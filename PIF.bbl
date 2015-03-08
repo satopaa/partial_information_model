@@ -1,0 +1,169 @@
+\begin{thebibliography}{}
+
+\bibitem[Armstrong, 2001]{armstrong2}
+Armstrong, J.~S. (2001).
+\newblock Combining forecasts.
+\newblock In Armstrong, J.~S., editor, {\em Principles of Forecasting: A
+  Handbook for Researchers and Practitioners}, pages 417--439. Kluwer Academic
+  Publishers, Norwell, MA.
+
+\bibitem[Banerjee et~al., 2005]{banerjee2005optimality}
+Banerjee, A., Guo, X., and Wang, H. (2005).
+\newblock On the optimality of conditional expectation as a bregman predictor.
+\newblock {\em Information Theory, IEEE Transactions on}, 51(7):2664--2669.
+
+\bibitem[Barton and Smith, 1997]{barton1997structured}
+Barton, T.~A. and Smith, S.~T. (1997).
+\newblock Structured covariance estimation for space-time adaptive processing.
+\newblock In {\em Acoustics, Speech, and Signal Processing, 1997. ICASSP-97.,
+  1997 IEEE International Conference on}, volume~5, pages 3493--3496. IEEE.
+
+\bibitem[Broomell and Budescu, 2009]{broomell2009experts}
+Broomell, S.~B. and Budescu, D.~V. (2009).
+\newblock Why are experts correlated? {Decomposing} correlations between
+  judges.
+\newblock {\em Psychometrika}, 74(3):531--553.
+
+\bibitem[Dawid et~al., 1995]{dawid1995coherent}
+Dawid, A., DeGroot, M., Mortera, J., Cooke, R., French, S., Genest, C.,
+  Schervish, M., Lindley, D., McConway, K., and Winkler, R. (1995).
+\newblock Coherent combination of experts' opinions.
+\newblock {\em TEST}, 4(2):263--313.
+
+\bibitem[Deza and Laurent, 1997]{deza1997geometry}
+Deza, M. and Laurent, M. (1997).
+\newblock {\em Geometry of Cuts and Metrics}, volume~15.
+\newblock Springer-Verlag, Berlin, 1st edition.
+
+\bibitem[Fox and Rottenstreich, 2003]{fox2003partition}
+Fox, C.~R. and Rottenstreich, Y. (2003).
+\newblock Partition priming in judgment under uncertainty.
+\newblock {\em Psychological Science}, 14(3):195--200.
+
+\bibitem[Gubin et~al., 1967]{gubin1967method}
+Gubin, L., Polyak, B., and Raik, E. (1967).
+\newblock The method of projections for finding the common point of convex
+  sets.
+\newblock {\em USSR Computational Mathematics and Mathematical Physics},
+  7(6):1--24.
+
+\bibitem[Henrion and Malick, 2012]{henrion2012projection}
+Henrion, D. and Malick, J. (2012).
+\newblock Projection methods in conic optimization.
+\newblock In {\em Handbook on Semidefinite, Conic and Polynomial Optimization},
+  pages 565--600. Springer.
+
+\bibitem[Hong and Page, 2009]{hong2009interpreted}
+Hong, L. and Page, S. (2009).
+\newblock Interpreted and generated signals.
+\newblock {\em Journal of Economic Theory}, 144(5):2174--2196.
+
+\bibitem[Hu and Olkin, 1991]{hu1991numerical}
+Hu, H. and Olkin, I. (1991).
+\newblock A numerical procedure for finding the positive definite matrix
+  closest to a patterned matrix.
+\newblock {\em Statistics \& probability letters}, 12(6):511--515.
+
+\bibitem[Laurent et~al., 1997]{laurent1997connections}
+Laurent, M., Poljak, S., and Rendl, F. (1997).
+\newblock Connections between semidefinite relaxations of the max-cut and
+  stable set problems.
+\newblock {\em Mathematical Programming}, 77(1):225--246.
+
+\bibitem[Malick, 2004]{malick2004dual}
+Malick, J. (2004).
+\newblock A dual approach to semidefinite least-squares problems.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  26(1):272--284.
+
+\bibitem[Mellers et~al., 2014]{mellers2014psychological}
+Mellers, B., Ungar, L., Baron, J., Ramos, J., Gurcay, B., Fincher, K., Scott,
+  S.~E., Moore, D., Atanasov, P., Swift, S.~A., Murray, T., Stone, E., and
+  Tetlock, P.~E. (2014).
+\newblock Psychological strategies for winning a geopolitical forecasting
+  tournament.
+\newblock {\em Psychological Science}, 25(5):1106--1115.
+
+\bibitem[Morris, 1995]{morris1995common}
+Morris, S. (1995).
+\newblock The common prior assumption in economic theory.
+\newblock {\em Economics and philosophy}, 11(02):227--253.
+
+\bibitem[Parunak et~al., 2013]{parunak2013characterizing}
+Parunak, H. V.~D., Brueckner, S.~A., Hong, L., Page, S.~E., and Rohwer, R.
+  (2013).
+\newblock Characterizing and aggregating agent estimates.
+\newblock In {\em Proceedings of the 2013 International Conference on
+  Autonomous Agents and Multi-agent Systems}, pages 1021--1028, Richland, SC.
+  International Foundation for Autonomous Agents and Multiagent Systems.
+
+\bibitem[Platt et~al., 1999]{platt1999probabilistic}
+Platt, J. et~al. (1999).
+\newblock Probabilistic outputs for support vector machines and comparisons to
+  regularized likelihood methods.
+\newblock {\em Advances in Large Margin Classifiers}, 10(3):61--74.
+
+\bibitem[Satop{\"a}{\"a} et~al., 2014a]{satopaa}
+Satop{\"a}{\"a}, V.~A., Baron, J., Foster, D.~P., Mellers, B.~A., Tetlock,
+  P.~E., and Ungar, L.~H. (2014a).
+\newblock Combining multiple probability predictions using a simple logit
+  model.
+\newblock {\em International Journal of Forecasting}, 30(2):344--356.
+
+\bibitem[Satop{\"a}{\"a} et~al., 2014b]{satopaamodeling}
+Satop{\"a}{\"a}, V.~A., Pemantle, R., and Ungar, L.~H. (2014b).
+\newblock Modeling probability forecasts via information diversity.
+\newblock Under Review.
+
+\bibitem[See et~al., 2006]{see2006between}
+See, K.~E., Fox, C.~R., and Rottenstreich, Y.~S. (2006).
+\newblock Between ignorance and truth: Partition dependence and learning in
+  judgment under uncertainty.
+\newblock {\em Journal of Experimental Psychology: Learning, Memory, and
+  Cognition}, 32(6):1385.
+
+\bibitem[Soloveychik and Wiesel, 2013]{soloveychik2013covariance}
+Soloveychik, I. and Wiesel, A. (2013).
+\newblock Covariance estimation in elliptical models with convex structure.
+\newblock {\em arXiv preprint arXiv:1311.0594}.
+
+\bibitem[Tanaka and Nakata, 2014]{tanaka2014positive}
+Tanaka, M. and Nakata, K. (2014).
+\newblock Positive definite matrix approximation with condition number
+  constraint.
+\newblock {\em Optimization Letters}, 8(3):939--947.
+
+\bibitem[Ungar et~al., 2012]{ungar2012good}
+Ungar, L., Mellers, B., Satop{\"a}{\"a}, V., Tetlock, P., and Baron, J. (2012).
+\newblock The good judgment project: A large scale test of different methods of
+  combining expert predictions.
+\newblock The Association for the Advancement of Artificial Intelligence
+  Technical Report FS-12-06.
+
+\bibitem[Wolkowicz et~al., 2000]{wolkowicz2000handbook}
+Wolkowicz, H., Saigal, R., and Vandenberghe, L. (2000).
+\newblock {\em Handbook of semidefinite programming: theory, algorithms, and
+  applications}, volume~27.
+\newblock Springer.
+
+\bibitem[Won and Kim, 2006]{won2006maximum}
+Won, J.~H. and Kim, S.-J. (2006).
+\newblock Maximum likelihood covariance estimation with a condition number
+  constraint.
+\newblock In {\em Signals, Systems and Computers, 2006. ACSSC'06. Fortieth
+  Asilomar Conference on}, pages 1445--1449. IEEE.
+
+\bibitem[Zadrozny and Elkan, 2001]{zadrozny2001obtaining}
+Zadrozny, B. and Elkan, C. (2001).
+\newblock Obtaining calibrated probability estimates from decision trees and
+  naive bayesian classifiers.
+\newblock In {\em ICML}, volume~1, pages 609--616. Citeseer.
+
+\bibitem[Ziegler, 2000]{ziegler2000lectures}
+Ziegler, G.~M. (2000).
+\newblock Lectures on 0/1-polytopes.
+\newblock In Kalai, G. and Ziegler, G.~M., editors, {\em Polytopes -
+  Combinatorics and Computation}, volume~29, pages 1--41, Basel. Springer,
+  Birkh\"auser.
+
+\end{thebibliography}

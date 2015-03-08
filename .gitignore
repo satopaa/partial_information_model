@@ -1,0 +1,8 @@
+*.aux
+*.gz
+*.log
+PIF.pdf
+*~
+.Rapp.history
+.DS_Store
+results/
