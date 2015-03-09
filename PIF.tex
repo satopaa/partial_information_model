@@ -73,6 +73,7 @@
 \def\bOmega{{\bf \Omega}}
 
 \def\dd{{\bf d}}
+\def\D{{\bf D}}
 \def\v{{\bf v}}
 \def\V{{\bf V}}
 \def\s{{\bf s}}
@@ -1219,7 +1220,7 @@ To address these drawbacks, this paper introduces a new selection procedure call
 %This matrix, however, is estimated only based on the observables $Z_j$. 
  Of course, the accuracy of this prediction cannot be measured until the actual outcome is observed. However, apart from the indexing Borel set and being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{B_j}$'s. Therefore it is natural to let each of the $Z_{B_j}$'s in turn play the role of $Z_S$, predict its value based on the other $Z_{B_i}$'s for $i \neq j$ and the globally estimated $\mathcal{P}_{LSE}(h\left(\SS_{Z}\right) : \nu)$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. That is, the final value of $\kappa$ is
   \begin{align}
-\kappa_{cov} = \argmax_{\nu \geq 0} \sum_{j=1}^N \ell \left( \Z_{j}, \mathcal{P}_{LSE}(h\left(\SS_{Z}\right) : \nu)| \Z_i \text{ for } i \neq j\right), \label{kappa_cov}
+\kappa_{cov} = \argmax_{\nu \geq 0} \sum_{j=1}^N \ell \left( \Z_{j}, \mathcal{P}_{LSE}(h\left(\SS_{Z}\right) : \nu) \big| \Z_i \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
 where the log-likelihood is now conditional on $Z_{B_i}$'s for $i \neq j$.  In contrast to cross-validation, conditional validation requires only one call to $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains rather stable when $N$ or $K$ is small. This is illustrated in the next section.
 
@@ -1331,7 +1332,7 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
         \label{ZsEstimation}
 \end{figure}
 
- Figure \ref{ZsEstimation} shows the average squared error loss of the competing aggregators in predicting $Y$. Given that $Y \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y-0)^2] = 1.0$ can be considered as a reasonable upper bound in prediction error. The revealed aggregator $X''$ with the true information structure $\bSigma_{22}$, on the other hand, is optimal and hence provides the corresponding lower bound. Under most values of $K$, the revealed aggregator $X''$ with $\SS_Z$ received a loss well above $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss fixed at around $0.26$. This is uniformly well above the loss of the revealed aggregator. The two versions, namely  $X''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ and $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ perform very similarly when $K \geq N$. They monotonically tend close to the optimal at around $0.03$ as $K$ grows larger. However, when $K < N$, using $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ is more robust and clearly yields better results. Therefore only $\kappa_{cov}$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
+ Figure \ref{ZsEstimation} shows the average squared error loss of the competing aggregators in predicting $Y$. Given that $Y \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y-0)^2] = 1.0$ can be considered as a reasonable upper bound in prediction error. The revealed aggregator $X''$ with the true information structure $\bSigma_{22}$, on the other hand, is optimal and hence provides the corresponding lower bound. Under most values of $K$, the revealed aggregator $X''$ with $\SS_Z$ received a loss well above $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss fixed at around $0.26$. This is uniformly well above the loss of the revealed aggregator. The two versions, namely  $X''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ and $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ perform very similarly when $K \geq N$. They monotonically tend close to the optimal at around $0.03$ as $K$ grows larger. However, when $K < N$, conditional validation is more robust and clearly yields better results. For this reason, only $\kappa_{cov}$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
   
 
 
@@ -1383,34 +1384,48 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 
 %\marginpar{this is not a case-study or through analysis of the data but an illustration of the framework}
 % 
-As was mentioned earlier, the Good Judgment Project has recruited thousands of forecasters to make probability predictions on different geopolitical events. This subsection analyzes the predictions made during the second year of the project.  
-%Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
-Each event is associated with a timeframe during which the forecasters make and update their predictions. To illustrate, two of
-the questions were: ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?''. The predictions made for these two events are shown in Figure \ref{Examples}. Each prediction problem closes and no more forecasts are allowed once the corresponding event resolves. Overall, the events have very different timeframes, ranging from several weeks to more than a year. For instance, the events in Figures \ref{Example1} and \ref{Example2} have timeframes of 154 and 52 days, respectively. Uncertainty in the event is typically the highest at the beginning of the timeframe and then vanishes by the resolution date. Given that this paper does not focus on dynamic data, only forecasts made within some interval of time should be considered for each event. The goal is to choose an interval during which predicting the correct outcome is neither trivial nor extremely difficult because in such cases competing aggregators are unlikely to present meaningful differences. Therefore, the interval used in this paper is $30$ to $100$ days before the resolution date. This is illustrated with the shaded regions in Figure \ref{Examples}. Some events had timeframes less than $30$ days and were omitted. The interval choice, however, was a compromise that maintained sufficient uncertainty in the events without discarding too much data. The final dataset has $48$ binary events. 
+Since 2011 the Good Judgment Project (GJP) has recruited thousands of forecasters to make probability estimates on different geopolitical events.  This subsection analyzes the estimates made during the second year of the project. During this year the forecasters made predictions for $78$ events, each with two possible outcomes. For instance, some of the questions were: ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?''. These examples are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
+In general, each event is associated with a timeframe, defined as the number of days between the first day of forecasting and the anticipated resolution day. 
+% during which the forecasters make and update their predictions. 
+%To illustrate, two of
+%the questions were: The predictions made for these two events are shown in Figure \ref{Examples}.
+% The prediction problem closes and no more forecasts are allowed once the corresponding event resolves. 
+The events had very different timeframes, ranging from 12 days to 519 days with a mean of 185.4 days.
+% 
+%  For instance, the events in Figures \ref{Example1} and \ref{Example2} have timeframes of 154 and 52 days, respectively. 
+ The outcome of the event is typically the most uncertain at the beginning and then becomes more certain towards the resolution date. The forecasters made and updated their predictions as frequently as they liked. Not all forecasters made predictions for all the events. Furthemore, the forecasters generally updated their forecasts infrequently, resulting into a very sparse dataset. 
+ 
 
-\marginpar{mention: also justify the cut-off a bit more}
+This data raises two issues: First, given that the current paper does not focus on modeling dynamic data, only forecasts made within some time interval are considered. The goal is to choose an interval during which predicting the correct outcome is neither trivial nor extremely difficult because in such cases the competing aggregators are unlikely to present meaningful differences. Second, the data is very sparse, yet the Gaussian model  requires an unconstrained estimator $\SS_Z$. Under a large number of missing observations, one option is to simply use all the complete pairs of observations to estimate the corresponding covariance.  This requires any two forecasters to make predictions on at least two common problems. However, given that evaluating different techniques to handle missing values is well outside the scope of this paper, only the hundred most active forecasters are considered. More specifically, the analysis focuses on two scenarios:
+ \begin{enumerate}[a)]
+\item \textit{Lower Uncertainty (LU):} Consider each forecaster's most recent forecast during $30-60$ days before the anticipated resolution day. The resulting dataset has $60$ events of which $13$ occurred. There are $841$ forecasters attending, on average, $11.3$ problems, with a range of $1$ to $55$ problems. The top $100$ most active forecasters attended, on average, $34.9$ problems, with a range of $25$ to $55$ problems. 
+ 
+\item \textit{Higher Uncertainty (HU):} Consider each forecaster's most recent forecast during  $90-120$ days before the anticipated resolution day. The resulting dataset has $49$ events of which $10$ occurred. There are $732$ forecasters attending, on average, $7.7$ problems, with a range of $1$ to $46$ problems.  The top $100$ most active forecasters attended, on average, $24.0$ problems, with a range of $14$ to $46$ problems. 
+ \end{enumerate}
+
 
 
 \begin{figure}[t!]
 \centering
         \centering
         \begin{subfigure}{0.49\textwidth}
-                \includegraphics[width=\textwidth]{1127_63}
+                \includegraphics[width=\textwidth]{1127}
                 \caption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
                                 \label{Example1}
         \end{subfigure}
         \begin{subfigure}{0.49\textwidth}
-                \includegraphics[width=\textwidth]{1160_75}
+                \includegraphics[width=\textwidth]{1160}
                 \caption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
                                 \label{Example2}
         \end{subfigure}             
         
-        \caption{Two events and the associated probability forecasts over time. Neither of these events occurred. Therefore the forecasts converge towards the correct answer as the resolution day (the right most point) approaches. Only forecasts made within the shaded region are used in the analysis.}
+        \caption{Two example problems. Given that neither event occurred, the forecasts converge towards the correct answer as the resolution day (the right most point) approaches. Problem (a) involved 522 forecasters, each making, on average, $6.4$ predictions. Problem (b), on the other hand, involved 521 forecasters with an average of $2.1$ predictions per forecaster.}
         \label{Examples}
 \end{figure}
 
 
-Recall that the partial information framework is designed for noise-reduction and hence assumes forecasts to be conditional unbiasedness. Unfortunately, the forecasters of the GJP are not conditionally unbiased, i.e., \textit{calibrated}, as this condition is more often called in the probability forecasting literature. In fact, human experts are generally known to lack calibration.  Even though the calibration of the forecasts can be improved via pre-processing mechanisms, such as Platt scaling \citep{platt1999probabilistic} or Isotonic regression \citep{zadrozny2001obtaining}, these techniques require a training set with known outcomes and are hence not in the scope of this paper. Consequently, the GJP forecasts are not pre-processed. The results, however, suggest that the Gaussian model remains robust and is able out-perform competing aggregators even when the forecasts are not extremely well-calibrated. 
+
+Recall that the partial information framework is designed for noise-reduction and hence assumes forecasts to be conditionally unbiased, i.e., \textit{calibrated}, as this condition is more often called in the probability forecasting literature. Unfortunately, human experts are generally known to lack calibration. According to some simple performance metrics, this is also the case with the GJP data. Even though the level of calibration can be somewhat improved via pre-processing mechanisms, such as Platt scaling \citep{platt1999probabilistic} or Isotonic regression \citep{zadrozny2001obtaining}, these techniques require a training set with known outcomes and hence are not in the scope of this paper. Consequently, the GJP forecasts are not pre-processed. The results, however, suggest that the Gaussian model remains robust and is able out-perform competing aggregators even when the forecasts are not extremely well-calibrated. 
 
 
 %``Will Zimbabwe commence a presidential election before 1 January 2013?". This question became available to the forecasters on 21 February 2012. Predictions were allowed until the event resolved; that is, until 1 January 2013 or the day Zimbabwe commences a presidential election, depending which one comes first. Given that Zimbabwe did not commence  the election before 1 January 2013, the final day of forecasts was 30 December 2012, giving a timeframe of  313 days of active forecasting. 
@@ -1430,18 +1445,18 @@ Recall that the partial information framework is designed for noise-reduction an
 % \end{align*}
 % where $S(p) = 1/(1+\exp(A_ip + B_i))$ and $Y_k$ is equal to $(K_++1)/(K_+ + 2)$ or $1/(K_- + 2)$ depending on whether $A_k$ happened or not, respectively. This, of course, requires  the outcomes of the events. Therefore the calibration parameters $A_i$ and $B_i$ are learned based on the first-year problems. These values are then used to calibrated the second-year forecasts. To evaluate sensitivity to changes in calibration, aggregation is applied to the second-year forecast both before and after calibration. 
 % 
-Not all the GJP forecasters made predictions for all the events, making the data fairly sparse.
-% Given that learning the calibration parameters based on a few events and probability estimates can lead to drastic overfitting, only forecasters who participated in at least half of the first-year problems were considered.  
+%Not all the GJP forecasters made predictions for all the events, making the data fairly sparse.
+%% Given that learning the calibration parameters based on a few events and probability estimates can lead to drastic overfitting, only forecasters who participated in at least half of the first-year problems were considered.  
+%% 
+%The Gaussian model can be applied as long as an unconstrained estimator $\SS_Z$ is available. Under a large number of missing observations, one option is to simply use all the complete pairs of observations to estimate the corresponding covariance.  This requires any two forecasters to make predictions on at least two common problems. However, given that evaluating different techniques to handle missing values is well outside the scope of this paper,  sufficient overlap is guaranteed by
+%%This can be challenging from the partial information perspective because the information overlap can be estimated between two forecasters only if they both made predictions on a number of common problems. 
+%considering only the hundred most active forecasters. The number of problems participated by these forecasters ranged from $30$ to $47$, with an average of $38.55$ problems. Recall that the forecasters were allowed to update their forecasts until the event resolved. To choose one prediction per forecaster, this paper analyzes two different setups: the \textit{higher uncertainty} (HU) setup considers only the forecaster's first prediction while the \textit{lower uncertainty} (LU) setup considers only the forecaster's last prediction. 
+%%\begin{enumerate}[a)]
+%%\item\textit{Higher Uncertainty:}  consider only the forecaster's first prediction, and
+%%\item\textit{Lower Uncertainty:}  consider only the forecaster's last prediction.
+%%\end{enumerate} 
+%The forecasts under HU are generally less accurate than the forecasts under LU because they are made earlier when the event presents relatively higher level of uncertainty. 
 % 
-The Gaussian model can be applied as long as an unconstrained estimator $\SS_Z$ is available. Under a large number of missing observations, one option is to simply use all the complete pairs of observations to estimate the corresponding covariance.  This requires any two forecasters to make predictions on at least two common problems. However, given that evaluating different techniques to handle missing values is well outside the scope of this paper,  sufficient overlap is guaranteed by
-%This can be challenging from the partial information perspective because the information overlap can be estimated between two forecasters only if they both made predictions on a number of common problems. 
-considering only the hundred most active forecasters. The number of problems participated by these forecasters ranged from $30$ to $47$, with an average of $38.55$ problems. Recall that the forecasters were allowed to update their forecasts until the event resolved. To choose one prediction per forecaster, this paper analyzes two different setups: the \textit{higher uncertainty} (HU) setup considers only the forecaster's first prediction while the \textit{lower uncertainty} (LU) setup considers only the forecaster's last prediction. 
-%\begin{enumerate}[a)]
-%\item\textit{Higher Uncertainty:}  consider only the forecaster's first prediction, and
-%\item\textit{Lower Uncertainty:}  consider only the forecaster's last prediction.
-%\end{enumerate} 
-The forecasts under HU are generally less accurate than the forecasts under LU because they are made earlier when the event presents relatively higher level of uncertainty. 
- 
  
  
  
@@ -1473,7 +1488,7 @@ The forecasts under HU are generally less accurate than the forecasts under LU b
 %Not every super-forecaster made predictions about every event. In fact, 
 
 \subsubsection{Model Specification and Aggregation}
-All the events considered in this section have two possible outcomes. Therefore $Y_k \in \{0,1\}$ for all $k = 1, \dots, K$. These outcomes are linked to the Gaussian information pool via the following function:
+All the events considered in this section have two possible outcomes; that is, $Y_k \in \{0,1\}$ for all $k = 1, \dots, K$. These outcomes are linked to the Gaussian information pool via the following function:
 \begin{align*}
 Y_k &= g(Z_{S,k}) = \begin{cases}
 1 & \text{ if } Z_{S,k} > t_k\\
@@ -1491,23 +1506,19 @@ where $\Phi(\cdot)$ is the CDF of a standard Gaussian distribution. Furthermore,
 X_{k}'' &= \E[Y_k | \Z_k] = \Phi\left( \frac{\bSigma_{12}\bSigma_{22}^{-1}\Z_k - t_k}{\sqrt{1-\bSigma_{12}\bSigma_{22}^{-1}\bSigma_{21}}}\right) \label{RevAgg}
 \end{align}
 
-All the unknown parameters of this model can be estimated. This begins with an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate can be obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$; that is,  if $\dd := \diag(\SS_P) / (1+\diag(\SS_P))$, where the division is element-wise, then an unconstrained estimator of $\bSigma_{22}$ is given by
-\begin{align*}
-\SS_Z &= \Diag(1-\dd)^{1/2} \SS_P \Diag(1-\dd)^{1/2}
-\end{align*}
-Next, choose a candidate value $\nu$ and project $\SS_Z$ onto the feasible region via $\mathcal{P}_{LSE}(\cdot : \nu)$. To estimate the thresholds $t_k$, observe that $-P_{jk}\sqrt{1-\delta_j} \sim \mathcal{N}(t_k, \delta_j)$.
+All the unknown parameters of this model can be estimated. The first step is to specify an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate can be obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$; that is,  if $\D := \Diag( \dd ) \Diag(\one + \dd)^{-1}$, where $\dd = \diag(\SS_P)$, then an unconstrained estimator of $\bSigma_{22}$ is given by $\SS_Z = (\I_N-\D)^{1/2} \SS_P (\I_N-\D)^{1/2}$. Next, choose a candidate value $\nu$ and project $\SS_Z$ onto the feasible region via $\mathcal{P}_{LSE}(\cdot : \nu)$. To estimate the thresholds $t_k$, observe that $-P_{jk}\sqrt{1-\delta_j} \sim \mathcal{N}(t_k, \delta_j)$.
 %With this estimate of $\bSigma_{22}$, the thresholds $t_k$ can be estimated.
 % It is possible  $t_k$ is set by the prior $\P(A_k)$; that is, if $\P(A_k) = q_k \in [0,1]$, then $t_k = \Phi^{-1}(1-q_k)$. Alternatively, the value of $t_k$ can be estimated from the forecasts by 
 % 
 % observing that $P_{jk} := -\Phi^{-1}(X_{jk})\sqrt{1-\delta_j} \sim \mathcal{N}(t_k, \delta_j)$. 
- The threshold $t_k$ is then estimated by the precision-weighted average of these quantities: 
+ The threshold $t_k$ is then estimated by the following precision-weighted average: 
 \begin{align*}
 \hat{t}_k &= -\frac{\sum_{j=1}^N \sqrt{1-\hat{\delta}_j}P_{jk}/\hat{\delta}_j}{\sum_{j=1}^N 1/\hat{\delta}_j},
 \end{align*}
-where $\hat{\delta}_j$ represent the current projected estimates of $\delta_j$. This procedure is repeated over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The final value is chosen with the conditional validation technique discussed in Section \ref{condSelection}.
+where $\hat{\delta}_j$ represents the projected estimate of $\delta_j$. This procedure is repeated over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The final value is chosen with the conditional validation technique discussed in Section \ref{condSelection}.
 
 
-This subsection benchmarks the revealed aggregator (\ref{RevAgg}) against the common averaging aggregators: average probability, median probability, average probit-score, and average log-odds.  To avoid infinite log-odds
+The revealed aggregator (\ref{RevAgg}) is benchmarked against common averaging aggregators: average probability, median probability, average probit-score, and average log-odds.  To avoid infinite log-odds
 and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
 censored to $X_{jk} = 0.001$ and $0.999$, respectively. Aggregation accuracy is measured with the mean Brier score (BS) that for an aggregate forecast $X_k$ is defined as
 %Consider $K$
@@ -1538,6 +1549,8 @@ This score takes values within the unit interval with lower values indicating hi
         \caption{This figure ... }
         \label{simReal}
 \end{figure}
+
+\marginpar{Change the legend to hold X''}
 
 
 Figure \ref{simReal} shows the average BS over the 1,000 iterations under both setups. Notice that the scores in Figure \ref{highUnc} are uniformly lower than in Figure \ref{lowUnc}. This is reflection of the higher uncertainty in the HU setup. Both setups, however, tell a similar story about the relative accuracies of the competing aggregators. First, the averaging aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Second, the averaging aggregators cannot utilize the increasing number of forecasters and hardly change once $N \geq 10$. Third, even though the revealed aggregator performs worse than the averaging aggregators under small $N$, it is able to collect information more efficiently as $N$ grows. Intuitively, this is the kind of behavior one would expect from an aggregator. Consequently,  $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$  achieves the best score for  $N \geq 15$, with the performance advantage growing in $N$. Fourth, even though $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ outperforms $\mathcal{P}_{LSE}(\cdot : \kappa_{in})$ for small $N$, this advantage diminishes as $N$ grows. In fact, for $N \geq 30$,  $\mathcal{P}_{LSE}(\cdot : \kappa_{in})$ outperforms $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$. This suggests the use of the computationally less demanding $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ under large $N$. 
@@ -1618,7 +1631,7 @@ The 100 forecasters considered in the previous subsection consist of 33 individu
 This pattern generalizes to the entire group of forecasters.  Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all 100 forecasters. The information structure has been ordered with respect to the diagonal such that the most (least) informed forecasters appear on the right (left). Furthermore, a colored rug has been appended on top of the plot. This rug shows whether each forecaster worked in isolation (black), in a non-super-forecaster team (red), or in a super-forecaster team (blue). Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions more informed. 
 
 
-\marginpar{This figure shows high information diversity. The further away it is from a single colored levelplto the higher diversity is.}
+%\marginpar{This figure shows high information diversity. The further away it is from a single colored levelplto the higher diversity is.}
 
 
 \subsection{Real World Data 2: Point Forecasts}

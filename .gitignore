@@ -1,5 +1,7 @@
 *.aux
 *.gz
+*.bbl
+*.blg
 *.log
 PIF.pdf
 *~
