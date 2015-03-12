@@ -148,6 +148,13 @@ Ville A. Satop\"a\"a, Shane T. Jensen, Robin Pemantle, and Lyle H. Ungar\\
 
 
 \section{Introduction}
+The past literature has distinguished two types of polling: prediction and opinion polling. In broad terms, an opinion poll is a survey of public opinion, whereas a prediction poll involves multiple agents collectively predicting the value of some quantity of interest. For instance, consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. 
+%In broader terms, 
+% Prediction polling is, of course, not limited to probability forecasts but can be applied to others types, such as point estimates or even probability density functions, as well. 
+In the recent years prediction polls have become increasingly popular possibly because modern social and computer networks permit the collection of a large number of responses from a diverse set of sources, including both human or machine agents. This has given rise to crowdsourcing platforms, such as MTurk and Witkey, and many companies, such as Myriada, Lumenogic, and Inkling, that have managed to successfully  capitalize on the benefits of collective wisdom. 
+
+
+
 %\subsection{Overview}
 
 %The problem of aggregating probability forecasts appears in many facets of real-world applications, 
@@ -155,20 +162,40 @@ Ville A. Satop\"a\"a, Shane T. Jensen, Robin Pemantle, and Lyle H. Ungar\\
 
 % This section, however, focuses on predicting global events that are of particular interest to the Intelligence Advanced Research Projects Activity (IARPA).
  
- In 2011 the Intelligence Advanced Research Projects Activity (IARPA) launched a forecasting tournament as a means to acquire accurate predictions on global events such as ``Will Serbia be officially granted EU candidacy by 31 December 2011?'' and ``Will Zimbabwe commence a presidential election before 1 January 2013?". Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
+ This paper develops a principled modeling framework for prediction polls. The focus, however, is on empirical work. Therefore the framework is illustrated on several real-world prediction polls. The first application considers a forecasting tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as a means to acquire accurate predictions on important geopolitical events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
 % This success is largely credited to the
- It has recruited 
+Since the start of the tournament, the GJP has recruited 
 thousands of forecasters from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
 %Requirements included at least a Bachelor's degree and completion of psychological and political tests that took roughly two hours. These measures assessed cognitive styles, cognitive abilities, personality traits, political attitudes, and real-world knowledge. 
-The forecasters were then asked to estimate probabilities (to the second decimal point) of a number of geopolitical binary events specified by IARPA. Each question was active for a period during which the participating forecasters could update their estimates as frequently as they liked without penalty. The forecasters knew that their probability estimates would be assessed for accuracy using Brier scores, i.e., the squared distance between the probability forecast and the event indicator that equals $1.0$ or $0.0$ depending on whether the event happened or not, respectively. This incentivized them to report their true beliefs instead of attempting to game the system. In addition to receiving \$150 for meeting minimum participation requirements that did not depend on prediction accuracy, the forecasters received status rewards for their performance via leader-boards displaying Brier scores for the top $20$ forecasters.
+These forecasters then estimated probabilities of the events specified by IARPA.  For instance, some of the questions were: ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?". The forecasts given for these two questions are shown in Figure \ref{Examples}. Each question has a timeframe during which the participating forecasters made and updated their estimates as frequently as they liked without penalty. For instance, the question in Figure \ref{Example1} has a timeframe of $154$ days, ranging from 30 July 2012  to 31 December 2012. In general, the forecasters updated their estimates very infrequently, making the dataset extremely sparse. 
+
+
+\begin{figure}[t!]
+\centering
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+                \includegraphics[width=\textwidth]{1127}
+                \caption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
+                                \label{Example1}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+                \includegraphics[width=\textwidth]{1160}
+                \caption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
+                                \label{Example2}
+        \end{subfigure}             
+        
+        \caption{Two example problems. Given that neither event occurred, the forecasts converge towards the correct answer as the resolution day (the right most point) approaches. Problem (a) involved 522 forecasters, each making, on average, $6.4$ predictions. Problem (b), on the other hand, involved 521 forecasters with an average of $2.1$ predictions per forecaster.}
+        \label{Examples}
+\end{figure}
+
+The second application, on the other hand, .... 
+
+
+%The success of the GJP can be largely credited to its extensive \textit{prediction polling}. This form of polling differs from the more classical \textit{opinion polling} sometimes in a subtle manner and is hence best described with a simple example: Consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. In broader terms, whereas an opinion poll is a survey of public opinion, prediction poll refers to a setup where multiple agents are collectively predicting the value of some quantity of interest. Prediction polling is, of course, not limited to probability forecasts but can be applied to others types, such as point estimates or even probability density functions, as well. Recently a large number of prediction polls of different types have emerged possibly because modern social and computer networks permit the collection of a large number of responses from a diverse set of sources, including both human or machine agents. This has given rise to crowdsourcing platforms, such as MTurk and Witkey, and many companies, such as Myriada, Lumenogic, and Inkling, that have managed to successfully  capitalize on the benefits of collective wisdom. 
 
 
 
-The success of the GJP can be largely credited to its extensive \textit{prediction polling}. This form of polling differs from the more classical \textit{opinion polling} sometimes in a subtle manner and is hence best described with a simple example: Consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. In broader terms, whereas an opinion poll is a survey of public opinion, prediction poll refers to a setup where multiple agents are collectively predicting the value of some quantity of interest. Prediction polling is, of course, not limited to probability forecasts but can be applied to others types, such as point estimates or even probability density functions, as well. Recently a large number of prediction polls of different types have emerged possibly because modern social and computer networks permit the collection of a large number of responses from a diverse set of sources, including both human or machine agents. This has given rise to crowdsourcing platforms, such as MTurk and Witkey, and many companies, such as Myriada, Lumenogic, and Inkling, that have managed to successfully  capitalize on the benefits of collective wisdom. 
-
-
-
-Once the predictions have been collected, the challenge is to combine them into a single consensus. This is typically done for the sake of decision-making and improved accuracy \citep{armstrong2}. Principled aggregation, however, requires an assumption about the source of heterogeneity among the forecasts. In particular, it is necessary to understand how the forecasts differ from the true value of the target quantity. For the past several decades, potentially due to the early forms of data collection, measurement error has served as the main source of heterogeneity. This approach has become the standard and is often applied in practice even when data variation is dominated  by causes besides error in measurement. For instance, the measurement error may be reasonable in modeling repeated estimates from a single instrument. However, it is unlikely to be the main source of heterogeneity in prediction polling, where the estimates arise from different sources. 
+Once the predictions have been collected, the challenge is to combine them into a single consensus. This is typically done for the sake of decision-making and improved accuracy \citep{armstrong2}. Principled aggregation, however, requires an assumption about the source of heterogeneity among the forecasts. In particular, it is necessary to specify how the forecasts differ from the true value of the target quantity. For the past several decades, potentially due to the early forms of data collection, measurement error has served as the main source of heterogeneity. This approach has become the standard and is often applied in practice even when data variation is dominated  by causes besides error in measurement. For instance, the measurement error may be reasonable in modeling repeated estimates from a single instrument. However, it is unlikely to be the main source of heterogeneity in prediction polling, where the estimates arise from multiple, often widely different sources. 
 
 %In such setups, the agents' cognitive or information diversity is often more important. 
 
@@ -235,7 +262,9 @@ Once the predictions have been collected, the challenge is to combine them into 
 
 
 
-The main contribution of this paper is a new source of heterogeneity that serves as an alternative to measurement error. The heterogeneity is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's revenue in the next quarter. The resulting framework, named the \textit{partial information framework}, is quite flexible yet intuitive. This is illustrated by deriving specific partial information models for several different types of forecasts, including point  and probability estimates. Under each model the optimal aggregator can be computed. These aggregators depend on an information structure for which an efficient estimation procedure is provided. The model is evaluated on several real world forecasting datasets. 
+The main contribution of this paper is a new source of forecast heterogeneity. In particular, differences are assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's revenue in the next quarter. The resulting framework, named the \textit{partial information framework}, is quite flexible yet intuitive. This is illustrated by deriving specific partial information models for several different types of forecasts, including point  and probability estimates. Under each model the optimal aggregator can be computed. These aggregators depend on an information structure for which an efficient estimation procedure is provided. The model is evaluated on several real world forecasting datasets. 
+
+
 
 \marginpar{Focus more on the big picture: this is a new source of heterogeneity which makes much more sense in the prediction context. }
 \marginpar{Needs more work.}
@@ -698,7 +727,7 @@ replacing $S$ by $[0,u]$ and $B_j$ by $u B_j$. For more motivation and interpret
 
 From a practical point of view, only the \textit{information variables}  $Z_S, Z_{B_1}, \dots, Z_{B_N}$ are important. They form the core source of randomness in the model and follow a joint multivariate Gaussian distribution:
 \begin{align}
-\left(\begin{matrix} Z_S \\ Z_{B_1}\\ \vdots \\ Z_{B_N} \end{matrix}\right) &\sim \mathcal{N}\left( 
+\left(\begin{matrix} Z_S \\ Z_{B_1}\\ \vdots \\ Z_{B_N} \end{matrix}\right) &\sim \mathcal{N}_{N+1}\left( 
 %\left(\begin{matrix} 
 %\mu_1 \\ \boldsymbol{\mu}_2
 % \end{matrix}\right) =
@@ -715,19 +744,17 @@ From a practical point of view, only the \textit{information variables}  $Z_S, Z
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
  \end{array}\right)\right)  \label{NExperts}
 \end{align}
-This is a  \textit{distribution of information} that provides a covariance structure between the target quantity $Z_S$ and the observables $Z_{B_j}$. When combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$, it  can be used to generate a variety of partial information models. This is illustrated in the next section.
-
-In many forecasting setups such a relation may be more natural than assuming a 
-This provides an alternative to the more classical approaches that assume 
-
-
-
-\marginpar{Must discuss the easy way to construing conditional statements here, i.e. talk about the revealed aggregator here. }
+This  \textit{distribution of information} has several important properties: First, motivated by the partial information framework, it describes the covariance structure among all the information variables simply based on covariance of the observables $Z_{B_1}, \dots, Z_{B_N}$. Consequently, it is possible to regress $Z_S$ on $Z_{B_1}, \dots, Z_{B_N}$ without actually observing $Z_S$. Note that this is philosophically different and possibly more natural than the classical approaches that typically estimate a model parameter, such as the mean, and then use that directly as a prediction of $Z_S$. Second, information aggregation in practice requires the ability to estimate the value of one variable given the others. Under the multivariate Gaussian distribution (\ref{NExperts}) this is especially easy. In particular, if $\Z = (Z_{B_1}, \dots, Z_{B_N})'$, then $Z_S | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right)$. This leads to closed-form revealed aggregator $X''$ in many applications. Third, the oracular aggregator can be emulated by appending (\ref{NExperts}) with a variable $Z_{B'}$, where $B' = \cup_{j=1}^N B_j$. This aggregator, however, is only useful in theoretical analysis and is therefore not discussed further in this paper. For more information see \cite{satopaamodeling} that use the oracular aggregator to analyze the empirical technique of extremizing, i.e., shifting an average aggregator closer to the nearer extreme (zero or one). Fourth, when combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$, expression (\ref{NExperts}) can be used to generate a broad range  of partial information models. Section \ref{empirical} illustrates this by applying the Gaussian model to datasets with different types of outcomes. 
 
 
 
 
-\marginpar{IMPORTANT: This also provides a covariance structure: in many prediction applications it is more natural to have the predictions correlate with the actual target. However it may not be clear how to set up such correlations as the outcome is not observed. The PIF gives a natural structure ffor this, and hence make many predictions setups more accessible. The MEF often treats the target as fixed; is it because do not know how to setup the correlation structure.}
+%\marginpar{Must discuss the easy way to construing conditional statements here, i.e. talk about the revealed aggregator here. }
+
+
+
+
+%\marginpar{IMPORTANT: This also provides a covariance structure: in many prediction applications it is more natural to have the predictions correlate with the actual target. However it may not be clear how to set up such correlations as the outcome is not observed. The PIF gives a natural structure ffor this, and hence make many predictions setups more accessible. The MEF often treats the target as fixed; is it because do not know how to setup the correlation structure.}
 
 
 %Throughout this paper, $Y$ is called the \textit{target quantity}, $X_j$'s the forecasters' predictions, and $Z_B$'s the \textit{information variables}. 
@@ -769,15 +796,14 @@ This provides an alternative to the more classical approaches that assume
 %Now, the forecasters' information  can be conveniently aggregated by   referring to the conditional distribution of a multivariate Gaussian distribution. More specifically, if ${\bf Z} = (Z_1, \dots, Z_N)'$, then $X_{S} | \boldsymbol{Z} \sim \mathcal{N}\left(\bar{\mu}, \bar{\Sigma}\right)$, where $\bar{\mu} 
 %  = {\bf \Sigma}_{12} {\bf\Sigma}_{22}^{-1} \boldsymbol{Z}$ and $\bar{\Sigma} = 1 - {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} {\bf\Sigma}_{21}$. How this is utilized in different applications depends on the context. The decision-maker must choose a \textit{link function} that maps the observables to the information pool. The next section illustrates this for some common types of forecasts and outcomes. 
   
-  \marginpar{Discuss (a sentence) oracular aggregator}
 %  \marginpar{The reveled aggregator should be in the link section; this is only about the information distribution.}
   
 %In particular, the partial information framework includes the interpreted signal framework. Therefore it supports the core statistical properties of the interpreted estimates (\cite{hong2009interpreted}). For instance, the classical measurement error framework often considers variation as noise and hence harmful. Under the partial information framework, however, increased variance suggests higher information diversity, which typically suggests improved accuracy in information aggregation. Therefore variation is generally seen as helpful. The same is true under the interpreted estimates. In addition, it has been shown that interpreted estimates require aggregation techniques that can leave the convex hull of the individual estimates (\cite{parunak2013characterizing}), and that independent interpreted estimates must be negatively correlated conditional on at least one outcome (\cite{hong2009interpreted}). Both of these properties are discussed and verified under a concrete instance of the partial information framework provided in the next section.
-\marginpar{Somewhere we should have a discussion on how data collection should be performed to ensure signal about the amount of information. Of course, variance/uncertainty is a good indicator. But there is more to this, it may be that it is really the non-informative prior that plays the key role. If you are doing something radical wrt to the prior, then you are likely to have a lot of information. This theory, however, does not hold. The variance really is the important key: you may give a point estimate that is very far from the central of the prior. But this may come with a very high variance, hence it is not informative. I guess there are different levels of strength for the information signal. This discussion might have to go at the end of section 3. 
+%\marginpar{Somewhere we should have a discussion on how data collection should be performed to ensure signal about the amount of information. Of course, variance/uncertainty is a good indicator. But there is more to this, it may be that it is really the non-informative prior that plays the key role. If you are doing something radical wrt to the prior, then you are likely to have a lot of information. This theory, however, does not hold. The variance really is the important key: you may give a point estimate that is very far from the central of the prior. But this may come with a very high variance, hence it is not informative. I guess there are different levels of strength for the information signal. This discussion might have to go at the end of section 3. 
 
 
-It actually even more complicated than that. Remember that we are assuming conditional unbiasedness. Give this assumption, deviation from the prior is considered high information. }
-
+%It actually even more complicated than that. Remember that we are assuming conditional unbiasedness. Give this assumption, deviation from the prior is considered high information. }
+%
 
 
 
@@ -964,7 +990,7 @@ An alternative that permits dimension-reduction is to project an unconstrained e
 %The associated loss function is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$, where $\Tr(\cdot)$ denotes the trace operator. 
 The dimension reduction is facilitated by a change of variables and projecting $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
 %The functional invariance of the MLE shows that $h(\boldsymbol{S}_Z)$ is an unconstrained MLE of  $h(\bSigma_{22}) = \bSigma$. 
-The revised yet equivalent estimation problem is
+The revised estimation problem is
 %A popular and efficient solution is to project an unconstrained estimator (such as a sample covariance matrix) on to the constrained space 
 % and can be solved efficiently with standard techniques such as the interior point methods.  
 %$||\cdot||_F$ is the Frobenius norm and $\boldsymbol{S}_Z$ is an unconstrained estimate of the information structure. This is a convex optimization problem in $\bSigma_{22}$ 
@@ -983,6 +1009,8 @@ The revised yet equivalent estimation problem is
 \end{split}
 \end{align}
 where $\Tr(\cdot)$ is the trace operator and $||\cdot||_F^2$ is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$. Even though many other norms could be used, for the sake of simplicity, this paper only considers the Frobenius norm. The linear constraints in (\ref{lse_problem}) maintain the structure induced by $h(\cdot)$. In particular, $b_1 = 1$ and $\A_1$ is filled with zeros except $a_{11} = 1$. For $j \geq 2$, $b_j = 0$ and $\A_j$ is filled with zeros except $a_{jj} = 1$ and  $a_{j1} = a_{1j} = -1/2$. Given that  $\bSigma_{22}$ is a principal sub-matrix of $\bSigma$, the condition $\bSigma \in \mathcal{S}_{+}^{N+1}$ implies $\bSigma_{22} \in \mathcal{S}_{+}^{N}$. Furthermore, by Cauchy's Interlace Theorem, $\lambda_{min}(\bSigma) \leq \lambda_{min}(\bSigma_{22})$ and $\lambda_{max}(\bSigma_{22}) \leq \lambda_{max}(\bSigma)$ such that $\cond(\bSigma_{22}) \leq \cond(\bSigma) \leq \kappa$. 
+
+%\marginpar{These are not exactly equivalent because the condition number constraint gets tighter on the info str. This value is somewhat arbitrary anyways. The only goal is to control the condition number.}
 
 
 %The relaxed problem (\ref{lse_problem}) is solved by projecting $ h(\boldsymbol{S}_Z)$ to the feasible set. 
@@ -1207,22 +1235,26 @@ for $j = 1, \dots, N$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N}^*) \Q$ is
 Previous literature has mentioned an approach to choosing the value of $\kappa$.
 % has been discussed in the previous literature. 
 In particular,  \cite{won2006maximum} discuss maximum likelihood estimation under a condition number constraint and propose choosing the value of $\kappa$ that maximizes the expected predictive log-likelihood. That is, if $\Z_1, \dots, \Z_K,  \tilde{\Z}\stackrel{i.i.d.}{\sim} \mathcal{N}_{N}(\boldsymbol{0}, \bSigma_{22})$, they choose $\kappa = \argmax_{\nu \geq 0} \E \left\{ \E_{\tilde{\Z}} \left(  \ell(\tilde{\Z},  \mathcal{P}_{LSE}(h(\SS) : \nu)) \right) \right\}$, where $\ell(\cdot)$ denotes the log-likelihood  and $\SS$ is the sample covariance matrix computed only based on $\Z_1, \dots, \Z_K$. They approximate the expected predictive log-likelihood with cross validation. This partitions the data $\Z$ into $R$ subsets $\Z = \left(\Z_{(1)}, \dots, \Z_{(R)}\right)'$. During the $r$th iteration, $\Z_{(r)}$ functions as $\tilde{\Z}$ and the remaining $R-1$ subsets are used for computing the sample covariance matrix, denoted  with $\SS_{(r)}$. 
-The final value of $\kappa$ is
+The chosen value of $\kappa$ is
  \begin{align}
 \kappa_{out} = \argmax_{\nu \geq 0} \sum_{r=1}^R \ell\left( \Z_{(r)}, \mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)\right)
 \label{kappa_out}
 \end{align}
-This approach, however, suffers from several drawbacks: a) it introduces a new tuning parameter $R$; b) it is computationally expensive as $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ must be called $R$ times for each candidate value $\nu$; and, most importantly, c) it can be unstable when $K$ is much smaller than $N$. This final drawback is particularly unfortunate because prediction-polls typically involve a large number of people giving estimates for several problems. 
+This approach, however, suffers from several drawbacks: a) it introduces a new tuning parameter $R$; b) it is computationally expensive as $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ must be called $R$ times for each candidate value $\nu$; and, most importantly, c) it can be unstable when $K$ or $N$ is small. The last drawback is particularly unfortunate because in prediction polling
+%typically involve a large number of people attending relatively few problems. T
+ the number of responses per forecaster is often kept low for the sake of avoiding responder fatigue and hence the potential of reduced  estimation accuracy. 
 
 %\marginpar{emphasize this more!!}
 
-To address these drawbacks, this paper introduces a new selection procedure called \textit{conditional validation} (cov). This approach is particularly tailored for prediction and can be used for choosing any tuning parameter. In this paper, however, it is only used for estimating $\kappa$. To describe the procedure, recall that the revealed aggregator estimates $Z_S$ based on the full covariance matrix $\bSigma$ and the observations $Z_{B_j}$. 
+To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This approach is particularly tailored for prediction and can be used for choosing any tuning parameter in a partial information model. To describe the procedure, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to predict  $Z_S$ from the $Z_{B_j}$'s. 
 %This matrix, however, is estimated only based on the observables $Z_j$. 
- Of course, the accuracy of this prediction cannot be measured until the actual outcome is observed. However, apart from the indexing Borel set and being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{B_j}$'s. Therefore it is natural to let each of the $Z_{B_j}$'s in turn play the role of $Z_S$, predict its value based on the other $Z_{B_i}$'s for $i \neq j$ and the globally estimated $\mathcal{P}_{LSE}(h\left(\SS_{Z}\right) : \nu)$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. That is, the final value of $\kappa$ is
+ Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from the indexing Borel set and being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{B_j}$'s. Therefore it is natural to let each of the $Z_{B_j}$'s in turn play the role of $Z_S$, predict its value based on $Z_{B_i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore the chosen value of $\kappa$ is
   \begin{align}
 \kappa_{cov} = \argmax_{\nu \geq 0} \sum_{j=1}^N \ell \left( \Z_{j}, \mathcal{P}_{LSE}(h\left(\SS_{Z}\right) : \nu) \big| \Z_i \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
-where the log-likelihood is now conditional on $Z_{B_i}$'s for $i \neq j$.  In contrast to cross-validation, conditional validation requires only one call to $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains rather stable when $N$ or $K$ is small. This is illustrated in the next section.
+where the log-likelihood is now conditional on $Z_{B_i}$'s for $i \neq j$. This imitates the idea behind cross-validation but, instead of predicting across rows (observations), it predicts across columns (variables).  In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains rather stable when $N$ or $K$ is small. This is illustrated in the next section.
+
+%\marginpar{this must be re-written better. This can be viewed as column-wise CV while the regular CV is row-wise.}
 
 
 Unfortunately, both (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance.  
@@ -1364,7 +1396,7 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 
 \subsection{Real World Data 1: Probability Forecasts}
 \label{binaryReal}
-\subsubsection{Dataset and Examples}
+\subsubsection{Aggregation Accuracy}
 %Probability forecasting is the science of giving probability estimates for future events. Typically more than one different forecast is available on the same event. Instead of trying to guess which prediction is the most accurate, the predictions should be combined into a single consensus forecast \citep{armstrong2}. The problem of aggregating probability forecasts appears in many facets of real-world applications, 
 %including weather forecasting, medical diagnosis, estimation of credit default, and sports betting. 
 %%including weather forecasting  \citep{murphy1977reliability}, medical diagnosis  \citep{pepe2003statistical}, estimation of credit default
@@ -1384,7 +1416,7 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 
 %\marginpar{this is not a case-study or through analysis of the data but an illustration of the framework}
 % 
-Since 2011 the Good Judgment Project (GJP) has recruited thousands of forecasters to make probability estimates on different geopolitical events.  This subsection analyzes the estimates made during the second year of the project. During this year the forecasters made predictions for $78$ events, each with two possible outcomes. For instance, some of the questions were: ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?''. These examples are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
+\textit{Data.} Since 2011 the Good Judgment Project (GJP) has recruited thousands of forecasters to make probability estimates on different geopolitical events.  This subsection analyzes the estimates made during the second year of the project. During this year the forecasters made predictions for $78$ events, each with two possible outcomes. For instance, some of the questions were: ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?''. These examples are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
 In general, each event is associated with a timeframe, defined as the number of days between the first day of forecasting and the anticipated resolution day. 
 % during which the forecasters make and update their predictions. 
 %To illustrate, two of
@@ -1395,6 +1427,9 @@ The events had very different timeframes, ranging from 12 days to 519 days with 
 %  For instance, the events in Figures \ref{Example1} and \ref{Example2} have timeframes of 154 and 52 days, respectively. 
  The outcome of the event is typically the most uncertain at the beginning and then becomes more certain towards the resolution date. The forecasters made and updated their predictions as frequently as they liked. Not all forecasters made predictions for all the events. Furthemore, the forecasters generally updated their forecasts infrequently, resulting into a very sparse dataset. 
  
+The forecasters knew that their probability estimates would be assessed for accuracy using Brier scores, i.e., the squared distance between the probability forecast and the event indicator that equals $1.0$ or $0.0$ depending on whether the event happened or not, respectively. This incentivized them to report their true beliefs instead of attempting to game the system. In addition to receiving \$150 for meeting minimum participation requirements that did not depend on prediction accuracy, the forecasters received status rewards for their performance via leader-boards displaying Brier scores for the top $20$ forecasters.
+
+
 
 This data raises two issues: First, given that the current paper does not focus on modeling dynamic data, only forecasts made within some time interval are considered. The goal is to choose an interval during which predicting the correct outcome is neither trivial nor extremely difficult because in such cases the competing aggregators are unlikely to present meaningful differences. Second, the data is very sparse, yet the Gaussian model  requires an unconstrained estimator $\SS_Z$. Under a large number of missing observations, one option is to simply use all the complete pairs of observations to estimate the corresponding covariance.  This requires any two forecasters to make predictions on at least two common problems. However, given that evaluating different techniques to handle missing values is well outside the scope of this paper, only the hundred most active forecasters are considered. More specifically, the analysis focuses on two scenarios:
  \begin{enumerate}[a)]
@@ -1402,30 +1437,11 @@ This data raises two issues: First, given that the current paper does not focus 
  
 \item \textit{Higher Uncertainty (HU):} Consider each forecaster's most recent forecast during  $90-120$ days before the anticipated resolution day. The resulting dataset has $49$ events of which $10$ occurred. There are $732$ forecasters attending, on average, $7.7$ problems, with a range of $1$ to $46$ problems.  The top $100$ most active forecasters attended, on average, $24.0$ problems, with a range of $14$ to $46$ problems. 
  \end{enumerate}
+Another study considering the $60-90$ days before the anticipated resolution day was also conducted. The results, however, were qualitatively very similar to the results under LU and HU. Therefore, for the sake of brevity, this middle scenario is not included in the final version of the paper.  
 
 
 
-\begin{figure}[t!]
-\centering
-        \centering
-        \begin{subfigure}{0.49\textwidth}
-                \includegraphics[width=\textwidth]{1127}
-                \caption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
-                                \label{Example1}
-        \end{subfigure}
-        \begin{subfigure}{0.49\textwidth}
-                \includegraphics[width=\textwidth]{1160}
-                \caption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
-                                \label{Example2}
-        \end{subfigure}             
-        
-        \caption{Two example problems. Given that neither event occurred, the forecasts converge towards the correct answer as the resolution day (the right most point) approaches. Problem (a) involved 522 forecasters, each making, on average, $6.4$ predictions. Problem (b), on the other hand, involved 521 forecasters with an average of $2.1$ predictions per forecaster.}
-        \label{Examples}
-\end{figure}
-
-
-
-Recall that the partial information framework is designed for noise-reduction and hence assumes forecasts to be conditionally unbiased, i.e., \textit{calibrated}, as this condition is more often called in the probability forecasting literature. Unfortunately, human experts are generally known to lack calibration. According to some simple performance metrics, this is also the case with the GJP data. Even though the level of calibration can be somewhat improved via pre-processing mechanisms, such as Platt scaling \citep{platt1999probabilistic} or Isotonic regression \citep{zadrozny2001obtaining}, these techniques require a training set with known outcomes and hence are not in the scope of this paper. Consequently, the GJP forecasts are not pre-processed. The results, however, suggest that the Gaussian model remains robust and is able out-perform competing aggregators even when the forecasts are not extremely well-calibrated. 
+Recall that the partial information framework is designed for noise-reduction. Therefore the forecasts are assumed to be conditionally unbiased, i.e., \textit{calibrated}, as this condition is more often called in the probability forecasting literature. Unfortunately, human experts are generally known to lack calibration. According to some simple performance metrics, this is also the case with the GJP data. Even though the level of calibration can be somewhat improved via pre-processing mechanisms, such as Platt scaling \citep{platt1999probabilistic} or Isotonic regression \citep{zadrozny2001obtaining}, these techniques require a training set with known outcomes and hence are not in the scope of this paper. Consequently, the GJP forecasts are not pre-processed. The results, however, suggest that the Gaussian model remains robust and is able out-perform competing aggregators even when the forecasts are not extremely well-calibrated. 
 
 
 %``Will Zimbabwe commence a presidential election before 1 January 2013?". This question became available to the forecasters on 21 February 2012. Predictions were allowed until the event resolved; that is, until 1 January 2013 or the day Zimbabwe commences a presidential election, depending which one comes first. Given that Zimbabwe did not commence  the election before 1 January 2013, the final day of forecasts was 30 December 2012, giving a timeframe of  313 days of active forecasting. 
@@ -1487,8 +1503,10 @@ Recall that the partial information framework is designed for noise-reduction an
 %%dataset,
 %Not every super-forecaster made predictions about every event. In fact, 
 
-\subsubsection{Model Specification and Aggregation}
-All the events considered in this section have two possible outcomes; that is, $Y_k \in \{0,1\}$ for all $k = 1, \dots, K$. These outcomes are linked to the Gaussian information pool via the following function:
+%\subsubsection{Model Specification and Aggregation}
+\vspace{2em}
+\noindent
+\textit{Model.} All the events considered in this section have two possible outcomes; that is, $Y_k \in \{0,1\}$ for all $k = 1, \dots, K$. These outcomes are linked to the Gaussian information pool via the following function:
 \begin{align*}
 Y_k &= g(Z_{S,k}) = \begin{cases}
 1 & \text{ if } Z_{S,k} > t_k\\
@@ -1506,19 +1524,23 @@ where $\Phi(\cdot)$ is the CDF of a standard Gaussian distribution. Furthermore,
 X_{k}'' &= \E[Y_k | \Z_k] = \Phi\left( \frac{\bSigma_{12}\bSigma_{22}^{-1}\Z_k - t_k}{\sqrt{1-\bSigma_{12}\bSigma_{22}^{-1}\bSigma_{21}}}\right) \label{RevAgg}
 \end{align}
 
-All the unknown parameters of this model can be estimated. The first step is to specify an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate can be obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$; that is,  if $\D := \Diag( \dd ) \Diag(\one + \dd)^{-1}$, where $\dd = \diag(\SS_P)$, then an unconstrained estimator of $\bSigma_{22}$ is given by $\SS_Z = (\I_N-\D)^{1/2} \SS_P (\I_N-\D)^{1/2}$. Next, choose a candidate value $\nu$ and project $\SS_Z$ onto the feasible region via $\mathcal{P}_{LSE}(\cdot : \nu)$. To estimate the thresholds $t_k$, observe that $-P_{jk}\sqrt{1-\delta_j} \sim \mathcal{N}(t_k, \delta_j)$.
+\vspace{2em}
+\noindent
+\textit{Estimation.} All the unknown parameters of this model can be estimated. The first step is to specify an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate can be obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$; that is,  if $\D := \Diag( \dd ) \Diag(\one + \dd)^{-1}$, where $\dd = \diag(\SS_P)$, then an unconstrained estimator of $\bSigma_{22}$ is given by $\SS_Z = (\I_N-\D)^{1/2} \SS_P (\I_N-\D)^{1/2}$. Next, choose a candidate value $\nu$ and project $\SS_Z$ onto the feasible region via $\mathcal{P}_{LSE}(\cdot : \nu)$. To estimate the thresholds $t_k$, let $\PP_k = (P_{1k}, \dots, P_{Nk})'$ and observe that $-\Diag(\one-\diag(\bSigma_{22}))^{1/2}\PP_{k} \sim \mathcal{N}_N(t_k \one_N, \bSigma_{22})$.
 %With this estimate of $\bSigma_{22}$, the thresholds $t_k$ can be estimated.
 % It is possible  $t_k$ is set by the prior $\P(A_k)$; that is, if $\P(A_k) = q_k \in [0,1]$, then $t_k = \Phi^{-1}(1-q_k)$. Alternatively, the value of $t_k$ can be estimated from the forecasts by 
 % 
 % observing that $P_{jk} := -\Phi^{-1}(X_{jk})\sqrt{1-\delta_j} \sim \mathcal{N}(t_k, \delta_j)$. 
  The threshold $t_k$ is then estimated by the following precision-weighted average: 
 \begin{align*}
-\hat{t}_k &= -\frac{\sum_{j=1}^N \sqrt{1-\hat{\delta}_j}P_{jk}/\hat{\delta}_j}{\sum_{j=1}^N 1/\hat{\delta}_j},
+%\hat{t}_k &= -\frac{\sum_{j=1}^N \sqrt{1-\hat{\delta}_j}P_{jk}/\hat{\delta}_j}{\sum_{j=1}^N 1/\hat{\delta}_j},
+\hat{t}_k &= -\frac{\PP_{k}' \Diag(\one-\diag(\hat{\bSigma}_{22}))^{1/2} \hat{\bSigma}_{22} \one}{\one' \hat{\bSigma}_{22} \one},
 \end{align*}
-where $\hat{\delta}_j$ represents the projected estimate of $\delta_j$. This procedure is repeated over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The final value is chosen with the conditional validation technique discussed in Section \ref{condSelection}.
+where $\hat{\bSigma}_{22}$ represents the current projection of $\SS_Z$. This procedure is repeated over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The final value is chosen with the conditional validation technique discussed in Section \ref{condSelection}.
 
-
-The revealed aggregator (\ref{RevAgg}) is benchmarked against common averaging aggregators: average probability, median probability, average probit-score, and average log-odds.  To avoid infinite log-odds
+\vspace{2em}
+\noindent
+\textit{Analysis.} The revealed aggregator (\ref{RevAgg}) is benchmarked against common averaging aggregators: average probability, median probability, average probit-score, and average log-odds.  To avoid infinite log-odds
 and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
 censored to $X_{jk} = 0.001$ and $0.999$, respectively. Aggregation accuracy is measured with the mean Brier score (BS) that for an aggregate forecast $X_k$ is defined as
 %Consider $K$
@@ -1527,6 +1549,8 @@ censored to $X_{jk} = 0.001$ and $0.999$, respectively. Aggregation accuracy is 
 \text{BS} &= \frac{1}{K} \sum_{k=1}^K \left(X_k- \one_{A_k}\right)^2.
  \end{align*}
 This score takes values within the unit interval with lower values indicating higher accuracy. The evaluation is performed via repeated subsampling of the forecasters: choose $N$ forecasters uniformly at random and then aggregate their forecasts. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. The simulation study is performed separately for the HU and LU setups. 
+
+\marginpar{Explain here that this is evidence that information diversity is more important.}
 
 \begin{figure}
 \vspace{-2em}
@@ -1640,7 +1664,7 @@ Suppose that the quantity of interest $Y$ and the predictions $X_j$ are real-val
 \begin{align}
 X'' =  \E\left[Y  | \F''\right] =  \E\left[Y | \Z\right] &= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} \Z \sigma_0 + \mu_0 \label{revPoint}
 \end{align}
-Given that $\E[X_j] = \mu_0$, the value of $\mu_0$ can be estimated with the sample mean of the $X_j$'s. The prior variance, however, is more challenging as all that is known is that it upper bounds the $\sigma_j^2$'s. Fortunately, as was mentioned earlier, the Gaussian model is invariant under scaling. Therefore the exact choice of $\sigma_0^2$ does not matter. To make this specific, suppose that $\varepsilon \sigma_0^2$ for some $\varepsilon > 0$ was used instead of $\sigma_0^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma_{22}/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_0^2$ must be chosen. A numerically stable solution is to set $\sigma_0^2 = 2\max \{ \delta_j \}$.  
+Given that $\E[X_j] = \mu_0$, the value of $\mu_0$ can be estimated with the sample mean of the $X_j$'s. The prior variance, however, is more challenging as all that is known is that it upper bounds the $\sigma_j^2$'s. Fortunately, the revealed aggregator is not affected by this choice. To make this specific, suppose that $\varepsilon \sigma_0^2$ for some $\varepsilon > 0$ was used instead of $\sigma_0^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma_{22}/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_0^2$ must be chosen. A numerically stable solution is to set $\sigma_0^2 = 2\max \{ \delta_j \}$.  
 
 
 
