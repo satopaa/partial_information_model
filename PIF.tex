@@ -148,10 +148,10 @@ Ville A. Satop\"a\"a, Shane T. Jensen, Robin Pemantle, and Lyle H. Ungar\\
 
 
 \section{Introduction}
-The past literature has distinguished two types of polling: prediction and opinion polling. In broad terms, an opinion poll is a survey of public opinion, whereas a prediction poll involves multiple agents collectively predicting the value of some quantity of interest. For instance, consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. 
+Past literature has distinguished two types of polling: prediction and opinion polling. In broad terms, an opinion poll is a survey of public opinion, whereas a prediction poll involves multiple agents collectively predicting the value of some quantity of interest. For instance, consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. 
 %In broader terms, 
 % Prediction polling is, of course, not limited to probability forecasts but can be applied to others types, such as point estimates or even probability density functions, as well. 
-In the recent years prediction polls have become increasingly popular possibly because modern social and computer networks permit the collection of a large number of responses from a diverse set of sources, including both human or machine agents. This has given rise to crowdsourcing platforms, such as MTurk and Witkey, and many companies, such as Myriada, Lumenogic, and Inkling, that have managed to successfully  capitalize on the benefits of collective wisdom. 
+In the recent years prediction polls have become increasingly popular possibly because of modern social and computer networks  that permit the collection of a large number of responses from a diverse set of sources, including both human or machine agents. This has given rise to crowdsourcing platforms, such as MTurk and Witkey, and many companies, such as Myriada, Lumenogic, and Inkling, that have managed to successfully  capitalize on the benefits of collective wisdom. 
 
 
 
@@ -162,7 +162,8 @@ In the recent years prediction polls have become increasingly popular possibly b
 
 % This section, however, focuses on predicting global events that are of particular interest to the Intelligence Advanced Research Projects Activity (IARPA).
  
- This paper develops a principled modeling framework for prediction polls. The focus, however, is on empirical work. Therefore the framework is illustrated on several real-world prediction polls. The first application considers a forecasting tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as a means to acquire accurate predictions on important geopolitical events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
+ 
+ This paper develops methodology generally applicable for prediction polls. The focus is on empirical work and hence the methods are illustrated on real-world prediction polls. In particular, the first application is a forecasting tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as a means to acquire accurate predictions on important geopolitical events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
 % This success is largely credited to the
 Since the start of the tournament, the GJP has recruited 
 thousands of forecasters from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
@@ -171,16 +172,16 @@ These forecasters then estimated probabilities of the events specified by IARPA.
 
 
 \begin{figure}[t!]
-\centering
+	\captionsetup[subfigure]{width=0.98\textwidth }
         \centering
-        \begin{subfigure}{0.49\textwidth}
+        \begin{subfigure}{0.495\textwidth}
                 \includegraphics[width=\textwidth]{1127}
-                \caption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
+                \subcaption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
                                 \label{Example1}
         \end{subfigure}
-        \begin{subfigure}{0.49\textwidth}
+        \begin{subfigure}{0.495\textwidth}
                 \includegraphics[width=\textwidth]{1160}
-                \caption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
+                \subcaption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
                                 \label{Example2}
         \end{subfigure}             
         
@@ -195,7 +196,7 @@ The second application, on the other hand, ....
 
 
 
-Once the predictions have been collected, the challenge is to combine them into a single consensus. This is typically done for the sake of decision-making and improved accuracy \citep{armstrong2}. Principled aggregation, however, requires an assumption about the source of heterogeneity among the forecasts. In particular, it is necessary to specify how the forecasts differ from the true value of the target quantity. For the past several decades, potentially due to the early forms of data collection, measurement error has served as the main source of heterogeneity. This approach has become the standard and is often applied in practice even when data variation is dominated  by causes besides error in measurement. For instance, the measurement error may be reasonable in modeling repeated estimates from a single instrument. However, it is unlikely to be the main source of heterogeneity in prediction polling, where the estimates arise from multiple, often widely different sources. 
+Once the predictions have been collected, the challenge is to combine them into a single consensus. This is typically done for the sake of decision-making and improved accuracy. Principled aggregation, however, requires an assumption about the source of heterogeneity among the forecasts. In particular, it is necessary to specify how the forecasts differ from the true value of the target quantity. For the past several decades, potentially due to the early forms of data collection, measurement error has served as the main source of heterogeneity. This approach has become the standard and is often applied in practice even when data variation is dominated  by causes besides error in measurement. For instance, the measurement error may be reasonable in modeling repeated estimates from a single instrument. However, it is unlikely to hold in prediction polling, where the estimates arise from multiple, often widely different sources. 
 
 %In such setups, the agents' cognitive or information diversity is often more important. 
 
@@ -261,13 +262,18 @@ Once the predictions have been collected, the challenge is to combine them into 
 
 
 
+%This paper proposes a new source of heterogeneity called the \textit{information diversity}. 
+The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}. 
+This assumes variation to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}. The current paper, however, generalizes the framework, discusses model estimation, and derives specific partial information models for different types of forecasts, including point and probability estimates. Under each model the optimal aggregator is derived and evaluated on actual forecasting data. These aggregators outperform the current state-of-the-art aggregators arising from measurement error, hence providing practical evidence in favor of information diversity. 
 
-The main contribution of this paper is a new source of forecast heterogeneity. In particular, differences are assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's revenue in the next quarter. The resulting framework, named the \textit{partial information framework}, is quite flexible yet intuitive. This is illustrated by deriving specific partial information models for several different types of forecasts, including point  and probability estimates. Under each model the optimal aggregator can be computed. These aggregators depend on an information structure for which an efficient estimation procedure is provided. The model is evaluated on several real world forecasting datasets. 
+
+%The resulting framework, named the \textit{partial information framework}, is quite flexible yet intuitive.
+
+%This is illustrated by deriving specific partial information models for several different types of forecasts, including point  and probability estimates. 
+%These aggregators depend on an information structure for which an efficient estimation procedure is provided. The model is evaluated on several real world forecasting datasets. 
 
 
-
-\marginpar{Focus more on the big picture: this is a new source of heterogeneity which makes much more sense in the prediction context. }
-\marginpar{Needs more work.}
+%\marginpar{Focus more on the big picture: this is a new source of heterogeneity which makes much more sense in the prediction context. }
 
 
 %hat serves as an alternative to measurement error when modeling different forecasts
@@ -286,10 +292,9 @@ The main contribution of this paper is a new source of forecast heterogeneity. I
 
 
 %\subsection{Organization of the Paper}
-The paper is structured as follows.  The next section briefly reviews previous work on modeling forecasts. Section \ref{PIF} begins by describing the partial information framework at its most general level and then ends by introducing a close yet practical specification of the framework. This specification culminates in a distribution of information that incorporates the forecasters' information diversity through the covariance structure. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework with applications to synthetic and real-world forecasts of different types of outcomes. The final section concludes with a summary and discussion of
+The paper is structured as follows.  The next section reviews previous work on modeling forecasts. Section \ref{PIF} begins by describing the partial information framework at its most general level and then ends by introducing a close yet practical specification of the framework. This specification culminates in a distribution that describes information diversity fully through a covariance matrix. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework with applications to synthetic and real-world forecasts of different types of outcomes. In particular, the partial information framework is used to analyze probability forecasts from the second year of the GJP and point estimates from... The final section concludes with a summary and discussion of
 future research.
 
-\marginpar{be more specific about the data; second year etc.}
 
 \section{Previous Work}
 %Prior work on forecast aggregation has focused largely on several frameworks that differ in their assumptions about the source of forecast heterogeneity.  These approaches are discussed in the next subsections.
@@ -571,6 +576,8 @@ motivation, sophistication, and historical data will probably do so.
 \subsection{General Observations}
 
 The partial information framework was originally introduced for probability forecasts in \cite{satopaamodeling}. This section elaborates and generalizes the framework beyond probability forecasts. Even though much of the discussion and motivation given in \cite{satopaamodeling} carries directly over, the overlap in content is kept at minimum. 
+
+\marginpar{No need to say this as it is said in the intro now}
 
 First, the construction  of the partial information framework begins with
 %Consider
