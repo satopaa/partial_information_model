@@ -990,6 +990,8 @@ The information structure $\bSigma_{22}$ is a parameter of an explicit likelihoo
 
 %\marginpar{The MLE is bad: a) the relaxations are not orthogonally invariant, hence the eigen value trick cannot be used, b) based on preliminary simulation studies, performs worse than the projection method. This can be possibly due to non-convexity of the problem; the estimate can be quite a bit off from sample covariance matrix. Also, rather unstable when little data.}
 
+\marginpar{would not call it unconstrained: naive that is obtained in a context specific manner. This projection method then allows for a corruption that is required for aggregation.}
+
 An alternative that permits dimension-reduction is to project an unconstrained estimator onto the feasible region. This approach, sometimes known as the least squares estimation, has been studied extensively by many authors in the past (see, e.g., \citealt{soloveychik2013covariance, barton1997structured, henrion2012projection, malick2004dual, hu1991numerical}). 
 %If the true information structure $\bSigma_{22} \in \COR_N$, then the projection will be closer to the truth than the unconstrained estimator. Furthermore, given that the projection does not alter any unconstrained estimates already in the feasible region, it retains many properties of the unconstrained estimator. For instance, this paper focuses on projecting the sample covariance matrix  $\boldsymbol{S}_Z$ which, under the Gaussian model, is the unconstrained MLE of the true information structure. Given that $\boldsymbol{S}_Z$ is consistent, its projection is also consistent.
 %
@@ -1378,7 +1380,7 @@ These two strategies lead to different predictive behavior as is illustrated in 
 
 
 
-\marginpar{The averaging aggregators do not collect information, they estimate some hidden parameter instead. This is very different and strange.}
+%\marginpar{The averaging aggregators do not collect information, they estimate some hidden parameter instead. This is very different and strange.}
 
 
 %\subsection{Simulation Study: Correctly Specified Model}
@@ -1427,31 +1429,38 @@ These two strategies lead to different predictive behavior as is illustrated in 
 % 
 %\textit{Data.} 
 %Since 2011 the Good Judgment Project (GJP) has recruited thousands of forecasters to make probability estimates on different geopolitical events. 
- This subsection focuses on the second year of the Good Judgment Project (GJP). That year the forecasters made probability estimates for $78$ events, each with two possible outcomes. Two of these events are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
-Each event was associated with a timeframe, defined as the number of days between the first day of forecasting and the anticipated resolution day. 
+ This subsection focuses on the second year of the Good Judgment Project (GJP). During this year the forecasters made probability estimates for $78$ events, each with two possible outcomes. Two of these events are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
+Each prediction problem has a timeframe, defined as the number of days between the first day of forecasting and the anticipated resolution day. 
 % during which the forecasters make and update their predictions. 
 %To illustrate, two of
 %the questions were: The predictions made for these two events are shown in Figure \ref{Examples}.
 % The prediction problem closes and no more forecasts are allowed once the corresponding event resolves. 
-Overall, the events had very different timeframes, ranging from 12 days to 519 days with a mean of 185.4 days.
+Overall, the problems had very different timeframes, ranging from 12 days to 519 days with a mean of 185.4 days.
 % 
 %  For instance, the events in Figures \ref{Example1} and \ref{Example2} have timeframes of 154 and 52 days, respectively. 
 During the timeframe, the forecasters were allowed to make and update their predictions as frequently as they liked.  The forecasters knew that their estimates would be assessed for accuracy using Brier scores, i.e., the squared distance between the probability forecast and the event indicator that equals $1.0$ or $0.0$ depending on whether the event happened or not, respectively. This incentivized them to report their true beliefs instead of attempting to game the system. In addition to receiving \$150 for meeting minimum participation requirements that did not depend on prediction accuracy, the forecasters received status rewards for their performance via leader-boards displaying Brier scores for the top $20$ forecasters. Depending on the details of the reward structure, such a competition for rank may eliminate the truth-revelation property of proper scoring rules (see, e.g., \citealt{lichtendahl2007probability}).
 
 
-This data raises two issues: First, given that the current paper does not focus on modeling dynamic data, only forecasts made within some time interval are considered.  The final outcome is typically the most uncertain at the beginning and then becomes more certain towards the resolution date. The goal is to choose some mid-interval during which predicting the correct outcome is neither trivial nor extremely difficult because in such cases the competing aggregators are unlikely to present meaningful differences. Second, not all forecasters made predictions for all the events. Furthermore, the forecasters generally updated their forecasts infrequently, resulting into a very sparse dataset. Such high sparsity can cause problems in  computing the initial unconstrained estimator $\SS_Z$. 
+This data raises several issues: First, recall that the partial information framework is designed for noise-reduction. Therefore the forecasts are assumed to be conditionally unbiased, i.e., \textit{calibrated}, as this condition is more often called in the probability forecasting literature. Unfortunately, human experts are generally known to lack calibration. Simple calibration measures suggest that this is also the case with the GJP forecasters. Even though the level of calibration can be somewhat improved via pre-processing mechanisms, such as Platt scaling \citep{platt1999probabilistic} or Isotonic regression \citep{zadrozny2001obtaining}, these techniques require a training set with known outcomes and hence are not in the scope of this paper. Consequently, the forecasts in this section are not pre-processed. 
+
+%The results, however, suggest that the revealed aggregator remains robust and is able out-perform competing aggregators even when the forecasts are not extremely well-calibrated. 
+
+Second, given that the current paper does not focus on modeling dynamic data, only forecasts made within some time interval are considered.  The final outcome is typically the most uncertain at the beginning and then becomes more certain towards the resolution date. The goal is to choose some mid-interval during which predicting the correct outcome is neither trivial nor extremely difficult because in such cases the competing aggregators are unlikely to present meaningful differences. 
+
+Third, not all forecasters made predictions for all the events. Furthermore, the forecasters generally updated their forecasts infrequently, resulting into a very sparse dataset. Such high sparsity can cause problems in  computing the initial unconstrained estimator $\SS_Z$. 
 %Under a large number of missing observations, one option is to simply use all the complete pairs of observations.  This requires any two forecasters to make predictions on at least two common problems. 
-However, evaluating different techniques to handle missing values is well outside the scope of this paper. Therefore only the hundred most active forecasters are considered. In particular, the discussion involves a parallel analysis of two scenarios: 
+However, evaluating different techniques to handle missing values is well outside the scope of this paper. Therefore only the hundred most active forecasters are considered. 
+
+All these considerations led to a parallel analysis of two scenarios: 
  \begin{enumerate}[a)]
 \item \textit{Lower Uncertainty (LU):} Consider each forecaster's most recent forecast during $30-60$ days before the anticipated resolution day. The resulting dataset has $60$ events of which $13$ occurred. There are $841$ forecasters attending, on average, $11.3$ problems, with a range of $1$ to $55$ problems. The top $100$ most active forecasters attended, on average, $34.9$ problems, with a range of $25$ to $55$ problems. 
  
 \item \textit{Higher Uncertainty (HU):} Consider each forecaster's most recent forecast during  $90-120$ days before the anticipated resolution day. The resulting dataset has $49$ events of which $10$ occurred. There are $732$ forecasters attending, on average, $7.7$ problems, with a range of $1$ to $46$ problems.  The top $100$ most active forecasters attended, on average, $24.0$ problems, with a range of $14$ to $46$ problems. 
  \end{enumerate}
-Another study considering the $60-90$ days before the anticipated resolution day was also conducted. The results, however, were qualitatively very similar to the results under LU and HU. Therefore this middle scenario was considered redundant and not included in the paper.  
+Another study looking at the $60-90$ days before the anticipated resolution day was also conducted. The results, however, were qualitatively very similar to the results currently presented. Therefore, to avoid redundancy, this middle scenario was omitted from the paper.  
 
 
 
-Recall that the partial information framework is designed for noise-reduction. Therefore the forecasts are assumed to be conditionally unbiased, i.e., \textit{calibrated}, as this condition is more often called in the probability forecasting literature. Unfortunately, human experts are generally known to lack calibration. Simple calibration measures suggest that this is also the case with the forecasters of the GJP. Even though the level of calibration can be somewhat improved via pre-processing mechanisms, such as Platt scaling \citep{platt1999probabilistic} or Isotonic regression \citep{zadrozny2001obtaining}, these techniques require a training set with known outcomes and hence are not in the scope of this paper. Consequently, the forecasts in this section are not pre-processed. The results, however, suggest that the revealed aggregator remains robust and is able out-perform competing aggregators even when the forecasts are not extremely well-calibrated. 
 
 
 %``Will Zimbabwe commence a presidential election before 1 January 2013?". This question became available to the forecasters on 21 February 2012. Predictions were allowed until the event resolved; that is, until 1 January 2013 or the day Zimbabwe commences a presidential election, depending which one comes first. Given that Zimbabwe did not commence  the election before 1 January 2013, the final day of forecasts was 30 December 2012, giving a timeframe of  313 days of active forecasting. 
@@ -1517,15 +1526,15 @@ Recall that the partial information framework is designed for noise-reduction. T
 %\vspace{2em}
 %\noindent
 %\textit{Model.} 
-The target events considered in this section have two possible outcomes; that is, $Y_k \in \{0,1\}$ for all $k = 1, \dots, K$. These outcomes are linked to the Gaussian information pool via the following function:
+The target events considered in this section have two possible outcomes; that is, $Y_k \in \{0,1\}$ for all $k = 1, \dots, K$. The outcomes are linked to the Gaussian information pool via the following function:
 \begin{align*}
 Y_k &= g(Z_{S,k}) = \begin{cases}
 1 & \text{ if } Z_{S,k} > t_k\\
 0 & \text{ otherwise},\\
 \end{cases}
 \end{align*}
-where $t_k \in \R$ is some threshold value. That is, the link function $g(\cdot)$ is simply the indicator function $\one_{A_k}$ of the event $A_k = \{Z_{S,k} > t_k\}$. 
-The thresholds are allowed to vary among events, hence permiting different prior distributions $\P(A_k)$. 
+where $t_k \in \R$ is some threshold value. Therefore the link function $g(\cdot)$ is simply the indicator function $\one_{A_k}$ of the event $A_k = \{Z_{S,k} > t_k\}$. 
+Note that the thresholds are allowed to vary the among events, hence permitting different prior distributions $\P(A_k)$. 
 %Overall, the events are quite different. Therefore it is important to allowing the threshold $t_k$ to change across problems. 
 The corresponding probability forecasts $X_{jk} \in [0,1]$ are
 \begin{align*}
@@ -1578,20 +1587,20 @@ where $\hat{\bSigma}_{22}$ represents the current projection of $\SS_Z$. This pr
 %\vspace{2em}
 %\noindent
 %\textit{Analysis.} 
-The revealed aggregator (\ref{RevAgg}) is benchmarked against the state-of-the-art aggregators arising from measurement error, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
+The accuracy of the reveled aggregator $X_k''$ is compared against the state-of-the-art measurement error aggregators, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
 and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
-censored to $X_{jk} = 0.001$ and $0.999$, respectively. Aggregation accuracy of aggregate $X_k$ is measured with the mean Brier score (BS) defined as
+censored to $X_{jk} = 0.001$ and $0.999$, respectively. The accuracy of an aggregate $X_k$ is measured with the mean Brier score (BS) defined as
 %Consider $K$
 %events and collect all $N_k$ probability forecasts for event $A_k$ into a vector $\boldsymbol{p}_k \in [0,1]^{N_k}$. Then, BS for aggregator $\text{Agg}:[0,1]^{N_k} \to [0,1]$ is 
  \begin{align*}
 \text{BS} &= \frac{1}{K} \sum_{k=1}^K \left(X_k- \one_{A_k}\right)^2.
  \end{align*}
-This score takes values within the unit interval with lower values indicating higher accuracy. The evaluation performs repeated subsampling of the forecasters: choose $N$ forecasters uniformly at random, aggregate their forecasts, and compute BS. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. In the rare occasion where no pairwise overlap is available between one or more pairs of forecasters, the subsampling is repeated until all pairs have at least one problem in common. 
+This score takes values within the unit interval with lower values indicating higher accuracy. Instead of aggregating all the forecasts at once, the aggregators are evaluated under different $N$ via repeated subsampling of the forecasters: choose $N$ forecasters uniformly at random, aggregate their forecasts, and compute BS. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. In the rare occasion where no pairwise overlap is available between one or more pairs of forecasters, the subsampling is repeated until all pairs have at least one problem in common. 
 %The simulation study is performed separately for the HU and LU setups. 
 
 
 
-Figure \ref{simReal} shows the average BS under HU and LU. Notice that the scores in Figure \ref{highUnc} are uniformly worse than in Figure \ref{lowUnc}. This reflects the higher level of uncertainty in the HU scenario. Both scenarios, however, tell a similar story about the relative accuracies of the competing aggregators. First, the measurement error aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Second, independently of $N$ and the level of uncertainty, the revealed aggregator $X''$ outperforms the averaging aggregators by a noticeable margin. Third,  $X''$ is able to collect information more efficiently than the measurement error aggregators. Consequently, its performance advantage grows as $N$ increases. This suggests that in the GJP data information diversity is a better model of forecast heterogeneity than measurement error. 
+Figure \ref{simReal} shows the average BS under HU and LU. Notice that the scores in Figure \ref{highUnc} are uniformly worse than in Figure \ref{lowUnc}. This reflects the higher level of uncertainty in the HU scenario. Both scenarios, however, tell a similar story about the relative accuracies of the competing aggregators. First, the measurement error aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Second, independently of $N$ and the level of uncertainty, the revealed aggregator $X_k''$ outperforms the averaging aggregators by a noticeable margin. Third,  $X_k''$ is able to collect information more efficiently than the measurement error aggregators. Consequently, its performance advantage grows as $N$ increases. This suggests that information diversity is a better model of forecast heterogeneity than measurement error. 
 
 % practical evidence in favor of information diversity as the dominating source of heterogeneity. 
 
@@ -1669,12 +1678,14 @@ The averaging-like aggregators can be expected to work well when the forecasters
 
 %% 4470 and 1119 and  2763, 5265, and 4916
 
-Given that $X_k''$ presented the highest relative improvement under LU, only this scenario is analyzed for the sake of brevity. 
-The associated 100 forecasters consist of 36 individuals predicting in isolation, 33 forecasting team-members (across 24 teams), and 31 super-forecasters (across 5 teams).  Figure \ref{top5} displays the estimated $\bSigma_{22}$ for the five most active forecasters, involving two forecasters working in isolation (Iso. A and B) and three super-forecasters (Sup. A, B, and C). Only the super-forecasters A and B are in the same team and hence have a relatively high information overlap. Overall, the three super-forecasters are more informed than the non-super-forecasters. Such a high level of information unavoidably leads to higher information overlap. In the contrary, the non-super-forecasters' information sets are smaller and hence  can fit inside the unit interval with a smaller overlap. 
+Given that $X_k''$ presented the highest relative improvement under LU, only this scenario is analyzed. 
+The associated 100 forecasters involve 36 individuals predicting in isolation, 33 forecasting team-members (across 24 teams), and 31 super-forecasters (across 5 teams).  Figure \ref{top5} displays the estimated $\bSigma_{22}$ for the five most active forecasters, involving two forecasters working in isolation (Iso. A and B) and three super-forecasters (Sup. A, B, and C). Only the super-forecasters A and B are in the same team and hence have a relatively high information overlap. Overall, the three super-forecasters are more informed than the non-super-forecasters. Such a high level of information unavoidably leads to higher information overlap. In the contrary, the non-super-forecasters' information sets are smaller and hence  can fit inside the unit interval with a smaller overlap. 
 
 
 
-This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the most (least) informed forecasters appear on the right (left). Furthermore, a colored rug has been appended on top of the plot. This rug shows whether each forecaster worked in isolation (black), in a non-super-forecaster team (red), or in a super-forecaster team (blue). Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. Therefore, the high color variation in Figure  \ref{top100} is evidence in favor of the GJP forecasters having high information diversity. 
+This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the most (least) informed forecasters appear on the right (left). Furthermore, a colored rug has been appended on top of the plot. This rug shows whether each forecaster worked in isolation (black), in a non-super-forecaster team (red), or in a super-forecaster team (blue). Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. 
+
+%Therefore, the high color variation in Figure  \ref{top100} is evidence in favor of the GJP forecasters having high information diversity. 
 
 
 %\marginpar{This figure shows high information diversity. The further away it is from a single colored levelplto the higher diversity is.}
