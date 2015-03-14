@@ -582,9 +582,9 @@ motivation, sophistication, and historical data will probably do so.
 
 \subsection{General Observations}
 
-The partial information framework was originally introduced for probability forecasts in \cite{satopaamodeling}. This section elaborates and generalizes the framework beyond probability forecasts. Even though much of the discussion and motivation given in \cite{satopaamodeling} carries directly over, the overlap in content is kept at minimum. 
+%The partial information framework was originally introduced for probability forecasts in \cite{satopaamodeling}. This section elaborates and generalizes the framework beyond probability forecasts. Even though much of the discussion and motivation given in \cite{satopaamodeling} carries directly over, the overlap in content is kept at minimum. 
 
-\marginpar{No need to say this as it is said in the intro now}
+%\marginpar{No need to say this as it is said in the intro now}
 
 First, the construction  of the partial information framework begins with
 %Consider
@@ -751,7 +751,7 @@ From a practical point of view, only the \textit{information variables}  $Z_S, Z
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
  \end{array}\right)\right)  \label{NExperts}
 \end{align}
-This  \textit{distribution of information} has several important properties: First, motivated by the partial information framework, it describes the covariance structure among all the information variables simply based on covariance of the observables $Z_{B_1}, \dots, Z_{B_N}$. Consequently, it is possible to regress $Z_S$ on $Z_{B_1}, \dots, Z_{B_N}$ without actually observing $Z_S$. Note that this is philosophically different and possibly more natural than the classical approaches that typically estimate a model parameter, such as the mean, and then use that directly as a prediction of $Z_S$. Second, information aggregation in practice requires the ability to estimate the value of one variable given the others. Under the multivariate Gaussian distribution (\ref{NExperts}) this is especially easy. In particular, if $\Z = (Z_{B_1}, \dots, Z_{B_N})'$, then $Z_S | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right)$. This leads to closed-form revealed aggregator $X''$ in many applications of the model. Third, the oracular aggregator can be emulated by appending (\ref{NExperts}) with a variable $Z_{B'}$, where $B' = \cup_{j=1}^N B_j$. This aggregator, however, is only useful in theoretical analysis and is therefore not discussed further in this paper. For more information see \cite{satopaamodeling} that uses the oracular aggregator to analyze the empirical technique of extremizing, i.e., shifting an average aggregator closer to the nearer extreme (zero or one). Fourth, when combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$, distribution (\ref{NExperts}) can be used to generate a broad range  of partial information models. Section \ref{empirical} illustrates this on several datasets with different types of outcomes. 
+This  \textit{distribution of information} has several important properties: First, motivated by the partial information framework, it describes the covariance structure among all the information variables simply based on covariance of the observables $Z_{B_1}, \dots, Z_{B_N}$. Consequently, it is possible to regress $Z_S$ on $Z_{B_1}, \dots, Z_{B_N}$ without actually observing $Z_S$. Note that this is philosophically different and often more natural than the classical approaches that typically estimate a model parameter, such as the mean, and then use that directly as a prediction of $Z_S$. Second, information aggregation in practice requires the ability to estimate the value of one variable given the others. Under the multivariate Gaussian distribution (\ref{NExperts}) this is especially easy. In particular, if $\Z = (Z_{B_1}, \dots, Z_{B_N})'$, then $Z_S | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right)$. This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. Third, the oracular aggregator can be emulated by appending (\ref{NExperts}) with a variable $Z_{B'}$, where $B' = \cup_{j=1}^N B_j$. This aggregator, however, is only useful in theoretical analysis and is therefore not discussed further in this paper. For more information see \cite{satopaamodeling} that uses the oracular aggregator to analyze the empirical technique of extremizing, i.e., shifting an average aggregator closer to the nearer extreme (zero or one). Fourth, when combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$, distribution (\ref{NExperts}) can be used to generate a broad range  of partial information models. Section \ref{empirical} illustrates this on several datasets with different types of outcomes. 
 
 
 
@@ -1294,7 +1294,7 @@ Unfortunately, both (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\
 
 \section{Empirical Analysis}
 \label{empirical}
-This section evaluates the Gaussian model both on synthetic and real-world forecasting data. The discussion illustrates how the Gaussian model can be applied to forecasting setups with different types of outcomes and forecasts. For these derivations, it is helpful to keep in mind that an instance of the Gaussian model has the following components: the information variables $Z_S, Z_{B_1}, \dots, Z_{B_N}$, a target quantity $Y  \in \mathcal{Y}$, the forecasts $X_j = \E[Y | Z_{B_j}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y = g(Z_S)$. 
+This section evaluates a) the Gaussian model both on synthetic and real-world forecasting data, and b) illustrates how the Gaussian model can be applied to forecasting setups with different types of outcomes. Each case assumes $N$ forecasters attending $K$ prediction problems. The Gaussian model then requires the following components for problem $k$: the information variables $Z_{S,k}, Z_{B_1,k}, \dots, Z_{B_N,k}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{B_j,k}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{S,k})$. 
 %\end{enumerate}
 %
 %\begin{align*}
@@ -1317,10 +1317,11 @@ This section evaluates the Gaussian model both on synthetic and real-world forec
 
 \subsection{Simulation Study: Point Forecasts}
 \label{simulation}
-Consider the most basic setup where the link function $g$ is the identity. Consequently,  $Y = g(Z_{S}) = Z_S$ and $X_j = \E[Y | Z_{B_j}] = Z_{B_j}$ for $j = 1, \dots, N$. Suppose the forecasters attend $K$ problems. Collect the information variables associated with problem $k$ into a vector $\Z_k = (Z_{S,k}, Z_{B_{1},k}, \dots, Z_{B_N, k})'$. For each problem the simulation first draws $\Z_k \stackrel{i.i.d.}{\sim} \mathcal{N}_{N+1}(\boldsymbol{0}, h(\bSigma_{22}))$. The  aggregators then observe $\Z_k^{-}$, where $\Z_k^{-} = (Z_{B_{1},k}, \dots, Z_{B_N, k})'$ holds only the forecasters' information variables such that $\Z_k = (Z_{S,k}, {\Z_k^{-}}')'$, and predict $Z_{S,k}$ based on this information. The process is repeated a $2,000$ times under different values of $K$, ranging from $5$ to $35$ with constant increments of $5$. The number of forecasters $N$ is fixed at $20$. 
+This subsection evaluates the Gaussian model on synthetic data generated directly from the distribution of information (\ref{NExperts}). This gives the simplest instance of the Gaussian model: the link function $g$ is the identity, the target quantity is $Y_k = g(Z_{S,k}) = Z_{S,k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{B_j,k}] = Z_{B_j,k}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$.  
 
-
-Before a random $\Z_k$ can be generated, a covariance matrix $\bSigma_{22} \in \COR_N$ must be specified. This can be done by first drawing $\delta_i \sim  \mathcal{U}(0,1)$ for all $i = 1, \dots, N$, and then setting $\rho_{ij} = \delta_i \delta_j$. To verify that such a structure is always in $\COR_N$, approximate the full information with a finite set of $L$ elements. Forecaster $j$'s information can then be  described by a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j$. If $\V$ is a $N \times L$ matrix with rows equal to the forecasters' information vectors, the corresponding (random) information structure is $\V \V' / L$, which, by construction, is always in $\COR_N$. Given that $\COR_N$ is a convex set, the expectation of  $\V \V' / L$ is also in $\COR_N$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j] = \delta_i$ and $\E[\v_i' \v_j] = \delta_i \delta_j$, respectively. This produces a broad range of information structures, both well- and ill-conditioned. In fact, if any $\delta_j = 0$, the resulting $\bSigma_{22}$ is singular.  To avoid this, the $\delta_j$'s are generated uniformly at random from the somewhat more realistic interval $[0.1, 0.9]$.
+ Generating random forecasts, however, requires a covariance matrix $\bSigma_{22} \in \COR_N$. This can be done by first drawing $\delta_i \sim  \mathcal{U}(0,1)$ for all $i = 1, \dots, N$, and then setting $\rho_{ij} = \delta_i \delta_j$. To see that the resulting information structure is always in $\COR_N$, approximate the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j$. If $\V$ is a $N \times L$ matrix with rows equal to the forecasters' information vectors, the corresponding (random) information structure is $\V \V' / L$, which, by construction, is always in $\COR_N$. Given that $\COR_N$ is a convex set, the expectation of  $\V \V' / L$ is also in $\COR_N$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j] = \delta_i$ and $\E[\v_i' \v_j] = \delta_i \delta_j$, respectively. This produces a broad range of information structures, both well- and ill-conditioned. In fact, if any $\delta_j = 0$, the resulting $\bSigma_{22}$ is singular.  To avoid this, the $\delta_j$'s are generated uniformly at random from the somewhat more realistic interval $[0.1, 0.9]$. Next,  the simulation draws $\Z_k \stackrel{i.i.d.}{\sim} \mathcal{N}_{N+1}(\boldsymbol{0}, h(\bSigma_{22}))$, where $\Z_k = (Z_{S,k}, Z_{B_{1},k}, \dots, Z_{B_N, k})'$ is a vector of information variables specific to event $k$. The aggregators observe the forecasts $\X_k =  (Z_{1k}, \dots, Z_{Nk})'$ and 
+% For each event The  aggregators then observe $\Z_k^{-}$, where $\Z_k^{-} = (Z_{B_{1},k}, \dots, Z_{B_N, k})'$ holds only the forecasters' information variables such that $\Z_k = (Z_{S,k}, {\Z_k^{-}}')'$, 
+ and predict $Y_{k}$ based on this information. The process is repeated a $2,000$ times under different values of $K$, ranging from $5$ to $35$ with constant increments of $5$. The number of forecasters $N$ is fixed at $20$. 
 
 
 
@@ -1337,16 +1338,16 @@ Before a random $\Z_k$ can be generated, a covariance matrix $\bSigma_{22} \in \
         \end{subfigure}%
         \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResCond.pdf}
-                \caption{Condition numbers of the different estimators}
+                \caption{Condition numbers}
                                 \label{SigmaInv}
         \end{subfigure}
-        \caption{Estimation of the information structure and its inverse. Both are important for accuracy prediction of $Z_S$. The vertical line represents the number of forecasters, $N$, that has been fixed to $20$.}
+        \caption{Estimation of the information structure and its condition number. Both are important for accuracy prediction of $Z_S$. The vertical line represents the number of forecasters, $N$, that has been fixed to $20$.}
         \label{SigmaEstimation}
 \end{figure}
 
-In this forecasting setup, the revealed aggregator for problem $k$ is $X_k'' = \diag(\bSigma_{22})' \bSigma_{22}^{-1}\Z_k^{-}$. This, of course, requires an estimate of $\bSigma_{22}$. This subsection considers $X_k''$ under four different versions of $\bSigma_{22}$ in addition to two aggregators based on the classical measurement error model:
+The revealed aggregator for event $k$ is $X_k'' = \diag(\bSigma_{22})' \bSigma_{22}^{-1}\X_k$. This, of course, requires an estimate of $\bSigma_{22}$. This subsection considers $X_k''$ under four different versions of $\bSigma_{22}$ in addition to two measurement error aggregators:
 \begin{enumerate}[i)]
-\item $X_k''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, where $\kappa_{cov}$ is found over a grid of $10$ values from $10$ to $1,000$. 
+\item $X_k''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, where $\kappa_{cov}$ is found over a grid of $10$ values between $10$ and $1,000$. 
 \item $X_k''$ with  $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$, where $\kappa_{out}$ is found over the same grid of values as $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. The cross-validation uses five folds, i.e. $R = 5$. 
 \item $X_k''$ with the sample covariance matrix $\SS_Z$. Given that $\SS_Z$ is singular when $K<N$, its inverse is computed with the (Moore-Penrose) generalized inverse.
 \item $X_k''$ with the true information structure $\bSigma_{22}$. 
@@ -1354,8 +1355,9 @@ In this forecasting setup, the revealed aggregator for problem $k$ is $X_k'' = \
 \item The median forecast.
 \end{enumerate}
 
-Recall from Section \ref{estimator} that accurate prediction stems both from a precise estimate of $\bSigma_{22}$ and a low condition number. This allows different strategies for achieving good accuracy. In particular, the two selection procedures discussed in Section \ref{condSelection} make slightly different tradeoffs between a precise estimate of $\bSigma_{22}$ and its condition number. This is illustrated in  Figure \ref{SigmaEstimation}. First, Figure \ref{Sigma} examines how $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$, and $\SS_Z$ capture the true $\bSigma_{22}$. 
-Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ and $\SS_Z$ improve at a higher rate than $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$.  In fact, if $K > N$, $\SS_Z$ and $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ perform better than $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. Next,  Figure \ref{SigmaInv}  presents the corresponding condition numbers. For the sake of keeping the scale manageable, $\cond(\SS_Z)$ has been omitted. Notice that $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{out}))$ increases while $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$ generally decreases as $K$ grows larger. In fact, when $K > N$,  $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$ is smaller than $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$. From the prediction perspective, this makes conditional-validation more forgiving towards error in the estimated $\bSigma_{22}$. Therefore, while $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ incorporates the actual prediction process and looks for a fine balance between a precise estimate of $\bSigma_{22}$ and a low condition number, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ is unaware of the prediction process and simply focuses on estimating $\bSigma_{22}$ as accurately as possible. These two strategies lead to different predictive behavior.
+Recall  that accurate revealed aggregation stems both from a precise estimate of $\bSigma_{22}$ and a low condition number. This allows different strategies for achieving good accuracy. In fact, it turns out that the two selection procedures discussed in Section \ref{condSelection} make slightly different tradeoffs. This is illustrated in  Figure \ref{SigmaEstimation}. First, Figure \ref{Sigma} examines how $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$, and $\SS_Z$ capture the true $\bSigma_{22}$. 
+Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ and $\SS_Z$ improve at a higher rate than $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$.  In fact, if $K > N$, $\SS_Z$ and $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ perform better than $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. On the other hand, if $K < N$, $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ is more accurate than the other two. Second, Figure \ref{SigmaInv}  presents the corresponding condition numbers. For the sake of keeping the scale manageable, $\cond(\SS_Z)$ has been omitted. Notice that $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{out}))$ increases while $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$ generally decreases as $K$ grows larger. In fact, when $K > N$,  $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$ is smaller than $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{out}))$. From the prediction perspective, this makes conditional-validation more forgiving towards error in the estimated $\bSigma_{22}$. Therefore, while $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ incorporates the actual prediction process and looks for a fine balance between a precise estimate of $\bSigma_{22}$ and a low condition number, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ is unaware of the details of revealed aggregation and hence simply focuses on estimating $\bSigma_{22}$ as accurately as possible. 
+
 
 
 %Therefore an error in $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ causes a larger error in prediction.   
@@ -1367,11 +1369,11 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 \vspace{-3.5em}
 
                 \includegraphics[width=0.5\textwidth]{simResX.pdf}
-        \caption{The accuracy to predict $Z_S$. The vertical line represents the number of forecasters, $N$, that has been fixed to $20$.}
+        \caption{The accuracy to predict $Y_k$. The vertical line represents the number of forecasters, $N$, that has been fixed to $20$.}
         \label{ZsEstimation}
 \end{figure}
 
- Figure \ref{ZsEstimation} shows the average squared error loss of the competing aggregators in predicting $Y$. Given that $Y \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y-0)^2] = 1.0$ can be considered as the upper bound in prediction error. The revealed aggregator $X''$ with the true information structure $\bSigma_{22}$, on the other hand, is optimal and hence provides the corresponding lower bound. Under most values of $K$, the revealed aggregator $X''$ with $\SS_Z$ received a loss well above $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss fixed at around $0.26$. This is uniformly well above the loss of the revealed aggregator. The two versions, namely  $X''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ and $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ perform very similarly when $K \geq N$. They monotonically tend close to the optimal at around $0.03$ as $K$ grows larger. However, when $K < N$, conditional validation is more robust and clearly yields better results. For this reason, only $\kappa_{cov}$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
+These two strategies lead to different predictive behavior as is illustrated in Figure \ref{ZsEstimation}. This plot shows the average squared error loss of the competing aggregators in predicting $Y_k$. Given that $Y_k = Z_{S,k} \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y_k-0)^2] = 1.0$ can be considered as the upper bound in prediction error. The revealed aggregator $X_k''$ with the true information structure $\bSigma_{22}$, on the other hand, is optimal and hence provides the corresponding lower bound. Under most values of $K$, the revealed aggregator $X''$ with $\SS_Z$ receive a loss well above $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss fixed at around $0.26$. This is uniformly well above the loss of the revealed aggregator. The two versions of $X_k''$ perform very similarly when $K \geq N$. They monotonically tend close to the optimal at around $0.03$ as $K$ grows larger. However, when $K < N$, conditional validation is more robust and clearly yields better results. For this reason, only $\kappa_{cov}$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
   
 
 
@@ -1522,7 +1524,8 @@ Y_k &= g(Z_{S,k}) = \begin{cases}
 0 & \text{ otherwise},\\
 \end{cases}
 \end{align*}
-where $t_k \in \R$ is some threshold value. That is, the link function $g(\cdot)$ is simply the indicator function $\one_{A_k}$ of the event $A_k = \{Z_{S,k} > t_k\}$. The thresholds are allowed to vary across events because the events analyzed by the GJP are in general quite different and hence require different prior distributions $\P(A_k)$. 
+where $t_k \in \R$ is some threshold value. That is, the link function $g(\cdot)$ is simply the indicator function $\one_{A_k}$ of the event $A_k = \{Z_{S,k} > t_k\}$. 
+The thresholds are allowed to vary among events, hence permiting different prior distributions $\P(A_k)$. 
 %Overall, the events are quite different. Therefore it is important to allowing the threshold $t_k$ to change across problems. 
 The corresponding probability forecasts $X_{jk} \in [0,1]$ are
 \begin{align*}
@@ -1549,19 +1552,6 @@ This model can be fully estimated from the data. The first step is to specify an
 \end{align*}
 where $\hat{\bSigma}_{22}$ represents the current projection of $\SS_Z$. This procedure is repeated over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The final value is chosen with the conditional validation technique discussed in Section \ref{condSelection}.
 
-%\vspace{2em}
-%\noindent
-%\textit{Analysis.} 
-The revealed aggregator (\ref{RevAgg}) is benchmarked against the state-of-the-art aggregators arising from measurement error, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
-and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
-censored to $X_{jk} = 0.001$ and $0.999$, respectively. Aggregation accuracy of aggregate $X_k$ is measured with the mean Brier score (BS) defined as
-%Consider $K$
-%events and collect all $N_k$ probability forecasts for event $A_k$ into a vector $\boldsymbol{p}_k \in [0,1]^{N_k}$. Then, BS for aggregator $\text{Agg}:[0,1]^{N_k} \to [0,1]$ is 
- \begin{align*}
-\text{BS} &= \frac{1}{K} \sum_{k=1}^K \left(X_k- \one_{A_k}\right)^2.
- \end{align*}
-This score takes values within the unit interval with lower values indicating higher accuracy. The evaluation performs repeated subsampling of the forecasters: choose $N$ forecasters uniformly at random, aggregate their forecasts, and compute BS. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. In the rare occasion where no pairwise overlap is available between one or more pairs of forecasters, the subsampling is repeated until all pairs have at least one problem in common. 
-%The simulation study is performed separately for the HU and LU setups. 
 
 \begin{figure}[t!]
 \vspace{-2em}
@@ -1584,6 +1574,22 @@ This score takes values within the unit interval with lower values indicating hi
         \caption{This figure presents the Brier scores (BS) averaged of the 1,000 sub-samplings of $N$ forecasters. The revealed aggregator uniformly outperforms the measurement error aggregators, suggesting that information diversity is a better model of forecast heterogeneity than measurement error. }
         \label{simReal}
 \end{figure}
+
+%\vspace{2em}
+%\noindent
+%\textit{Analysis.} 
+The revealed aggregator (\ref{RevAgg}) is benchmarked against the state-of-the-art aggregators arising from measurement error, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
+and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
+censored to $X_{jk} = 0.001$ and $0.999$, respectively. Aggregation accuracy of aggregate $X_k$ is measured with the mean Brier score (BS) defined as
+%Consider $K$
+%events and collect all $N_k$ probability forecasts for event $A_k$ into a vector $\boldsymbol{p}_k \in [0,1]^{N_k}$. Then, BS for aggregator $\text{Agg}:[0,1]^{N_k} \to [0,1]$ is 
+ \begin{align*}
+\text{BS} &= \frac{1}{K} \sum_{k=1}^K \left(X_k- \one_{A_k}\right)^2.
+ \end{align*}
+This score takes values within the unit interval with lower values indicating higher accuracy. The evaluation performs repeated subsampling of the forecasters: choose $N$ forecasters uniformly at random, aggregate their forecasts, and compute BS. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. In the rare occasion where no pairwise overlap is available between one or more pairs of forecasters, the subsampling is repeated until all pairs have at least one problem in common. 
+%The simulation study is performed separately for the HU and LU setups. 
+
+
 
 Figure \ref{simReal} shows the average BS under HU and LU. Notice that the scores in Figure \ref{highUnc} are uniformly worse than in Figure \ref{lowUnc}. This reflects the higher level of uncertainty in the HU scenario. Both scenarios, however, tell a similar story about the relative accuracies of the competing aggregators. First, the measurement error aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Second, independently of $N$ and the level of uncertainty, the revealed aggregator $X''$ outperforms the averaging aggregators by a noticeable margin. Third,  $X''$ is able to collect information more efficiently than the measurement error aggregators. Consequently, its performance advantage grows as $N$ increases. This suggests that in the GJP data information diversity is a better model of forecast heterogeneity than measurement error. 
 
