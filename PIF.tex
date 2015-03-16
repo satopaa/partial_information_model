@@ -544,39 +544,44 @@ Such approaches, however, do not reflect an actual model of forecasts and requir
 \section{Partial Information Framework}
 \label{PIF}
 
-\subsection{Research Context}
+\subsection{Noise, Bias, and Assessment}
 \label{context}
 
 
 
-Consider $N$ forecaster and suppose Forecaster $i$ predicts $X_i$ for some (random) quantity of interest $Y$. The prediction $X_i$ is nothing but an estimator of $Y$. Therefore, as is the case with all estimators, 
+Consider $N$ forecaster and suppose Forecaster $j$ predicts $X_j$ for some (random) quantity of interest $Y$. The prediction $X_j$ is simply an estimator of $Y$. Therefore, as is the case with all estimators, 
 %If the forecaster operates under the quadratic loss function, the optimal strategy is to report the expected value of $Y$ given all the information 
-its deviation from the truth can be broken down into two components: bias and noise. A forecaster is said to be conditionally unbiased if $\E[Y | X_i] = X_i$.  A stream of conditionally biased forecasts can, in principle, be corrected by
-translating $X_i$ into the forecast $\bar{Y}_i$, where $\bar{Y}_i$ is
-the historical average of the outcomes when $X_i$ is
-forecast.  One can then assume without loss of generality that the
-forecaster is conditionally unbiased, replacing $X_i$ if necessary by the
-historically corrected $\bar{Y}_i$. This assumption is, of course, valid
-only in principle: it relies on a relatively lengthy history and an
-assumption of stationarity of the properties of the forecasts.  
-Nevertheless, on the
-theoretical level, it is important to separate the problems of bias
-and noise because they are solved by different mechanisms.  This
+its deviation from the truth can be broken down into two components: bias and noise. On the
+theoretical level, it is important to separate these two problems because they are solved by different mechanisms.  This
 paper considers the aggregation problem for conditionally unbiased forecasts,
-therefore isolating the task to one of noise reduction.
+therefore isolating the task to one of noise reduction. In particular, the forecasters are assumed to be conditionally unbiased such that $\E[Y | X_j] = X_j$ for all $j = 1, \dots, N$.  
 
-Before delving into the problem of forecast aggregation, it is useful
-to briefly discuss the problem of assessing and improving a single
-forecast stream.  The most common methodology uses a loss
-function $L(X_i, Y)$, which is a one-dimensional
-assessment of an estimator. Many choices, however, are possible, and
+%A stream of conditionally biased forecasts can, in principle, be corrected by
+%translating $X_i$ into the forecast $\bar{Y}_i$, where $\bar{Y}_i$ is
+%the historical average of the outcomes when $X_i$ is
+%forecast.  One can then assume without loss of generality that the
+%forecaster is conditionally unbiased, replacing $X_i$ if necessary by the
+%historically corrected $\bar{Y}_i$. This assumption is, of course, valid
+%only in principle: it relies on a relatively lengthy history and an
+%assumption of stationarity of the properties of the forecasts.  
+
+%Nevertheless, 
+%
+%Before delving into the problem of forecast aggregation, it is useful
+%to briefly discuss the problem of assessing and improving a single
+%forecast stream.  
+
+A forecast is typically assessed with a loss
+function $L(X_i, Y)$. Many choices, however, are possible, and
 an estimator that outperforms another under one loss function will not
 necessarily do so under a different one. In this paper  the focus is on loss functions that are minimized at the conditional expectation of $Y$ (given the forecaster's information).  This involves many well-known penalties such as the Kullback-Leibler divergence, Mahalanobis distance, and the quadratic loss \citep{banerjee2005optimality}. These loss functions can be considered \textit{revealing} because if a group of
 sophisticated forecasters operates under such a loss function,
 the assumption of conditionally unbiased forecasts is, to some degree,
-self-fulfilling.  Forecasters can improve their long run performance via training and active
-feedback. Forecasters with competitive
-motivation, sophistication, and historical data will probably do so.
+self-fulfilling. 
+
+% Forecasters can improve their long run performance via training and active
+%feedback. Forecasters with competitive
+%motivation, sophistication, and historical data will probably do so.
 
 % Secondly, the
 %assessment of the aggregated forecast is not uni-dimensional any more
@@ -590,30 +595,30 @@ motivation, sophistication, and historical data will probably do so.
 
 
 
-\subsection{General Observations}
+\subsection{General Framework}
 
 %The partial information framework was originally introduced for probability forecasts in \cite{satopaamodeling}. This section elaborates and generalizes the framework beyond probability forecasts. Even though much of the discussion and motivation given in \cite{satopaamodeling} carries directly over, the overlap in content is kept at minimum. 
 
 %\marginpar{No need to say this as it is said in the intro now}
 
-First, the construction  of the partial information framework begins with
+The construction  of the partial information framework begins with
 %Consider
  a probability space $(\Omega, \F , \P)$ and a
-measurable random variable $Y \in \F$ to be forecasted by $N$ forecasters. The probability measure $\P$ provides a non-informative (proper) prior belief on $Y$ and  reflects the \textit{basic information} known to all forecasters. 
+measurable random variable $Y \in \F$ to be forecasted by $N$ forecasters. The probability measure $\P$ provides a non-informative (proper) prior on $Y$ and  reflects the \textit{basic information} known to all forecasters. 
 %There is one substantive
 %assumption in this model, namely the choice of the prior distribution $\P(Y)$. Given that this prior serves as a reference point for estimating levels of forecaster information, it should be both proper and non-informative. 
 Such a prior has been discussed extensively in the economics and game theory literature where it is usually known as the \textit{common prior} (see, e.g., \citealt{morris1995common, dawid1995coherent}). Even though this is a substantive assumption in the framework, specifying a prior distribution cannot be avoided as
 long as the model depends on a probability space. This includes essentially any probability
-model for forecast aggregation. How the prior is formulated depends on the problem context: it can be chosen explicitly by the decision-maker, computed based on historic data, or, as will be shown in Section \ref{empirical}, estimated directly from the forecasts. 
+model for forecast aggregation. How the prior is incorporated depends on the problem context: it can be chosen explicitly by the decision-maker, computed based on past observations of $Y$, or estimated directly from the forecasts. 
 
 %\marginpar{As we will see in some cases we can in fact estimate this prior; hence produce an aggregator with no tuning parameters.}
 
 
  In any Bayesian setup,
 with a revealing loss function, it is more or less tautological that
-Forecaster $i$ reports $X_j = \E (Y \| \F_j)$, where $\F_j \subseteq \F$ is
-the \textit{information set} used by the forecaster. This assumption is not in any way restrictive. To see this, recall that for a conditionally unbiased forecaster $\E (Y \| X_j) = X_j$. Under the given probability model, conditioning on $X_j$ is equivalent to conditioning on some $\F_j$, and hence $\E (Y \| X_j) =  \E (Y \| \F_j) = X_j$. Consequently, the assumption
- $X_j = \E (Y | \F_j)$ only requires the existence of a probability model, together with the assumption of conditional unbiasedness.
+Forecaster $j$ reports $X_j = \E[Y \| \F_j]$, where $\F_j \subseteq \F$ is
+the \textit{information set} used by the forecaster. To see that this assumption is not in any way restrictive, recall that a conditionally unbiased forecaster predicts $\E [Y \| X_j] = X_j$. Under the given probability model, conditioning on $X_j$ is equivalent to conditioning on $\sigma(X_j) = \F_j$, namely the smallest $\sigma$-field generated by $X_j$, and hence $\E [Y \| X_j] =  \E [Y \| \F_j] = X_j$. Consequently, the assumption
+ $X_j = \E [Y | \F_j]$ only requires the existence of a probability model, together with the assumption of conditional unbiasedness.
 %This arises directly from the existence of a probability model and the assumption of calibration because for a calibrated forecaster, $\E(\one_A | p) = p$, which shows constructively that $p$ is of the form $\E(A | \G)$ for some $\G$. 
 %The
 %partial information framework extends this idea to $N$
@@ -628,7 +633,7 @@ Therefore, given that $\F_i \neq \F_j$ if $X_i \neq X_j$, forecast heterogeneity
 %\marginpar{Here P is the noninframtive prior; must be proper. }
 
 These sets contain the basic information plus any additional information actually used by the
-forecasters. To make this more precise, suppose Forecaster $i$ has access to the information in a sub-$\sigma$-field $\G \subseteq \F$. Any forecast that is measurable with respect to $\G$ is then a valid prediction for Forecaster $j$. The actual forecast, however, does not necessarily have to be $\E[Y | \G]$ but rather $\E[Y | \F_j]$ for some $\F_j \subseteq \G$. Therefore the available information and the information actually used may not be the same.
+forecasters. To make this more precise, suppose Forecaster $j$ has access to the information in a sub-$\sigma$-field $\G \subseteq \F$. Any forecast that is measurable with respect to $\G$ is then a valid prediction for Forecaster $j$. The actual forecast, however, does not necessarily have to be $\E[Y | \G]$ but rather $\E[Y | \F_j]$ for some $\F_j \subseteq \G$. Therefore the available information and the information actually used may not be the same.
 % if Forecaster $i$ uses a simple rule, the set $\F_i$ may not be the full $\sigma$-field of
 %information available to the forecaster but rather a smaller
 %$\sigma$-field corresponding to the information used by the
@@ -647,12 +652,12 @@ that information may as well not exist.
 Any further details must come from the
 assumptions on the structure of the information sets. To illustrate, suppose that the forecasters are asked to predict a sequence of values
 $\{Y_1, Y_2 , \ldots \}$. The general framework only assumes that
-Forecaster~$j$ uses some $\sigma$-field $\F_{ij}$ to make a forecast for $Y_i$.  Further aspects of the problem
-are reflected by the structure of the collection $\{ \F_{ij} \}$.  For
+Forecaster~$j$ uses some $\sigma$-field $\F_{jk}$ to make a forecast for $Y_k$.  Further aspects of the problem
+are reflected by the structure of the collection $\{ \F_{jk} \}$.  For
 example, if the values are sequenced in time, then the information
-sets $\{ \F_{ij} : i = 1 , 2, 3, \ldots \}$ are likely to form an
+sets $\{ \F_{jk} : k = 1 , 2, 3, \ldots \}$ are likely to form an
 increasing sequence.  If the forecasts are public, it is reasonable 
-to assume that $\F_{ij}$ contains all forecasts up to time $i-1$.
+to assume that $\F_{jk}$ contains all forecasts up to time $k-1$.
 %If, in addition, the forecasts of each individual event $A_j$ are sequenced rather %than synchronous, the set $\F_{ij}$ may contain information about %some forecasts at time $j$ as well.  
 This is, of course, only one illustration. The framework itself is quite flexible
 yet intuitive. In fact, it is not difficult to imagine a variety
@@ -661,10 +666,10 @@ different inter-dependencies among the information sets.
 
 
 For any such setup, the partial information framework distinguishes two benchmarks for aggregation efficiency.  The first is the {\em oracular} aggregator
-$X' := \E (Y \| \F')$, where $\F'$ is the $\sigma$-field
+$X' := \E [Y \| \F']$, where $\F'$ is the $\sigma$-field
 generated by the union of the information sets $\{\F_j : j = 1, \dots, N\}$.  Given that aggregation cannot be improved beyond using all the information  of the forecasters, the oracular aggregator represents a theoretical optimum in estimation efficiency.  In practice, however, information comes to the
-aggregator only through the forecasts $\{X_j : j = 1, \dots, N\}$. Given that $\F'$ generally cannot be constructed from these forecasts alone, no practically feasible aggregator can be expected to perform as well as $X'$.  Therefore, a more achievable benchmark is the \textit{revealed} aggregator $X'' := \E (Y \|
-\F'')$, where $\F''$ is the $\sigma$-field generated (or revealed) by the forecasts
+aggregator only through the forecasts $\{X_j : j = 1, \dots, N\}$. Given that $\F'$ generally cannot be constructed from these forecasts alone, no practically feasible aggregator can be expected to perform as well as $X'$.  Therefore, a more achievable benchmark is the \textit{revealed} aggregator $X'' := \E [Y \|
+\F'']$, where $\F''$ is the $\sigma$-field generated (or revealed) by the forecasts
 $\{X_j : j = 1, \dots, N \}$. Given that this benchmark can be applied in practice, it is the relevant estimator in each specific partial information model. 
 
 
@@ -691,8 +696,9 @@ $\{X_j : j = 1, \dots, N \}$. Given that this benchmark can be applied in practi
  
 
 \subsection{Gaussian Partial Information Model}
+%\subsection{F}
 \label{gaussian}
-In practice, it is unlikely that the information sets $\mathcal{F}_j$  can ever be known with fine precision. Therefore it is necessary to make reasonable assumptions that yield plausible yet generic information structures.
+In practice it is unlikely that the information sets $\mathcal{F}_j$  can ever be known with fine precision. Therefore it is necessary to make reasonable assumptions that yield plausible yet generic information structures.
 The key insight in constructing a close yet practical specification of the partial information framework is to approximate the full information with a pool of information particles. Each particle, which can be interpreted as representing the smallest unit of information, is either positive or negative. The total sum (integral) of these particles determines the final value of the target quantity $Y$. 
 %The positive particles increase the target quantity $Z$, 
 %%For instance, a subset of positive particles may represent a news article with  evidence that $A$ is likely to happen. 
@@ -703,12 +709,14 @@ Each forecaster, however, observes only the sum of some subset of the particles.
 \begin{quote}
 {\bf The Gaussian Information Pool.} Denote the pool of information with the unit interval $S = [0,1]$. Consider a centered Gaussian process $\{Z_B\}$ that is defined on a probability space $(\Omega
 , \F , \P)$ and indexed by the Borel subsets $B \subseteq S$ such that the
-covariances $\Cov (Z_B , Z_{B'}) = |B \cap B'|$.  In other words, the
+covariances $\Cov (Z_{B_j} , Z_{B_j}) = |B_i \cap B_j|$.  In other words, the
 unit interval $S$ is endowed with Gaussian white noise, and $Z_B$ is the
 total of the white noise in the Borel subset $B$. 
 %The full white noise $Z_S$ determines the target quantity $Y$ via some surjective function from $\R$ to the support of $Y$. 
 %Denote the target quantity to be predicted with $Y$. 
-If the set $\mathcal{Y}$ represents the support of the target quantity $Y$, then the full white noise determines $Y := h(Z_S)$ via some surjective function $h: \R \to \mathcal{Y}$. 
+If the set $\mathcal{Y}$ represents the support of $Y$, then 
+%the full white noise determines
+ $Y := g(Z_S)$, where $g: \R \to \mathcal{Y}$ is some surjective link function. 
 For each $j = 1, \dots, N$, let $B_j$ be some Borel subset of $S$, and
 define the corresponding $\sigma$-field as $\F_j := \sigma (Z_{B_j})$.
  Forecaster $j$  then predicts $X_j := \E[Y | \F_j]$.
@@ -728,8 +736,8 @@ replacing $S$ by $[0,u]$ and $B_j$ by $u B_j$.
 
 The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, recall the interpreted signal
 model of~\citet{broomell2009experts}. They assume that
-Forecaster~$i$ forms an opinion based on $L_i (H_1 , \ldots , H_r)$,
-where each $L_i$ is a linear function of cues
+Forecaster~$j$ forms an opinion based on $L_j (H_1 , \ldots , H_r)$,
+where each $L_j$ is a linear function of cues
 $H_1 , \ldots , H_r$ that influence the quantity of interest.  Proposing a linear model for subjective
 interpretation seems quite natural.  If
 the cues (or any linear combination of them) are independent
