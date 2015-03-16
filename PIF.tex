@@ -168,12 +168,14 @@ Even though historically opinion polls have been the dominant form, in the recen
 % 
 % This paper develops methodology generally applicable for prediction polls. % 
 
-This paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The focus, however, is on empirical work. Therefore, the methods are illustrated with case studies of real-world prediction polls.  In particular, the first study analyzes a forecasting tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as a means to acquire accurate predictions on future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
+The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The focus, however, is on empirical work. Therefore, the methods are illustrated with case studies of real-world prediction polls.  In particular, the first study analyzes a forecasting tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as means to acquire accurate predictions on future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
 % This success is largely credited to the
 The GJP has performed large-scale prediction polling, recruiting 
 thousands of forecasters from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
 %Requirements included at least a Bachelor's degree and completion of psychological and political tests that took roughly two hours. These measures assessed cognitive styles, cognitive abilities, personality traits, political attitudes, and real-world knowledge. 
-These forecasters were then asked to estimate probabilities of the events specified by IARPA.  To illustrate, Figure \ref{Examples} shows the forecasts for two of these events: ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?". The forecasters were allowed to make and update their estimates until the events resolved. The forecasters, however, reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset extremely sparse. 
+These forecasters were then asked to estimate probabilities of the events specified by IARPA.  To illustrate, Figure \ref{Examples} shows the forecasts for two of these events.
+% ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?".
+In general, the forecasters were allowed to make and update their estimates until the events resolved. The forecasters, however, reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset extremely sparse. 
 
 %Each question has a timeframe during which the participating forecasters made and updated their estimates as frequently as they liked without penalty. For instance, the question in Figure \ref{Example1} has a timeframe of $154$ days, ranging from 30 July 2012  to 31 December 2012. In general, the forecasters updated their estimates very infrequently, making the dataset extremely sparse. 
 
@@ -203,7 +205,7 @@ The second case study, on the other hand, ....
 
 
 
-Once the predictions have been collected, the challenge is to combine them into a single consensus. This is typically done for the sake of decision-making and improved accuracy. Principled aggregation, however, requires an assumption about the source of heterogeneity among the forecasts. In particular, it is necessary to specify how the forecasts differ from the true value of the target quantity. For the past several decades, potentially due to the early forms of data collection, measurement error has served as the main source of heterogeneity. This approach has become the standard and is often applied in practice even when data variation is dominated  by causes besides error in measurement. For instance, the measurement error may be reasonable in modeling repeated estimates from a single instrument. However, it is unlikely to hold in prediction polling, where the estimates arise from multiple, often widely different sources. 
+Once the predictions have been collected, the challenge is to combine them into a single consensus. This is typically done for the sake of decision-making and improved accuracy. Principled aggregation, however, requires an assumption about the source of heterogeneity among the forecasts. In particular, it is necessary to specify how the forecasts differ from the true value of the target quantity. For the past several decades, potentially due to the early forms of data collection, measurement error has served as the main source of heterogeneity. This approach has become the standard and is often applied in practice even when data variation is dominated  by causes besides error in measurement. For instance, assuming measurement error may be reasonable in modeling repeated estimates from a single instrument. However, it is unlikely to hold in prediction polling, where the estimates arise from multiple, often widely different sources. 
 
 %In such setups, the agents' cognitive or information diversity is often more important. 
 
@@ -271,7 +273,7 @@ Once the predictions have been collected, the challenge is to combine them into 
 
 %This paper proposes a new source of heterogeneity called the \textit{information diversity}. 
 The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}, that serves as an alternative to measurement error. 
-Forecast variation is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}. The current paper, however, generalizes the framework, discusses model estimation, and derives specific partial information models for different types of forecasts, including point and probability estimates. Under each model the optimal aggregator is derived and evaluated on actual forecasting data. The aggregators  are shown to outperform the state-of-the-arts aggregators based on measurement error. This provides practical evidence in favor of information diversity as the more important source of heterogeneity. 
+Forecast variation is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}. The current paper, however, generalizes the framework, discusses model estimation, and derives specific partial information models for different types of forecasts. Under each model the optimal aggregator is derived and evaluated on actual forecasting data. They are shown to outperform the current state-of-the-arts measurement error aggregators. This provides practical evidence in favor of information diversity as the more important source of heterogeneity. 
 
 
 %The resulting framework, named the \textit{partial information framework}, is quite flexible yet intuitive.
@@ -299,7 +301,7 @@ Forecast variation is assumed to stem from information available to the forecast
 
 
 %\subsection{Organization of the Paper}
-The paper is structured as follows.  The next section reviews previous work on modeling forecasts. Section \ref{PIF} begins by describing the partial information framework at its most general level and then ends by introducing a close yet practical specification of the framework. This specification culminates in a distribution that describes information diversity with a covariance matrix. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability forecasts from the second year of the GJP and point estimates from... The final section concludes with a summary and discussion of
+The paper is structured as follows.  The next section reviews previous work on modeling forecasts. Section \ref{PIF} begins by describing the partial information framework at its most general level and then ends by introducing a close yet practical specification of the framework. This specification culminates in a distribution that describes information diversity with a covariance matrix. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability forecasts made during the second year of the GJP and point estimates from... The final section concludes with a summary and discussion of
 future research.
 
 
@@ -310,18 +312,53 @@ future research.
 
 
 
+\subsection{Interpreted Signal Framework}
+
+\citet{hong2009interpreted} introduce the {\em interpreted signal
+framework} in which 
+%the forecaster's prediction is based on a personal
+%interpretation of (a subset of) cues that influence the
+%quantity to be predicted.  
+differences among the 
+predictions are ascribed to differing interpretation procedures.  For
+example, consider two forecasters who visit a company and predict its future revenue. One forecaster may carefully examine the company's technological status while while the other pays closer attention to what the managers say.  Even though the
+forecasters receive the same information, they interpret it
+differently and therefore are likely to arrive at different forecasts. Therefore forecast heterogeneity is assumed to stem from ``cognitive
+diversity''.  
+
+This is a very reasonable assumption that has been analyzed and
+utilized in many other settings.  For example,
+~\citet{parunak2013characterizing} demonstrate that optimal
+aggregation of interpreted forecasts is not constrained to the
+convex hull of the forecasts; \citet{broomell2009experts} analyze
+inter-forecaster correlation under the assumption that the cues can be
+mapped to the individual forecasts via different linear regression
+functions.
+% \citet{berger1991bayesian} treat the individual forecasts $\X = (X_1, \dots, X_N)$ as the  posterior distributions based on different sets of data and compute the aggregate $\pi(Y | \X) \propto f(\X | Y) \pi(Y)$ for several examples. This approach relies on a conditional distribution $ f(\X | Y)$ whose construction is problem specific.
+%
+%\marginpar{SHANE: not sure where this lands.}
+No previous work, however, has discussed a formal framework that links the interpreted forecasts to their target quantity in an explicit yet flexible manner. Consequently, the interpreted signal framework, as proposed, has remained relatively abstract. The partial information framework, however, formalizes the intuition behind it, allows quantitative predictions, and provides a flexible construction that can be adopted to a broad range of forecasting setups. 
+
+%Therefore, the partial information framework is a statistical formalization of the interpreted signal framework. 
+
+
+
 
 
 \subsection{Measurement Error Framework}
 %In the absence of a quantitative
 %interpreted signal model,
-Prior applications have typically explained forecast heterogeneity  with standard statistical models. These models are different formalizations of  the \textit{measurement error framework} that generates forecast heterogeneity purely from a probability distribution. More specifically, the framework assumes a ``true'' (possibly transformed) forecast
-$\theta$, which can be interpreted as the prediction made by an ideal forecaster. This is then somehow measured by the individual forecasters with mean-zero idiosyncratic error.  Therefore, each forecast is an independent draw from a common
-probability distribution centered at $\theta$, and the underlying probability model is just the classical statistical model for measurement with i.i.d. mean zero error.  
+In the absence of a quantitative
+interpreted signal model, prior applications have typically explained forecast heterogeneity  with standard statistical models. These models are different formalizations of  the \textit{measurement error framework} that generates forecast heterogeneity purely from a probability distribution. More specifically, the framework assumes a ``true'' (possibly transformed) forecast
+$\theta$, which can be interpreted as the prediction made by an ideal forecaster. This is then somehow measured by the individual forecasters with mean-zero idiosyncratic error.  Therefore, each forecast is nothing but an independent draw from a common
+probability distribution centered at $\theta$.
+%, and the underlying probability model is just the classical statistical model for measurement with i.i.d. mean zero error.  
 Consequently, the resulting aggregators are different types of averages of the individual (transformed) predictions.
 
-This framework has become standard practice possibly because the underlying probability model is both simple and very familiar.  Unfortunately, there are a number of disadvantages. First, average-based aggregators target the mean of forecasts. This, however, may not be the correct target. For instance, probability forecasting targets the event indicator that lies on the boundary of
-the sample space. In such cases important properties such as unbiasedness cannot be expected from the resulting aggregators. Second, the standard assumption of conditional independence of the observations forces a specific and highly
+This framework has become standard practice possibly because of its simplicity and familiarity.  Unfortunately, there are a number of disadvantages. First, average-based aggregators target the mean of forecasts. This, however, may not be the correct target. For instance, the correct target in probability forecasting is the event indicator that lies on the boundary of
+the sample space. 
+%In such cases important properties such as unbiasedness cannot be expected from the resulting aggregators. 
+Second, the standard assumption of conditional independence of the observations forces a specific and highly
 unrealistic structure on interpreted forecasts \citep{hong2009interpreted}. Any averaging aggregator is also constrained to
 the convex hull of the individual forecasts, which further contradicts the
 interpreted signal framework \citep{parunak2013characterizing}. Empirically, one sees
@@ -352,33 +389,6 @@ adjusted estimator performs better on some data set of interest.
 %framework produces under-confident aggregators, a popular adjustment is to {\em extremize}, that is, to shift the average aggregates closer to the
 %nearest extreme (either zero or one) (see, e.g.,  \citet{Ranjan08, satopaa, mellers2014psychological}). 
 Such approaches, however, do not reflect an actual model of forecasts and require a training set with known outcomes. For this reason, they are not discussed further in this paper. 
-
-
-\subsection{Interpreted Signal Framework}
-
-\citet{hong2009interpreted} introduce the {\em interpreted signal
-framework} in which the forecaster's prediction is based on a personal
-interpretation of (a subset of) the factors or cues that influence the
-quantity to be predicted.  Differences among the 
-predictions are ascribed to differing interpretation procedures.  For
-example, consider two forecasters who visit a company and aim to predict its future revenue. One forecaster may carefully examine the company's technological status while while the other pays closer attention to what the manager tells them.  Even though the
-forecasters receive the same information, they interpret it
-differently and therefore are likely to arrive at different forecasts.
-
-Therefore forecast heterogeneity is assumed to stem from ``cognitive
-diversity''.  This is a very reasonable assumption that has been analyzed and
-utilized in many other settings.  For example,
-~\citet{parunak2013characterizing} demonstrate that optimal
-aggregation of interpreted forecasts is not constrained to the
-convex hull of the forecasts; \citet{broomell2009experts} analyze
-inter-forecaster correlation under the assumption that the cues can be
-mapped to the individual forecasts via different linear regression
-functions.
-% \citet{berger1991bayesian} treat the individual forecasts $\X = (X_1, \dots, X_N)$ as the  posterior distributions based on different sets of data and compute the aggregate $\pi(Y | \X) \propto f(\X | Y) \pi(Y)$ for several examples. This approach relies on a conditional distribution $ f(\X | Y)$ whose construction is problem specific.
-%
-%\marginpar{SHANE: not sure where this lands.}
-To the best of our knowledge, no previous work has discussed a formal framework that links the interpreted forecasts to their target quantity in an explicit yet flexible manner. Consequently, the interpreted signal framework, as proposed, has remained relatively abstract. The partial information framework, however, formalizes the intuition behind it, allows quantitative predictions, and provides a flexible construction that can be adopted to a broad range of forecasting setups. Therefore, the partial information framework is a statistical formalization of the interpreted signal framework. 
-
 
 
 
@@ -1349,7 +1359,7 @@ This subsection evaluates the Gaussian model on synthetic data generated directl
 
 The revealed aggregator for event $k$ is $X_k'' = \diag(\bSigma_{22})' \bSigma_{22}^{-1}\X_k$. This, of course, requires an estimate of $\bSigma_{22}$. This subsection considers $X_k''$ under four different versions of $\bSigma_{22}$ in addition to two measurement error aggregators:
 \begin{enumerate}[i)]
-\item $X_k''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, where $\kappa_{cov}$ is found over a grid of $10$ values between $10$ and $1,000$. 
+\item $X_k''$ with $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, where $\kappa_{cov}$ is found over a grid of $100$ values between $10$ and $1,000$. 
 \item $X_k''$ with  $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$, where $\kappa_{out}$ is found over the same grid of values as $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. The cross-validation uses five folds, i.e. $R = 5$. 
 \item $X_k''$ with the sample covariance matrix $\SS_Z$. Given that $\SS_Z$ is singular when $K<N$, its inverse is computed with the (Moore-Penrose) generalized inverse.
 \item $X_k''$ with the true information structure $\bSigma_{22}$. 
@@ -1653,6 +1663,7 @@ The averaging-like aggregators can be expected to work well when the forecasters
 
 %the extent to which our prior knowledge on information overlap coincides with the estimated $\bSigma_{22}$. 
 
+
 \begin{figure}[t!]
         \centering
         \begin{subfigure}[b]{0.495\textwidth}
@@ -1683,9 +1694,7 @@ The associated 100 forecasters involve 36 individuals predicting in isolation, 3
 
 
 
-This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the most (least) informed forecasters appear on the right (left). Furthermore, a colored rug has been appended on top of the plot. This rug shows whether each forecaster worked in isolation (black), in a non-super-forecaster team (red), or in a super-forecaster team (blue). Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. 
-
-%Therefore, the high color variation in Figure  \ref{top100} is evidence in favor of the GJP forecasters having high information diversity. 
+This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the most (least) informed forecasters appear on the right (left). Furthermore, a colored rug has been appended on top of the plot. This rug shows whether each forecaster worked in isolation (black), in a non-super-forecaster team (red), or in a super-forecaster team (blue). Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. Therefore the colorful Figure  \ref{top100} suggest that the GJP forecasters have high information diversity. 
 
 
 %\marginpar{This figure shows high information diversity. The further away it is from a single colored levelplto the higher diversity is.}
