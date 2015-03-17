@@ -835,7 +835,9 @@ This  \textit{distribution of information} has several important properties: Fir
 
 \section{Model Estimation}
 \label{estimator}
-This section describes methodology for estimating the information structure $\bSigma_{22}$.  The predictions provide signal on $\bSigma_{22}$ as follows: a) the more similar two forecasters' predictions are, the higher the corresponding information overlap; and b) the more unlikely the forecast is according to the non-informative prior, the more informed the forecaster is likely to be. However, estimating $\bSigma_{22}$ in full generality based on a single prediction per forecaster is difficult, if possible at all. Therefore in this paper the forecasters are assumed to attend $K \geq 2$ related problems. For instance, the forecasters may participate in separate yet similar prediction problems or give repeated forecasts on a single recurring event. In such setups $\bSigma_{22}$ is likely to remain stable across problems and hence can be estimated based on multiple predictions per forecaster. See \cite{satopaamodeling} for aggregation of one-time events, i.e., setups with only a single prediction per forecaster. 
+This section describes methodology for estimating the information structure $\bSigma_{22}$.  The predictions provide signal on $\bSigma_{22}$ as follows: a) the more similar two forecasters' predictions are, the higher the corresponding information overlap; and b) the more unlikely a forecast is according to the non-informative prior, i.e., the belief only reflecting the basic information, the more informed the corresponding forecaster is likely to be. 
+%For the second point it is important to recall that the forecasters are assumed conditionally unbiased. 
+However, estimating $\bSigma_{22}$ in full generality based on a single prediction per forecaster is difficult, if possible at all. Therefore, to facilitate model estimation, the forecasters are assumed to attend $K \geq 2$ related problems. For instance, the forecasters may participate in separate yet similar prediction problems or give repeated forecasts on a single recurring event. In such setups $\bSigma_{22}$ is likely to remain stable across problems and hence can be estimated based on multiple predictions per forecaster. See \cite{satopaamodeling} for revealed aggregation of one-time events, i.e., scenarios where only one prediction per forecaster is available. 
 %In particular, it is assumed that the foresters attend $K \geq 2$ predictions problems. 
 % One natural simplification is to only consider the amount of information used by a forecaster and the size of the information overlap among the forecasters. 
 
@@ -854,37 +856,50 @@ This section describes methodology for estimating the information structure $\bS
 
 %\marginpar{Must explain that will focus only on the point estimates as this generalizes to many other methods.}
 %\marginpar{Also need to discuss why we are doing the projection; some motivation is needed why this is a good idea: p > N. Clearly when the true covariance matrix is in COR(N), the projection will be closer.}
-Estimating the information structure $\bSigma_{22}$ is equivalent to estimating a covariance matrix under constraints. Clearly, $0 \leq \rho_{ij} \leq \delta_i \leq 1$ for all $i,j$.  This, however, is not sufficient. The individual elements of $\bSigma_{22}$ are heavily linked to each other and form a highly constrained space. \cite{satopaamodeling} showed that a sufficient and necessary condition is $$\bSigma_{22} \in \COR_N :=  \conv\left\{
+Estimating the information structure $\bSigma_{22}$ is equivalent to estimating a covariance matrix under several constraints. Clearly, $0 \leq \rho_{ij} \leq \delta_i \leq 1$ for all $i,j$.  This, however, is not sufficient. The individual elements of $\bSigma_{22}$ are heavily linked to each other and form a highly constrained space. \cite{satopaamodeling} showed that a sufficient and necessary condition is 
+ \begin{align}
+\bSigma_{22} \in \COR_N :=  \conv\left\{
 \boldsymbol{x}\boldsymbol{x}' : \boldsymbol{x} \in
-\{0,1\}^N\right\},$$ where $\conv(\cdot)$ denotes the convex hull operator and $\COR_N$ is known as the correlation polytope (also known as the boolean quadric polytope by some authors). All elements of $ \COR_N$ are symmetric, positive semidefinite, and hence valid covariance matrices. 
+\{0,1\}^N\right\}, \label{CORn}
+\end{align}
+where $\conv(\cdot)$ denotes the convex hull operator and $\COR_N$ is known as the correlation polytope (also known as the boolean quadric polytope by some authors). All elements of $ \COR_N$ are symmetric, positive semidefinite, and hence valid covariance matrices. 
 %\citep{letchford2008binary}.  
 
-These elements, however, differ largely in their sensitivity to numerical operations. This is important because an accurate yet highly sensitive estimate of $\bSigma_{12}$ can lead to imprecise aggregation. To make this more precise, notice that the Gaussian revealed aggregator includes the term $\bSigma_{12} \bSigma_{22}^{-1} \Z$. Re-express this term as $\w \Z$, where $\w$ is the solution to $\bSigma_{12} = \w \bSigma_{22}$. The rate at which this solution changes with respect to a change in $\bSigma_{12}$ depends on the condition number $\cond(\bSigma_{22}) := \lambda_{max}(\bSigma_{22}) / \lambda_{min}(\bSigma_{22})$, i.e., the ratio between the maximum and the minimum eigenvalues of $\bSigma_{22}$. If the condition number is very large, a small error in $\bSigma_{12}$ can cause a large error in $\w$. On the other hand, if the condition number is small, the $\bSigma_{22}$ is called \textit{well-conditioned} and error in $\w$ will not be much larger than the error in $\bSigma_{12}$. Therefore it is necessary to constrain $\cond(\bSigma_{22})$ during estimation. 
-%A matrix with a low condition number is typically called \textit{well-conditioned}. 
+These elements, however, differ largely in their sensitivity to numerical operations. This is important because an accurate yet highly sensitive estimate of $\bSigma_{12}$ can lead to imprecise aggregation. To make this concrete, recall from Section \ref{gaussian} that the conditional mean of $Z_S$ given $\Z$ is  $\bSigma_{12} \bSigma_{22}^{-1} \Z$. Given that in many applications this term ends up propagating to the final revealed aggregator $X''$, it deserves careful estimation. 
+%notice that the Gaussian revealed aggregator includes the term $\bSigma_{12} \bSigma_{22}^{-1} \Z$.
+ Re-express the term as $\w' \Z$, where $\w$ is the solution to $\bSigma_{12} = \w' \bSigma_{22}$. The rate at which the solution changes with respect to a change in $\bSigma_{12}$ depends on the condition number $\cond(\bSigma_{22}) := \lambda_{max}(\bSigma_{22}) / \lambda_{min}(\bSigma_{22})$, i.e., the ratio between the maximum and the minimum eigenvalues of $\bSigma_{22}$. If the condition number is very large, a small error in $\bSigma_{12}$ can cause a large error in $\w$. In the contrary, if the condition number is small, $\bSigma_{22}$ is \textit{well-conditioned} and error in $\w$ will not be much larger than the error in $\bSigma_{12}$. Therefore the estimation procedure should require
+  \begin{align}
+ \cond(\bSigma_{22}) \leq \kappa \label{condNum}
+ \end{align}
+ for a given threshold $\kappa \geq 1$.
+ 
+%  provides beneficial regularization, which is particularly important under small sample sizes. 
+% \marginpar{Let's not talk about regularization as this was not the purpose ever}
+% 
+% Therefore it is necessary to constrain $\cond(\bSigma_{22})$ during estimation. 
 
-\marginpar{cond also provides us beneficial shrinkage}
+%\marginpar{cond also provides us beneficial shrinkage}
 
-\marginpar{If we just project onto the space this will be singular.}
-\marginpar{Our case is interesting because both inverse and matrix must be accurate. }
+%\marginpar{If we just project onto the space this will be singular.}
+%%\marginpar{Our case is interesting because both inverse and matrix must be accurate. }
+%\marginpar{What are the extremes of condition number: small and large}
 
-Let $\boldsymbol{S}_Z$ denote the sample covariance matrix of $\Z$. Given that this is sufficient for $\bSigma_{22}$, the estimation procedure can then be written generally as
+Both constraints (\ref{CORn}) and (\ref{condNum}) form convex sets. The corresponding intersection is the feasible region of the general estimation problem. To make this specific, let $\boldsymbol{S}_Z$ denote the sample covariance matrix of $\Z$. Under the Gaussian model this is sufficient for $\bSigma_{22}$. Therefore the general estimation procedure is
 \begin{align}
 \label{orig_problem}
 \begin{split}
 %\text{minimize } &  || \bSigma_{22} - \boldsymbol{S}_Z ||_F^2 \label{orig_problem}\\
-\text{minimize } &  \ell \left(\bSigma_{22}, \boldsymbol{S}_Z\right) \\
+\text{minimize } &  f_0 \left(\bSigma_{22}, \boldsymbol{S}_Z\right) \\
 \text{subject to } & \bSigma_{22} \in \COR_N, \\
 & \cond(\bSigma_{22}) \leq \kappa,
 \end{split}
 \end{align}
-where $\ell$ is a loss, a.k.a, the objective function, and $\kappa \geq 1$ is a fixed upper bound on the condition number. Both constraints in (\ref{orig_problem}) represent convex sets. Therefore,
+where $f_0$ is some objective function.
 %the feasible region is convex and 
 %By introducing an auxiliary variable $u > 0$, the condition number constraint can be written as $ u I \preceq \bSigma_{22} \preceq \kappa u I$, where $A \preceq B$ denotes that $B - A$ is positive semidefinite.  This defines a convex region. 
- if $\ell$ is convex in $\bSigma_{22}$, the estimation task (\ref{orig_problem}) is a convex optimization problem. 
-
+If $f_0$ is convex in $\bSigma_{22}$, expression (\ref{orig_problem}) is a convex optimization problem. 
 %\marginpar{As is stated in the Wiki page for conditional gaussian, the inverse can be a pseudo inverse. How does this relate to the condition number?}
-
-Typically the global optimum to such a problem can be found very efficiently. There are, however, two main difficulties: 
+Typically the global optimum to such a problem can be found very efficiently. There are, however, two difficulties: 
 \begin{enumerate}[(i)]
 \item The correlation polytope is known to be extremely complex. In fact, complete descriptions of the facets of $\COR_N$ are only known for $N \leq 7$ and conjectured for  $\COR(8)$ and $\COR(9)$ 
 %\citep{ziegler2000lectures, christofsmapo, pitowsky1991correlation}
@@ -949,12 +964,12 @@ Solutions to these difficulties are discussed in the following  two subsections.
 %\right\}
 %\end{align*}
 %These relaxations have been discussed previously in literature. See, e.g., \citet[Chapter 27.1]{deza1997geometry}. 
-A common approach to an intractable problem, such as (\ref{orig_problem}), is to approximate it by a nearby problem that is easier to solve. Typically this done by replacing the feasible region with a good relaxation. For instance, one could interpret the $\delta_j$'s and $\rho_{ij}$'s  as probabilities and pairwise joint probabilities, respectively, of some $N$ events. This makes many known inequalities and properties of probabilities available for relaxing $\COR_N$. On simple example is $\delta_i + \delta_j - \rho_{ij} \leq 1$. Of course, more involved inequalities can be used to tighten the relaxation. See, e.g., \citet[Chapter 27.1]{deza1997geometry} for more information.  
+A common approach to an intractable problem such as (\ref{orig_problem}) is to approximate it by a nearby problem that is easier to solve. One option is to replace the feasible region with a good relaxation. For instance, it is possible to interpret the $\delta_j$'s and $\rho_{ij}$'s  as probabilities and pairwise joint probabilities, respectively, of some $N$ events. This makes many known inequalities and properties of probabilities available for relaxing $\COR_N$. A simple example arises from the inclusion-exclusion principle: $\delta_i + \delta_j - \rho_{ij} \leq 1$ for all $i,j$. Of course, adding more involved inequalities lead to even tighter relaxations. See, e.g., \citet[Chapter 27.1]{deza1997geometry} for more information.  
 
 
-The number of such linear constraints, however, grows very quickly in $N$, introducing a large computational burden. Therefore this paper considers a semidefinite relaxation instead. To describe this choice, denote the set of symmetric $N \times N$  matrices with $\mathcal{S}^N$, represent the set of  symmetric positive semidefinite $N \times N$ matrices with $\mathcal{S}_{+}^N$, and consider a one-to-one function $h$ that transforms $\M \in \mathcal{S}^{N}$ to  
+The number of such linear constraints, however, grows very quickly in $N$, introducing a large computational burden. Therefore the current paper considers a single semidefinite relaxation instead. To describe this choice, denote the set of symmetric $N \times N$  matrices with $\mathcal{S}^N$, represent the set of  symmetric positive semidefinite $N \times N$ matrices with $\mathcal{S}_{+}^N$, and consider a one-to-one function $h$ that transforms a matrix $\M \in \mathcal{S}^{N}$ to  
 \begin{align*}
-h(\M)  = 
+h(\M)  := 
 %\left(\begin{matrix} 
 %\Sigma_{11} & {\bf \Sigma}_{12}\\
 %{\bf \Sigma}_{21} & {\bf \Sigma}_{22}\\
@@ -965,16 +980,16 @@ h(\M)  =
 \diag(\M) &\M\\
  \end{matrix}\right) \in \mathcal{S}^{N+1},
 \end{align*}
-where $\diag(\M)$ is a vector of the diagonal elements of $\M$.  The correlation polytope is then relaxed with $\SD_N := \left\{ \M \in \mathcal{S}^N : h(\M) \in \mathcal{S}_{+}^{N+1} \right\}$. Given that $\bSigma := h(\bSigma_{22})$ is the covariance matrix of the multivariate Gaussian distribution (\ref{NExperts}), having $h(\bSigma_{22}) \in \SD_N$ can be viewed as the minimal requirement for $\bSigma_{22}$. It was discussed by \cite{laurent1997connections}, who showed that $\COR_N \subseteq \SD_N$ and called it, ``in some sense, the best possible relaxation of'' $\COR_N$. An equivalent relaxation has been extensively studied in the context of the well-known Max-Cut problem, where it has been found to be surprisingly strong both in theory and practice (see, e.g., \citealt{wolkowicz2000handbook}). 
+where $\diag(\M)$ is a vector of the diagonal elements of $\M$.  The correlation polytope is then relaxed with $\SD_N := \left\{ \M \in \mathcal{S}^N : h(\M) \in \mathcal{S}_{+}^{N+1} \right\}$. Given that $\bSigma := h(\bSigma_{22})$ is the covariance matrix of the multivariate Gaussian distribution (\ref{NExperts}), having $h(\bSigma_{22}) \in \SD_N$ can be viewed as the minimal requirement for $\bSigma_{22}$. This condition was discussed by \cite{laurent1997connections}, who showed that $\COR_N \subseteq \SD_N$ and called it, ``in some sense, the best possible relaxation of'' $\COR_N$. An equivalent relaxation has been extensively studied in the context of the well-known Max-Cut problem, where it has been found to be surprisingly strong both in theory and practice (see, e.g., \citealt{wolkowicz2000handbook}). 
 
 %The set $\SD_N$ can be analyzed by recalling that the principal sub-matrices of a positive semidefinite matrix are positive semidefinite. This combined with the Schur complement leads to three observations about matrix  $\M \in \SD_N$: a)  any off-diagonal $m_{ij}$ can be negative;  b) $m_{ij}$ can be greater than $\min\{m_{ii}, m_{jj}\}$; and c) all elements are less or equal to $1$. Clearly, the first two observations violate the correlation polytope. In particular, violation a) can assign an unrealistically high weight to a non-informed forecaster and hence dramatically distort aggregation. Therefore we improve the relaxation by intersecting $\SD_N$ with the convex set of $N \times N$ nonnegative matrices $\R_+^{N} = \{\M : m_{ij} \geq 0\}$. The second violation could be handled with additional $2\binom{N}{2}$ linear constraints. This, however, introduces a large computational burden, especially for large $N$, and is hence not considered in this paper. See e.g., \citet[Chapter 27.1]{deza1997geometry} for further discussion on linear relaxations of $\COR_N$. 
 
-The relaxed version of (\ref{orig_problem}) then becomes
+The relaxed version of original problem (\ref{orig_problem}) then becomes
 \begin{align}
 \label{relax_problem}
 \begin{split}
 %\text{minimize } &  || \bSigma_{22} - \boldsymbol{S}_Z ||_F^2 \label{orig_problem}\\
-\text{minimize } &  \ell \left(\bSigma_{22}, \boldsymbol{S}_Z\right) \\
+\text{minimize } &  f_0 \left(\bSigma_{22}, \boldsymbol{S}_Z\right) \\
 %\text{subject to } & \bSigma_{22} \in \SD_N \cap \R_+^{N}, \\
 \text{subject to } & \bSigma_{22} \in \SD_N, \\
 & \cond(\bSigma_{22}) \leq \kappa.
@@ -991,7 +1006,7 @@ The relaxed version of (\ref{orig_problem}) then becomes
 %\marginpar{Explain that this is a convex optimization problem, i..e the constraints are convex, as long as $\ell$ is convex. Hence the global optimum can be found.}
 %By the Schur complement this is equivalent to $\bSigma_{22} - \bSigma_{21} \bSigma_{12} \succeq 0$. 
 %$0 \leq 1-\bSigma_{21}\bSigma_{22}^{-1}\bSigma_{12} = Var(Z_S | \boldsymbol{Z})$, which, for the sake of aggregation, must  always hold. 
-Given that the feasible region of this problem has a simple form, it responds to difficulty (\ref{compProblem2}) from Section \ref{generalEstimation}. The next subsection addresses difficulty (\ref{compProblem1}) by selecting a loss function that allows the dimension of the problem to be reduced largely. 
+Given that the feasible region of this problem is both convex and tractable, it responds to difficulty (\ref{compProblem2}) from Section \ref{generalEstimation}. The next subsection addresses difficulty (\ref{compProblem1}) by selecting a loss function that allows the dimension of the problem to be reduced. 
 
 
 %Naturally, improved results can be obtained by considering the intersection of more than one relaxation. The number of linear constraints, however, grows very rapidly. Therefore, the trade-off between additional accuracy and computational cost of such additions should be examined.
@@ -1002,22 +1017,24 @@ Given that the feasible region of this problem has a simple form, it responds to
 
 %\marginpar{motive by finding global optimum and as another projection.}
 
-The information structure $\bSigma_{22}$ is a parameter of an explicit likelihood. Therefore estimation naturally begins with the maximum likelihood approach (MLE) under which the loss $\ell \left(\bSigma_{22}, \boldsymbol{S}_Z\right) $ is equal to the Gaussian likelihood. Unfortunately, this loss function is not convex in $\bSigma_{22}$. Consequently, only a locally optimal solution is guaranteed with standard optimization techniques. Second, based on preliminary simulations, the MLE does not perform very well, especially when $K$ is much smaller than $N$. Third, it is not clear whether the dimension of this form can be reduced. \cite{won2006maximum} consider the MLE of the Gaussian covariance matrix under a condition number constraint. They are able to transform the original problem with $\binom{N+1}{2}$ variables to an equivalent problem with only $N$ variables, namely the eigenvalues of $\bSigma_{22}$. This transformation, however, requires an orthogonally invariant problem. Given that relaxed constraint $\bSigma_{22} \in \SD_N$ is not orthogonally invariant, the same dimension-reduction technique cannot be applied. Instead, the MLE must be computed with the $\binom{N+1}{2}$ variables, making estimation slow for small $N$ and undoable for moderate to large $N$. For these reasons the MLE is not discussed further in this paper.
+The information structure $\bSigma_{22}$ is a parameter of an explicit likelihood. Therefore estimation naturally begins with the maximum likelihood approach (MLE) under which the loss $f_0 \left(\bSigma_{22}, \boldsymbol{S}_Z\right) $ is equal to the Gaussian likelihood. Unfortunately, this loss function is not convex in $\bSigma_{22}$. Consequently, only a locally optimal solution is guaranteed with standard optimization techniques. 
+%Second, based on preliminary simulations, the MLE does not perform very well, especially when $K$ is much smaller than $N$. 
+Furthermore, it is not clear whether the dimension of this form can be reduced. \cite{won2006maximum} discuss the MLE under a condition number constraint. They are able to transform the original problem with $\binom{N+1}{2}$ variables to an equivalent problem with only $N$ variables, namely the eigenvalues of $\bSigma_{22}$. This transformation, however, requires an orthogonally invariant problem. Given that relaxed constraint $\bSigma_{22} \in \SD_N$ is not orthogonally invariant, the same dimension-reduction technique cannot be applied. Instead, the MLE must be computed with the $\binom{N+1}{2}$ variables, making estimation slow for small $N$ and undoable even for moderately large $N$. For these reasons the MLE is not discussed further in this paper.
 
 %Furthermore, we tested this approach and discovered that it tends to overfit under small sample sizes typical to crowdsourcing applications. It is possible that a regularizer can be appended to the estimation procedure to improve robustness. This, however, is considered beyond the scope of this paper and hence left for future work. A simple alternative that leads to good results is the least squares estimator. 
 
 %\marginpar{The MLE is bad: a) the relaxations are not orthogonally invariant, hence the eigen value trick cannot be used, b) based on preliminary simulation studies, performs worse than the projection method. This can be possibly due to non-convexity of the problem; the estimate can be quite a bit off from sample covariance matrix. Also, rather unstable when little data.}
 
-\marginpar{would not call it unconstrained: naive that is obtained in a context specific manner. This projection method then allows for a corruption that is required for aggregation.}
+%\marginpar{would not call it unconstrained: naive that is obtained in a context specific manner. This projection method then allows for a corruption that is required for aggregation.}
 
-An alternative that permits dimension-reduction is to project an unconstrained estimator onto the feasible region. This approach, sometimes known as the least squares estimation, has been studied extensively by many authors in the past (see, e.g., \citealt{soloveychik2013covariance, barton1997structured, henrion2012projection, malick2004dual, hu1991numerical}). 
+The true information structure $\bSigma_{22}$ can be often estimated easily with an unconstrained estimator such as the sample covariance matrix $\SS_Z$. Even though this section focuses on $\SS_Z$, the discussion generalizes to any unconstrained estimator via direct substitution of $\SS_Z$. Any such estimator can be improved by projecting it onto the feasible region. This approach, known sometimes as least squares estimation (LSE), has been studied extensively by many authors  (see, e.g., \citealt{soloveychik2013covariance, barton1997structured, henrion2012projection, malick2004dual, hu1991numerical}). It guarantees a globally optimal solution and facilitates  dimension reduction. 
 %If the true information structure $\bSigma_{22} \in \COR_N$, then the projection will be closer to the truth than the unconstrained estimator. Furthermore, given that the projection does not alter any unconstrained estimates already in the feasible region, it retains many properties of the unconstrained estimator. For instance, this paper focuses on projecting the sample covariance matrix  $\boldsymbol{S}_Z$ which, under the Gaussian model, is the unconstrained MLE of the true information structure. Given that $\boldsymbol{S}_Z$ is consistent, its projection is also consistent.
 %
 %\marginpar{This may not be true given our condition number constraint. In fact, there is no need to mention this at all. Focus on giving an equivalent problem.}
 %The associated loss function is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$, where $\Tr(\cdot)$ denotes the trace operator. 
-The dimension reduction is facilitated by a change of variables and projecting $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
+The first step is to make a change of variables and project $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
 %The functional invariance of the MLE shows that $h(\boldsymbol{S}_Z)$ is an unconstrained MLE of  $h(\bSigma_{22}) = \bSigma$. 
-The revised estimation problem is
+The estimation problem then becomes
 %A popular and efficient solution is to project an unconstrained estimator (such as a sample covariance matrix) on to the constrained space 
 % and can be solved efficiently with standard techniques such as the interior point methods.  
 %$||\cdot||_F$ is the Frobenius norm and $\boldsymbol{S}_Z$ is an unconstrained estimate of the information structure. This is a convex optimization problem in $\bSigma_{22}$ 
@@ -1035,19 +1052,24 @@ The revised estimation problem is
 & \Tr(\A_j \bSigma) = b_j, \hspace{2em} (j = 1, \dots, N+1) 
 \end{split}
 \end{align}
-where $\Tr(\cdot)$ is the trace operator and $||\cdot||_F^2$ is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$. Even though many other norms could be used, for the sake of simplicity, this paper only considers the Frobenius norm. The linear constraints in (\ref{lse_problem}) maintain the structure induced by $h(\cdot)$. In particular, $b_1 = 1$ and $\A_1$ is filled with zeros except $a_{11} = 1$. For $j \geq 2$, $b_j = 0$ and $\A_j$ is filled with zeros except $a_{jj} = 1$ and  $a_{j1} = a_{1j} = -1/2$. Given that  $\bSigma_{22}$ is a principal sub-matrix of $\bSigma$, the condition $\bSigma \in \mathcal{S}_{+}^{N+1}$ implies $\bSigma_{22} \in \mathcal{S}_{+}^{N}$. Furthermore, by Cauchy's Interlace Theorem, $\lambda_{min}(\bSigma) \leq \lambda_{min}(\bSigma_{22})$ and $\lambda_{max}(\bSigma_{22}) \leq \lambda_{max}(\bSigma)$ such that $\cond(\bSigma_{22}) \leq \cond(\bSigma) \leq \kappa$. 
+where $\Tr(\cdot)$ is the trace operator and $||\cdot||_F^2$ is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$. Even though many other norms could be used, for the sake of simplicity, this paper only considers the Frobenius norm. 
+
+The linear constraints in (\ref{lse_problem}) maintain the structure induced by $h(\cdot)$. In particular, $b_1 = 1$ and $\A_1$ is filled with zeros except $a_{11} = 1$. For $j \geq 2$, $b_j = 0$ and $\A_j$ is filled with zeros except $a_{jj} = 1$ and  $a_{j1} = a_{1j} = -1/2$. Given that  $\bSigma_{22}$ is a principal sub-matrix of $\bSigma$, the condition $\bSigma \in \mathcal{S}_{+}^{N+1}$ implies $\bSigma_{22} \in \mathcal{S}_{+}^{N}$. Furthermore, by Cauchy's Interlace Theorem, $\lambda_{min}(\bSigma) \leq \lambda_{min}(\bSigma_{22})$ and $\lambda_{max}(\bSigma_{22}) \leq \lambda_{max}(\bSigma)$ such that $\cond(\bSigma_{22}) \leq \cond(\bSigma) \leq \kappa$. Note that, for a given $\kappa$, requiring $\cond(\bSigma) \leq \kappa$ instead of $\cond(\bSigma_{22}) \leq \kappa$ shrinks the region of feasible $\bSigma_{22}$'s. 
+%This, however, only affects the rate at which region grows in $\kappa$. 
+ At this point, however, the exact value of $\kappa$ is arbitrary and only serves as means to control $\cond(\bSigma_{22})$.  
+ Section \ref{condSelection} introduces a procedure to choose $\kappa$ from the data such that the final estimate of $\bSigma_{22}$ is well-conditioned. Under such an adaptive procedure, problem (\ref{lse_problem}) can be considered equivalent to the  relaxed problem (\ref{relax_problem}) (with the objective $f_0$ equal to the Frobenius norm).
 
 %\marginpar{These are not exactly equivalent because the condition number constraint gets tighter on the info str. This value is somewhat arbitrary anyways. The only goal is to control the condition number.}
 
 
 %The relaxed problem (\ref{lse_problem}) is solved by projecting $ h(\boldsymbol{S}_Z)$ to the feasible set. 
-The first step in solving problem (\ref{lse_problem}) expresses the feasible region as an intersection of two sets, namely 
+To solve problem (\ref{lse_problem}), express the feasible region as an intersection of two sets, namely 
 \begin{align*}
 \mathcal{C}_{sd} &= \left\{\bSigma : \bSigma \in \mathcal{S}_{+}^{N+1}, \cond(\bSigma) \leq \kappa\right\}, \text{ and }\\
 \mathcal{C}_{lin} &= \left\{\bSigma : \Tr(\A_j \bSigma) = b_j, j = 1, \dots, N+1\right\}.
 %& \R_+^{N+1}.
 \end{align*}
-Given that both of these sets are convex, projecting onto their intersection can be computed easily with the Directional Alternating Projection Algorithm \citep{gubin1967method}. This method makes progress by repeatedly projecting onto the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. Therefore it is efficient only if projecting onto each of the individual sets is fast. Fortunately, this is the case for problem (\ref{lse_problem}). 
+Given that both of these sets are convex, projecting onto their intersection can be computed easily with the Directional Alternating Projection Algorithm \citep{gubin1967method}. This method makes progress by repeatedly projecting onto the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. Consequently, it is efficient only if projecting onto each of the individual sets is fast. Fortunately, this is the case for problem (\ref{lse_problem}). 
 
 
 %Dykstra's projection algorithm described \citep{boyle1986method}. Intuitively, the solution is found by iteratively projecting onto the sets $\mathcal{C}_{sd}$, $\mathcal{C}_{lin}$, and $\R_+^{N+1}$. 
@@ -1064,15 +1086,15 @@ Given that both of these sets are convex, projecting onto their intersection can
 
 %Let $\M$ be an arbitrary $(N+1) \times (N+1)$ matrix. First, projecting $\M$ onto $\R_+^{N+1}$ is equal to taking the positive part of each element of $\M$. Denote this projection with the operator $\mathcal{P}_{+}(\cdot)$. 
 
-First, projecting a matrix $\M$  onto $\mathcal{C}_{lin}$ is a linear map. To make this more specific, let $\m = \vec(\M)$ be a column-wise vectorization of $\M$. 
+First, projecting a matrix $\M \in \mathcal{S}^{N+1}$  onto $\mathcal{C}_{lin}$ is a linear map. To make this more specific, let $\m = \vec(\M)$ be a column-wise vectorization of $\M$. 
 %Then, $\s$ has length $N_s := \binom{N+1}{2} = (N+1)N/2$. If $\A_0$ is a $(N+1) \times (N_s - N - 1)$ binary matrix with ones only at positions $\left(i,  1+\sum_{j=0}^{i-3}(N-j)\right)$ for $i = 2, \dots, N+1$, 
-If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$ for $j = 1, \dots, N+1$, then the  linear constraints in (\ref{relax_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. The projection of  $\M$ onto $\mathcal{C}_{lin}$ then is $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and replacing $m_{i1}$, $m_{1i}$, and $m_{ii}$ by their average $(m_{ii} + m_{i1} + m_{1i})/3$, for $i = 2, \dots, N+1$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
+If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$ for $j = 1, \dots, N+1$, then the  linear constraints in (\ref{relax_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. The projection of  $\M$ onto $\mathcal{C}_{lin}$ is $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$, for $j = 2, \dots, N+1$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
 
-Second, \cite{tanaka2014positive} re-express the projection of $\M$ onto $\mathcal{C}_{sd}$ as a univariate optimization problem. To  describe this approach, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_N) \Q'$, where $\Diag(\x)$ is a diagonal matrix with $\x$ on the diagonal, and the univariate function 
+Second, \cite{tanaka2014positive} re-express the projection of $\M \in \mathcal{S}^{N+1}$ onto $\mathcal{C}_{sd}$ as a univariate optimization problem. To  describe this approach, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_{N+1}) \Q'$ and the univariate function 
 \begin{align*}
-g(\mu) &= \sum_{i=1}^{N} \left[ \left(\mu-l_i\right)^2_+ + \left(l_i - \kappa\mu\right)^2_+ \right],
+g(\mu) &= \sum_{i=1}^{N+1} \left[ \left(\mu-l_i\right)^2_+ + \left(l_i - \kappa\mu\right)^2_+ \right],
 \end{align*}
-where $(\cdot)_+$ is the positive part operator. The function $g(\mu)$ can be minimized very efficiently by solving a series of smaller convex problems, each with a closed form solution. Complete technical details of this are given in the Appendix.
+where $\Diag(\x)$ is a diagonal matrix with diagonal $\x$ and $(\cdot)_+$ is the positive part operator. The function $g(\mu)$ can be minimized very efficiently by solving a series of smaller convex problems, each with a closed form solution. Complete technical details of this are given in the Appendix.
 %minimized efficiently. Technical details on a 
 %$g: \mu \in \R^+ \to \R^+$  that returns $(\mu - \tilde{l}_1)^2 + \dots + (\mu - \tilde{l}_a)^2 + (\tilde{l}_b - \kappa\mu)^2 + \dots + (\tilde{l}_{N+1} -  \kappa\mu)^2$, when $\tilde{l}_a \leq \mu \leq \tilde{l}_{a+1}$ and $\tilde{l}_{b-1} \leq \kappa\mu \leq \tilde{l}_b$. 
 If $\mu^* = \argmin_{\mu \geq 0} g(\mu)$ and 
@@ -1088,10 +1110,18 @@ l_j & \text{ otherwise}
 %\lambda_{l+1}^*= \lambda_{l+1}, &\dots, \lambda^*_{u-1} = \lambda_{u-1}\\
 %\lambda_u^* = &\dots = \lambda_{N+1}^* = \kappa\mu^*,
 %\end{align*}
-for $j = 1, \dots, N$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N}^*) \Q$ is the projection of $\M$ onto $\mathcal{C}_{sd}$. Call this projection $\mathcal{P}_{sd}(\cdot : \kappa)$. 
+for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q$ is the projection of $\M$ onto $\mathcal{C}_{sd}$. Call this projection $\mathcal{P}_{sd}(\cdot : \kappa)$. 
 
 
- Algorithm \ref{proj_algo} uses these projections to solve (\ref{lse_problem}). Given that all the steps are in closed-form, except the univariate subroutine in $\mathcal{P}_{cond}(\cdot:\kappa)$, each iteration is very fast.  Overall time to convergence, of course, depends on the choice of the stopping criterion. Many intuitive criteria are possible. Given that $\bSigma_D \in \mathcal{C}_{sd}$ and $\bSigma_C \in \mathcal{C}_{lin}$, the stopping criterion $\max \{(\bSigma_{D}-\bSigma_{C})_{ij}^2\} < \epsilon$ suggests that the final projection is in $\mathcal{C}_{sd}$ and close to $\mathcal{C}_{lin}$ in every direction. Based on our experience, the algorithm converges quite quickly. For instance, our implementation in C++ solves (\ref{lse_problem}) for $\epsilon = 10^{-5}$ and $N = 100$ in less than a second on a 1.7 GHz Intel Core i5 computer.  This suggests that Algorithm \ref{proj_algo} addresses difficulty (\ref{compProblem1}). For the rest of the paper, denote the projection onto the intersection $\mathcal{C}_{sd} \cap \mathcal{C}_{lin}$ with $\mathcal{P}_{LSE}(\cdot : \kappa)$. 
+ Algorithm \ref{proj_algo} uses these projections to solve (\ref{lse_problem}). Given that all the steps are in closed-form, except the univariate subroutine in $\mathcal{P}_{cond}(\cdot:\kappa)$, each iteration is very fast.  Overall time to convergence, of course, depends on the choice of the stopping criterion. Many intuitive criteria are possible. Given that $\bSigma_D \in \mathcal{C}_{sd}$ and $\bSigma_C \in \mathcal{C}_{lin}$, the stopping criterion $\max \{(\bSigma_{D}-\bSigma_{C})_{ij}^2\} < \epsilon$ suggests that the final projection is in $\mathcal{C}_{sd}$ and close to $\mathcal{C}_{lin}$ in every direction. Based on our experience, the algorithm converges quite quickly. For instance, our implementation in C++ solves (\ref{lse_problem}) for $\epsilon = 10^{-5}$ and $N = 100$ in less than a second on a 1.7 GHz Intel Core i5 computer.  This suggests that Algorithm \ref{proj_algo} is at least a partial response to difficulty (\ref{compProblem1}). 
+ 
+ 
+%% For the rest of the paper, d
+% Denote the projection onto the intersection $\mathcal{C}_{sd} \cap \mathcal{C}_{lin}$ with $\mathcal{P}_{LSE}(\cdot : \kappa)$. As was mentioned before, this procedure produces a regularized estimator. In particular, $\mathcal{P}_{LSE}(\cdot : \kappa) \to I_N$ as $\kappa \downarrow 1$. Therefore the projection shrinks the unconstrained estimate towards the identity matrix. This shrinkage target has been utilized before. See, e.g, \citealt{ledoit2004well} who improve (asymptotically) the sample covariance matrix by shrinking it towards the identity matrix. 
+% 
+% \marginpar{This is not true}
+% 
+% The next subsection discusses a procedure for choosing the value of $\kappa$. 
 
 %\marginpar{Explain explicitly why this solves problem (i)}
 % 
@@ -1131,10 +1161,10 @@ for $j = 1, \dots, N$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N}^*) \Q$ is
 %\end{algorithm}
 
 \begin{algorithm}[t]
-\caption{This procedure projects the point $h(\boldsymbol{S}_Z)$ onto the intersection $\mathcal{C}_{sd} \cap \mathcal{C}_{lin}$. Denote this projection with $\mathcal{P}_{LSE}(\cdot : \kappa)$. }
+\caption{This procedure projects the point $h(\boldsymbol{S}_Z)$ onto the intersection $\mathcal{C}_{sd} \cap \mathcal{C}_{lin}$. Denote the projection with $\mathcal{P}_{LSE}(\cdot : \kappa)$. Throughout the paper, the stopping criterion is fixed at $\epsilon = 10^{-5}$.}
 \label{proj_algo}
 \begin{algorithmic}[1]
-\Require Sample covariance matrix $\boldsymbol{S}_Z$, stopping criterion $\epsilon > 0$, and an upper bound on the condition number $\kappa \geq 0$. 
+\Require Sample covariance matrix $\boldsymbol{S}_Z$, stopping criterion $\epsilon > 0$, and an upper bound on the condition number $\kappa \geq 1$. 
 \Procedure{Directional Alternating Projection Algorithm}{}
 \State $\bSigma_{A} \leftarrow  h(\boldsymbol{S}_Z)$
 %\State $\bLambda_{lin} \leftarrow \boldsymbol{0}$
@@ -1249,7 +1279,8 @@ for $j = 1, \dots, N$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N}^*) \Q$ is
 
 \subsection{Selecting the value of $\kappa$}
 \label{condSelection}
-%Given that Algorithm \ref{proj_algo} depends on $\kappa$, a principled approach to selecting such a value should be proposed. 
+%The only remaining component in model estimation is the selection of $\kappa$. 
+Given that Algorithm \ref{proj_algo} requires on a given $\kappa$, a principled approach to selecting this threshold should be described. 
 %The simplest approach is to find the value of $\kappa$ that maximizes the log-likelihood of the observed data. 
 %More specifically, let $\phi(\cdot | \bSigma)$ denote the PDF of a centered Gaussian distribution with covariance matrix $\bSigma$.  
 %if $\hat{\bSigma}_{22}(\nu)$ is the estimate of $\bSigma_{22}$ under $\kappa= \nu$, 
@@ -1259,32 +1290,32 @@ for $j = 1, \dots, N$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N}^*) \Q$ is
 %%\label{inSample}
 %\end{align*}
 %This approach, however, tends to favor very large values of $\kappa$ which, as will become clear in Section \ref{empirical}, typically leads to poor aggregate predictions. 
-Previous literature has mentioned an approach to choosing the value of $\kappa$.
+Previous literature has discussed this.
 % has been discussed in the previous literature. 
-In particular,  \cite{won2006maximum} discuss maximum likelihood estimation under a condition number constraint and propose choosing the value of $\kappa$ that maximizes the expected predictive log-likelihood. That is, if $\Z_1, \dots, \Z_K,  \tilde{\Z}\stackrel{i.i.d.}{\sim} \mathcal{N}_{N}(\boldsymbol{0}, \bSigma_{22})$, they choose $\kappa = \argmax_{\nu \geq 0} \E \left\{ \E_{\tilde{\Z}} \left(  \ell(\tilde{\Z},  \mathcal{P}_{LSE}(h(\SS) : \nu)) \right) \right\}$, where $\ell(\cdot)$ denotes the log-likelihood  and $\SS$ is the sample covariance matrix computed only based on $\Z_1, \dots, \Z_K$. They approximate the expected predictive log-likelihood with cross validation. This partitions the data $\Z$ into $R$ subsets $\Z = \left(\Z_{(1)}, \dots, \Z_{(R)}\right)'$. During the $r$th iteration, $\Z_{(r)}$ functions as $\tilde{\Z}$ and the remaining $R-1$ subsets are used for computing the sample covariance matrix, denoted  with $\SS_{(r)}$. 
-The chosen value of $\kappa$ is
+In particular,  \cite{won2006maximum} analyze maximum likelihood estimation under a condition number constraint and propose choosing the value of $\kappa$ that maximizes the expected predictive log-likelihood. That is, if $\Z_1, \dots, \Z_K,  \tilde{\Z}\stackrel{i.i.d.}{\sim} \mathcal{N}_{N}(\boldsymbol{0}, \bSigma_{22})$, they choose $$\kappa = \argmax_{\nu \geq 1} \E \left\{ \E_{\tilde{\Z}} \left[  \ell(\tilde{\Z},  \mathcal{P}_{LSE}(\SS : \nu)) \right] \right\},$$ where $\ell(\cdot)$ denotes the log-likelihood  and $\SS$ is the sample covariance matrix computed only based on $\Z_1, \dots, \Z_K$. They approximate the expected predictive log-likelihood with cross validation. This partitions the data $\Z = \left(\Z_{1}, \dots, \Z_{K}\right)'$ into $R$ subsets such that  $\Z = \left(\Z_{(1)}, \dots, \Z_{(R)}\right)'$. During the $r$th iteration, $\Z_{(r)}$ functions as $\tilde{\Z}$ and the remaining $R-1$ subsets are used for computing the sample covariance matrix, denoted  with $\SS_{(r)}$. 
+The chosen value of $\kappa$ maximizes the out-of-sample log-likelihood:
  \begin{align}
-\kappa_{out} = \argmax_{\nu \geq 0} \sum_{r=1}^R \ell\left( \Z_{(r)}, \mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)\right)
+\kappa_{out} = \argmax_{\nu \geq 1} \sum_{r=1}^R \ell\left( \Z_{(r)}, \mathcal{P}_{LSE}(\SS_{(r)} : \nu)\right)
 \label{kappa_out}
 \end{align}
-This approach, however, suffers from several drawbacks: a) it introduces a new tuning parameter $R$; b) it is computationally expensive as $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ must be called $R$ times for each candidate value $\nu$; and, most importantly, c) it can be unstable when $K$ or $N$ is small. The last drawback is particularly unfortunate because in prediction polling
+Unfortunately, this approach suffers from several drawbacks: a) it introduces a new tuning parameter $R$; b) it is computationally expensive as $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ must be called $R$ times for each candidate value $\nu$; and c) it can be unstable under small sample sizes. The last drawback is particularly unfortunate because in prediction polling
 %typically involve a large number of people attending relatively few problems. T
- the number of responses per forecaster is often kept low for the sake of avoiding responder fatigue and hence the potential of reduced  estimation accuracy. 
+ the number of responses per forecaster is often kept low for the sake of avoiding responder fatigue.
+%  and hence potentially reduced  estimation accuracy. 
 
 %\marginpar{emphasize this more!!}
 
-To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This approach is particularly tailored for prediction and can be used for choosing any tuning parameter in a partial information model. To describe the procedure, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to predict  $Z_S$ from the $Z_{B_j}$'s. 
+To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This approach is particularly tailored for prediction and can be used for choosing any tuning parameter under the partial information framework. First, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to predict  $Z_S$ from the $Z_{B_j}$'s. 
 %This matrix, however, is estimated only based on the observables $Z_j$. 
- Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from the indexing Borel set and being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{B_j}$'s. Therefore it is natural to let each of the $Z_{B_j}$'s in turn play the role of $Z_S$, predict its value based on $Z_{B_i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore the chosen value of $\kappa$ is
+ Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from the indexing Borel set and being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{B_j}$'s. Therefore it is natural to let each of the $Z_{B_j}$'s in turn play the role of $Z_S$, predict its value based on $Z_{B_i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore, if $\Z_j^* = (Z_{B_j,1}, \dots, Z_{B_j,K})'$ collects the $j$th forecaster's information of the $K$ events, the chosen value of $\kappa$ is
   \begin{align}
-\kappa_{cov} = \argmax_{\nu \geq 0} \sum_{j=1}^N \ell \left( \Z_{j}, \mathcal{P}_{LSE}(h\left(\SS_{Z}\right) : \nu) \big| \Z_i \text{ for } i \neq j\right), \label{kappa_cov}
+\kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS_{Z} : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
-where the log-likelihood is now conditional on $Z_{B_i}$'s for $i \neq j$. This imitates the idea behind cross-validation but, instead of predicting across rows (observations), it predicts across columns (variables).  In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(h\left(\SS_{(r)}\right) : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains rather stable when $N$ or $K$ is small. This is illustrated in the next section.
+where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS_Z$ is computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. This imitates the idea behind cross-validation but, instead of predicting across rows (observations), it predicts across columns (variables).  In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains rather stable when $N$ or $K$ is small. This is illustrated in the next section.
 
 %\marginpar{this must be re-written better. This can be viewed as column-wise CV while the regular CV is row-wise.}
 
-
-Unfortunately, both (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance.  
+Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance.  
 
 %Given that it is particularly tailored for predicting $Z_S$, it is 
 %In fact, under simulated data, $\kappa_{cond}$ outperforms $\kappa_{out}$ in predicting the value of $Z_S$. 
@@ -1314,7 +1345,7 @@ Unfortunately, both (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\
 
 \section{Empirical Analysis}
 \label{empirical}
-This section evaluates a) the Gaussian model both on synthetic and real-world forecasting data, and b) illustrates how the Gaussian model can be applied to forecasting setups with different types of outcomes. Each case assumes $N$ forecasters attending $K$ prediction problems. The Gaussian model then requires the following components for problem $k$: the information variables $Z_{S,k}, Z_{B_1,k}, \dots, Z_{B_N,k}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{B_j,k}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{S,k})$. 
+This section evaluates a) the Gaussian model both on synthetic and real-world forecasting data, and b) illustrates how the Gaussian model can be applied to forecasting setups with different types of outcomes. Each case assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model then consist of the following components: the information variables $Z_{S,k}, Z_{B_1,k}, \dots, Z_{B_N,k}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{B_j,k}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{S,k})$. 
 %\end{enumerate}
 %
 %\begin{align*}
@@ -1344,6 +1375,7 @@ This subsection evaluates the Gaussian model on synthetic data generated directl
  and predict $Y_{k}$ based on this information. The process is repeated a $2,000$ times under different values of $K$, ranging from $5$ to $35$ with constant increments of $5$. The number of forecasters $N$ is fixed at $20$. 
 
 
+\marginpar{Change the caption to hold the actual sample cov matrices. Bold things.}
 
 \begin{figure}[t!]
 \centering
@@ -1374,6 +1406,8 @@ The revealed aggregator for event $k$ is $X_k'' = \diag(\bSigma_{22})' \bSigma_{
 \item The average forecast.
 \item The median forecast.
 \end{enumerate}
+\marginpar{Call revealed aggs as $X_{cov}''$}
+
 
 Recall  that accurate revealed aggregation stems both from a precise estimate of $\bSigma_{22}$ and a low condition number. This allows different strategies for achieving good accuracy. In fact, it turns out that the two selection procedures discussed in Section \ref{condSelection} make slightly different tradeoffs. This is illustrated in  Figure \ref{SigmaEstimation}. First, Figure \ref{Sigma} examines how $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$, and $\SS_Z$ capture the true $\bSigma_{22}$. 
 Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ and $\SS_Z$ improve at a higher rate than $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$.  In fact, if $K > N$, $\SS_Z$ and $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ perform better than $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. On the other hand, if $K < N$, $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ is more accurate than the other two. Second, Figure \ref{SigmaInv}  presents the corresponding condition numbers. For the sake of keeping the scale manageable, $\cond(\SS_Z)$ has been omitted. Notice that $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{out}))$ increases while $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$ generally decreases as $K$ grows larger. In fact, when $K > N$,  $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{cov}))$ is smaller than $\cond(\mathcal{P}_{LSE}(\cdot : \kappa_{out}))$. From the prediction perspective, this makes conditional-validation more forgiving towards error in the estimated $\bSigma_{22}$. Therefore, while $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$ incorporates the actual prediction process and looks for a fine balance between a precise estimate of $\bSigma_{22}$ and a low condition number, $\mathcal{P}_{LSE}(\cdot : \kappa_{out})$ is unaware of the details of revealed aggregation and hence simply focuses on estimating $\bSigma_{22}$ as accurately as possible. 
@@ -1925,7 +1959,7 @@ Given that $\E[X_j] = \mu_0$, the value of $\mu_0$ can be estimated with the sam
 \caption{This procedure solves (\ref{globalMu}) efficiently using the structure of the problem and binary-search.} 
 \label{projSD_algo}
 \begin{algorithmic}[1]
-\Require $\kappa \geq 0$ and sample eigenvalues in ascending order $\l_1 \leq l_2 \leq \dots \leq l_{N+1}$.
+\Require $\kappa \geq 1$ and sample eigenvalues in ascending order $\l_1 \leq l_2 \leq \dots \leq l_{N+1}$.
 \Procedure{binary-search optimization}{}
 \State Initialize $D \leftarrow \max\{l_1,0\}/\kappa$ and  $U \leftarrow l_{N+1}$.
 \State $\mu_0 \leftarrow (D + U)/2$
