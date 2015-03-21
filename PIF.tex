@@ -768,7 +768,25 @@ From a practical point of view, only the \textit{information variables}  $Z_S, Z
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
  \end{array}\right)\right)  \label{NExperts}
 \end{align}
-This  \textit{distribution of information} has several important properties: First, motivated by the partial information framework, it describes the covariance structure among all the information variables simply based on covariance of the observables $Z_{B_1}, \dots, Z_{B_N}$. Consequently, it is possible to regress $Z_S$ on $Z_{B_1}, \dots, Z_{B_N}$ without actually observing $Z_S$. Note that this is philosophically different and often more natural than the classical approaches that typically estimate a model parameter, such as the mean, and then use that directly as a prediction of $Z_S$. Second, information aggregation in practice requires the ability to estimate the value of one variable given the others. Under the multivariate Gaussian distribution (\ref{NExperts}) this is especially easy. In particular, if $\Z = (Z_{B_1}, \dots, Z_{B_N})'$, then $Z_S | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right)$. This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. Third, the oracular aggregator can be emulated by extending (\ref{NExperts}) with a variable $Z_{B'}$, where $B' = \cup_{j=1}^N B_j$. This aggregator, however, is only useful in theoretical analysis and is therefore not discussed further in this paper. For more information see \cite{satopaamodeling} that uses the oracular aggregator to analyze the empirical technique of extremizing, i.e., shifting an average aggregator closer to the nearer extreme (zero or one). Fourth, when combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$, distribution (\ref{NExperts}) can be used to generate a broad range  of partial information models. Section \ref{empirical} illustrates this on several datasets with different types of outcomes. 
+This is a \textit{distribution of information} that can be combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$ to yield a broad range  of partial information models. 
+%Section \ref{empirical} illustrates this on several datasets with different types of outcomes. 
+The following enumeration lists several important aspects of these models:
+
+\begin{enumerate}[i)]
+\item \textbf{Prior Mean.} Given that $\E[Y | X_j]  = X_j$, the law of iterated expectation gives $\E[\E[Y | X_j]]  = \E[Y] = \E[X_j]$ for all $j = 1, \dots, N$. Therefore under the Gaussian model all the variables shares the same mean. This is particularly useful as it provides means to estimates the prior mean from the forecasts. 
+
+\item \textbf{Target Quantity.}  Measurement-error aggregators estimate $\E[Y]$ based on the observed forecasts. The correct target, however, is the realization $y$ of the random variable $Y$. These aggregators, unfortunately, cannot target $y$ because they do not incorporate a correlation structure between $Y$ and the $X_{B_j}$'s. The partial information framework, however, motivates a covariance structure among these variables. Given that this covariance matrix can be estimated solely based on the realized values of $Z_{B_1}, \dots, Z_{B_N}$, it is possible to regress $Z_S$ on $Z_{B_1}, \dots, Z_{B_N}$ and hence target $y$.
+%without actually observing $Z_S$.
+
+\item \textbf{Revealed Aggregator.} Information aggregation in practice requires the ability to estimate the value of one variable given the others. Under the multivariate Gaussian distribution (\ref{NExperts}) this is especially easy. In particular, if $\Z = (Z_{B_1}, \dots, Z_{B_N})'$, then $$Z_S | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right).$$ This leads to a closed-form revealed aggregator $X''$ in many different applications of the model.
+
+\item \textbf{Oracular Aggregator.} The oracular aggregator can be emulated by extending (\ref{NExperts}) with a variable $Z_{B'}$, where $B' = \cup_{j=1}^N B_j$. This aggregator, however, is only useful in theoretical analysis and is therefore not discussed further in this paper. For more information see \cite{satopaamodeling} that uses the oracular aggregator to analyze the empirical technique of extremizing, i.e., shifting an average aggregator closer to the nearer extreme (zero or one).
+
+\end{enumerate}
+%
+%First, motivated by the partial information framework, it describes the covariance structure among all the information variables simply based on covariance of the observables $Z_{B_1}, \dots, Z_{B_N}$. Consequently, it is possible to regress $Z_S$ on $Z_{B_1}, \dots, Z_{B_N}$ without actually observing $Z_S$. Note that this is philosophically different and often more natural than the classical approaches that typically estimate a model parameter, such as the mean, and then use that directly as a prediction of $Z_S$. Second
+%
+% Third, Fourth,
 
 
 
@@ -1297,24 +1315,28 @@ The chosen value of $\kappa$ maximizes the out-of-sample log-likelihood:
 \kappa_{out} = \argmax_{\nu \geq 1} \sum_{r=1}^R \ell\left( \Z_{(r)}, \mathcal{P}_{LSE}(\SS_{(r)} : \nu)\right)
 \label{kappa_out}
 \end{align}
-Unfortunately, this approach suffers from several drawbacks: a) it introduces a new tuning parameter $R$; b) it is computationally expensive as $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ must be called $R$ times for each candidate value $\nu$; and c) it can be unstable under small sample sizes. The last drawback is particularly unfortunate because in prediction polling
+Unfortunately, this approach suffers from several drawbacks: a) it introduces a new tuning parameter $R$; b) it is computationally expensive as $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ must be called $R$ times for each candidate value $\nu$; c) it can be unstable under small $K$, which is particularly unfortunate because
 %typically involve a large number of people attending relatively few problems. T
- the number of responses per forecaster is often kept low for the sake of avoiding responder fatigue.
+ the number of responses per forecaster is often kept low for the sake of avoiding responder fatigue; and d) if the data is very sparse, finding an appropriate partition of the data may be difficult or require non-random procedures. 
 %  and hence potentially reduced  estimation accuracy. 
+
+%\marginpar{unstable under low number of problems}
+%\marginpar{discuss the inappropriateness of CV to sparse data; makes it difficult.}
 
 %\marginpar{emphasize this more!!}
 
-To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This approach is particularly tailored for prediction and can be used for choosing any tuning parameter under the partial information framework. First, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to predict  $Z_S$ from the $Z_{B_j}$'s. 
+To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This is an in-sample approach that is tailored for prediction and can be used for choosing any tuning parameter under the partial information framework. First, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to predict  $Z_S$ from the $Z_{B_j}$'s. 
 %This matrix, however, is estimated only based on the observables $Z_j$. 
  Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from the indexing Borel set and being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{B_j}$'s. Therefore it is natural to let each of the $Z_{B_j}$'s in turn play the role of $Z_S$, predict its value based on $Z_{B_i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore, if $\Z_j^* = (Z_{B_j,1}, \dots, Z_{B_j,K})'$ collects the $j$th forecaster's information of the $K$ events, the chosen value of $\kappa$ is
   \begin{align}
 \kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS_{Z} : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
-where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS_Z$ is computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. This imitates the idea behind cross-validation but, instead of predicting across rows (observations), it predicts across columns (variables).  In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains rather stable when $N$ or $K$ is small. This is illustrated in the next section.
+where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS_Z$ is computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Overall, the idea is similar to cross-validation but, instead of predicting across rows (observations), it predicts across columns (variables).  This may be more appropriate in prediction polling-like setups that typically involve a large number of forecasters (large $N$) attending relatively few problems (small $K$). In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains more stable when $K$ is small. This is illustrated in the next section.
 
 %\marginpar{this must be re-written better. This can be viewed as column-wise CV while the regular CV is row-wise.}
 
 Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance.  For instance, in the following empirical section, $\kappa$ is chosen over a grid of $100$ values between $10$ and $1,000$. 
+
 
 %Given that it is particularly tailored for predicting $Z_S$, it is 
 %In fact, under simulated data, $\kappa_{cond}$ outperforms $\kappa_{out}$ in predicting the value of $Z_S$. 
@@ -1503,16 +1525,16 @@ Second, given that the current paper does not focus on modeling dynamic data, on
 
 Third, not all forecasters made predictions for all the events. Furthermore, the forecasters generally updated their forecasts infrequently, resulting into a very sparse dataset. Such high sparsity can cause problems in  computing the initial unconstrained estimator $\SS_Z$. 
 %Under a large number of missing observations, one option is to simply use all the complete pairs of observations.  This requires any two forecasters to make predictions on at least two common problems. 
-Evaluating different techniques to handle missing values, however, is well outside the scope of this paper. Therefore only the hundred most active forecasters are considered. This makes sufficient overlap highly likely but still not guaranteed. 
+Evaluating different techniques to handle missing values, however, is well outside the scope of this paper. Therefore, to somewhat alleviate the effect of missing values, only the hundred most active forecasters are considered. This makes sufficient overlap highly likely but still not guaranteed. 
 
 All these considerations lead to a parallel analysis of two scenarios: 
  \begin{enumerate}[a)]
-\item \textit{Lower Uncertainty (LU):} Consider each forecaster's most recent forecast during $30-60$ days before the anticipated resolution day. The resulting dataset has $60$ events of which $13$ occurred. There are $841$ forecasters attending, on average, $11.3$ problems, with a range of $1$ to $55$ problems. The top $100$ most active forecasters attended, on average, $34.9$ problems, with a range of $25$ to $55$ problems. 
+\item \textit{Lower Uncertainty (LU):} Consider each forecaster's most recent forecast during $30-60$ days before the anticipated resolution day. The resulting dataset has $60$ events of which $13$ occurred. There are $841$ forecasters attending, on average, $11.3$ problems, with a range of $1$ to $55$ problems. The top $100$ most active forecasters attended, on average, $34.9$ problems, with a range of $25$ to $55$ problems. In the resulting $60 \times 100$ data table, around 42\% of the values are missing. 
  
-\item \textit{Higher Uncertainty (HU):} Consider each forecaster's most recent forecast during  $90-120$ days before the anticipated resolution day. The resulting dataset has $49$ events of which $10$ occurred. There are $732$ forecasters attending, on average, $7.7$ problems, with a range of $1$ to $46$ problems.  The top $100$ most active forecasters attended, on average, $24.0$ problems, with a range of $14$ to $46$ problems. 
+\item \textit{Higher Uncertainty (HU):} Consider each forecaster's most recent forecast during  $90-120$ days before the anticipated resolution day. The resulting dataset has $49$ events of which $10$ occurred. There are $732$ forecasters attending, on average, $7.7$ problems, with a range of $1$ to $46$ problems.  The top $100$ most active forecasters attended, on average, $24.0$ problems, with a range of $14$ to $46$ problems. In the resulting $49 \times 100$ data table, around 51\% of the values are missing. 
  \end{enumerate}
+ 
 Another study looking at the $60-90$ days before the anticipated resolution day was also conducted. The results, however, were qualitatively very similar to the results presented in the following sections. Therefore, to minimize redundancy, this middle scenario was omitted from the paper.  
-
 
 
 
@@ -1607,7 +1629,11 @@ X_{k}'' &= \E[Y_k | \Z_k] = \Phi\left( \frac{\bSigma_{12}\bSigma_{22}^{-1}\Z_k -
 %\textit{Estimation.} 
 \end{quote}
 
-All the parameters of this model can be estimated from the data. The first step is to specify an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate is obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$. More specifically,  if $\D := \Diag( \dd ) \Diag(\one + \dd)^{-1}$, where $\dd = \diag(\SS_P)$, then an unconstrained estimator of $\bSigma_{22}$ is given by $\SS_Z = (\I_N-\D)^{1/2} \SS_P (\I_N-\D)^{1/2}$. Next, choose a candidate value $\nu$ and estimate $\bSigma_{22}$ with $\mathcal{P}_{LSE}(\SS_Z : \nu)$. To estimate the thresholds $t_k$, let $\PP_k = (P_{1k}, \dots, P_{Nk})'$ and observe that $-\Diag(\one-\diag(\bSigma_{22}))^{1/2}\PP_{k} \sim \mathcal{N}_N(t_k \one_N, \bSigma_{22})$.
+%\marginpar{We need to explain somewhere how we handle sparsity: gaussian dropping some terms is still gausisan with the given covariance sub matrix}
+
+All the parameters of this model can be estimated from the data. The first step is to specify an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate is obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$. More specifically,  if $\D := \Diag( \dd ) \Diag(\one + \dd)^{-1}$, where $\dd = \diag(\SS_P)$, then an unconstrained estimator of $\bSigma_{22}$ is given by $\SS_Z = (\I_N-\D)^{1/2} \SS_P (\I_N-\D)^{1/2}$. Given that there are many missing values, $\SS_P$ is computed by estimating each pairwise covariance separately based on all the events for which both forecasters made predictions. 
+%If the predictions are missing at random, the resulting $\SS_P$ is an unbiased estimator of $\Cov(\PP)$. 
+Next, choose a candidate value $\nu$ and estimate $\bSigma_{22}$ with $\mathcal{P}_{LSE}(\SS_Z : \nu)$. To estimate the thresholds $t_k$, let $\PP_k = (P_{1k}, \dots, P_{Nk})'$ and observe that $-\Diag(\one-\diag(\bSigma_{22}))^{1/2}\PP_{k} \sim \mathcal{N}_N(t_k \one_N, \bSigma_{22})$.
 %With this estimate of $\bSigma_{22}$, the thresholds $t_k$ can be estimated.
 % It is possible  $t_k$ is set by the prior $\P(A_k)$; that is, if $\P(A_k) = q_k \in [0,1]$, then $t_k = \Phi^{-1}(1-q_k)$. Alternatively, the value of $t_k$ can be estimated from the forecasts by 
 % 
@@ -1617,7 +1643,7 @@ All the parameters of this model can be estimated from the data. The first step 
 %\hat{t}_k &= -\frac{\sum_{j=1}^N \sqrt{1-\hat{\delta}_j}P_{jk}/\hat{\delta}_j}{\sum_{j=1}^N 1/\hat{\delta}_j},
 \hat{t}_k &= -\frac{\PP_{k}' \Diag(\one-\diag(\hat{\bSigma}_{22}))^{1/2} \hat{\bSigma}_{22} \one}{\one' \hat{\bSigma}_{22} \one},
 \end{align*}
-where $\hat{\bSigma}_{22} = \mathcal{P}_{LSE}(\SS_Z : \nu)$. This procedure is repeated over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The final value is chosen with the conditional validation technique discussed in Section \ref{condSelection}; that is, the resulting revealed aggregator is $X_{cov}''$. 
+where $\hat{\bSigma}_{22} = \mathcal{P}_{LSE}(\SS_Z : \nu)$. If $\PP_k$ has missing values, the corresponding rows and columns of $\hat{\bSigma}_{22}$ are dropped. Intuitively, this estimator gives more weight to the forecasters with very little information, i.e., their precision $1/\delta_j$ is high. The final $\kappa$ is chosen using conditional validation over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. Similarly to before, denote the resulting revealed aggregator with $X_{cov}''$. 
 
 
 \begin{figure}[t!]
@@ -1645,9 +1671,9 @@ where $\hat{\bSigma}_{22} = \mathcal{P}_{LSE}(\SS_Z : \nu)$. This procedure is r
 %\vspace{2em}
 %\noindent
 %\textit{Analysis.} 
-This aggregator benchmarked against the state-of-the-art measurement error aggregators, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
+This aggregator is benchmarked against the state-of-the-art measurement-error aggregators, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
 and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
-censored to $X_{jk} = 0.001$ and $0.999$, respectively. The accuracy of an aggregate $X_k$ is measured with the mean Brier score (BS) defined as
+censored to $X_{jk} = 0.01$ and $0.99$, respectively. The accuracy of an aggregate $X_k$ is measured with the mean Brier score (BS) defined as
 %Consider $K$
 %events and collect all $N_k$ probability forecasts for event $A_k$ into a vector $\boldsymbol{p}_k \in [0,1]^{N_k}$. Then, BS for aggregator $\text{Agg}:[0,1]^{N_k} \to [0,1]$ is 
  \begin{align*}
