@@ -565,9 +565,9 @@ Suppose $\E[Y|X_j]  = X_j$ for all $j =1, \dots, N$. Let $\F_j = \sigma(X_j)$ an
 \item $\Var(X_i) \leq \Var(X_j)$.  \label{third}
 \end{enumerate}
 \end{proposition}
-This proposition links the observed forecasts and the unknown $Y$. In particular, item \ref{first}) shows that the mean of $Y$ is simply the mean of the forecasts. Furthermore, if the forecasters report probability estimates, the prior distribution can be estimated from the data. Item \ref{second}) shows that $\Cov(X_j, Y) = \Var(X_j)$ because $Y = \E[Y | \F]$ and $\F_j \subset \F$ for all $j = 1, \dots, N$. This explains how the covariance matrix of the observables, namely the $X_j$'s extends to the unknown $Y$. Such extension allows $Y$ to be regressed on the $X_j$'s without a separate training set. The regression is performed by the \textit{revealed} aggregator $X'' := \E [Y \|
+This proposition links the observed forecasts and the unknown $Y$. In particular, item \ref{first}) shows that the mean of $Y$ is simply the mean of the forecasts. Furthermore, if the forecasters report probability estimates, the prior distribution can be estimated from the data. Item \ref{second}) shows that $\Cov(X_j, Y) = \Var(X_j)$ because $Y = \E[Y | \F]$ and $\F_j \subset \F$ for all $j = 1, \dots, N$. This explains how the covariance matrix of the observables, namely the $X_j$'s extends to the unknown $Y$ (see Equation (\ref{NExperts})). Such extension allows $Y$ to be regressed on the $X_j$'s without a separate training set. This is specifically performed by the \textit{revealed} aggregator $X'' := \E [Y \|
 \F'']$, where $\F''$ is the $\sigma$-field generated (or revealed) by the forecasts
-$\{X_j : j = 1, \dots, N \}$. This aggregator optimally utilizes the information in the forecasts and is therefore the relevant estimator in each specific partial information model. Finally, item \ref{third}) shows that the variance of the forecasts increases in the amount of information. 
+$\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the information in the forecasts and is therefore the relevant estimator in each specific partial information model. Finally, item \ref{third}) shows that the variance of the forecasts increases in the amount of information. 
 
 % Together these observations  
 %This arises directly from the existence of a probability model and the assumption of calibration because for a calibrated forecaster, $\E(\one_A | p) = p$, which shows constructively that $p$ is of the form $\E(A | \G)$ for some $\G$. 
@@ -666,8 +666,8 @@ To apply the partial information framework in practice requires a joint probabil
  \end{array}\right)\right)  \label{NExperts}
 \end{align}
 This \textit{distribution of information} has an easy interpretation: $\delta_j := \Var(Z_j)$ is the amount of information used by Forecaster $j$ and $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ is the information overlap between Forecasters $i$ and
-$j$. Therefore the sub-matrix $\bSigma_{22}$ is called the \textit{information structure}. The information variables link to $Y$ and the $X_j$'s via a \textit{link function} and the model assumptions. First, if $\mathcal{Y}$ denotes the support of $Y$, then 
- $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective \textit{link function} specific to the model instance. Second, given that the forecasts are assumed conditionally unbiased, Forecaster $j$ predicts $X_j = \E[Y | Z_j]$. This gives a very flexible specification, yielding a broad range  of partial information models. Examples are discussed in Section \ref{empirical} that illustrates the model on several different types of outcomes.  
+$j$. Therefore the sub-matrix $\bSigma_{22}$ is naturally called the \textit{information structure}. The information variables link to $Y$ and the $X_j$'s via a \textit{link function} and the model assumptions. First, if $\mathcal{Y}$ denotes the support of $Y$, then 
+ $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective link function specific to the model instance. For instance, if the prior distribution of $Y$ is $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$.  Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution. Second, given that the forecasts are conditionally unbiased, Forecaster $j$ predicts $X_j = \E[Y | Z_j]$. This gives a very flexible specification, yielding a broad range  of partial information models. Examples are discussed in Section \ref{empirical} that illustrates this \textit{Gaussian model} on several different types of outcomes.  
 
 % The scale of these quantities is not relevant. Therefore $\Var(Y)$ has been fixed to $1$. 
 %The Gaussian information pool has an easy interpretation: the set $B_j$ contains the information used
@@ -723,7 +723,7 @@ $j$. Therefore the sub-matrix $\bSigma_{22}$ is called the \textit{information s
 %replacing $S$ by $[0,u]$ and $B_j$ by $u B_j$. 
 
 
-The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, \citet{broomell2009experts} discuss a model under which
+The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, \citet{broomell2009experts} discuss a model for subjective interpretation. They assume that
 % recall the interpreted signal
 %model of~\citet{broomell2009experts}. They assume that
 Forecaster~$j$ forms an opinion based on $L_j (H_1 , \ldots , H_r)$,
@@ -734,7 +734,7 @@ the cues (or any linear combination of them) are independent
 and have small tails, then as $r \to \infty$, the joint distribution
 of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
 Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
-to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is particularly useful when deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right).$$ This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. For more motivation and interpretation, see \cite{satopaamodeling}.
+to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is especially useful in deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right).$$ This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. For more motivation and interpretation, see \cite{satopaamodeling}.
 
 % Therefore,
 %the actual scale (e.g., the fact that the covariances of
@@ -1447,7 +1447,7 @@ Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-conve
 
 \section{Empirical Analysis}
 \label{empirical}
-This section evaluates a) the Gaussian model both on synthetic and real-world forecasting data, and b) illustrates how the Gaussian model can be applied to different types of forecasting tasks. Each case assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model then consist of the following components: the information variables $Z_{S,k}, Z_{B_1,k}, \dots, Z_{B_N,k}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{B_j,k}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{S,k})$ for all $k = 1, \dots, K$.
+This section evaluates a) the Gaussian model both on synthetic and real-world forecasting data, and b) illustrates how the Gaussian model can be applied to different types of forecasting tasks. Each case assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model then consist of the following components: the information variables $Z_{0k}, Z_{1k}, \dots, Z_{Nk}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{jk}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{0k})$ for all $k = 1, \dots, K$.
 %\end{enumerate}
 %
 %\begin{align*}
@@ -1473,19 +1473,40 @@ This section evaluates a) the Gaussian model both on synthetic and real-world fo
 The evaluation begins with synthetic data generated directly from the distribution of information (\ref{NExperts}). This yields the simplest instance of the Gaussian model:
 
 \begin{quote}
-{\bf Model Instance.}  The link function $g$ is the identity, the target quantity is $Y_k = g(Z_{S,k}) = Z_{S,k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{B_j,k}] = Z_{B_j,k}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. Recall from Section \ref{gaussian} that $\E[Z_{S,k} | \Z_k] = \bSigma_{12} \bSigma_{22}^{-1} \Z_k$. Therefore the revealed aggregator is $X_k'' = \bSigma_{12} \bSigma_{22}^{-1} \X_k$, where $\X_k = \Z_k$. 
+{\bf Model Instance.}  The link function $g$ is the identity, the target quantity is $Y_k = g(Z_{0k}) = Z_{0k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{jk}] = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \bSigma_{12} \bSigma_{22}^{-1} \X_k$, where $\X_k = \Z_k$. 
 \end{quote}
 
-Simulating forecasts requires a covariance matrix $\bSigma_{22} \in \COR_N$. A random information structure can be generated by first drawing $\delta_i \sim  \mathcal{U}(0,1)$ for all $i = 1, \dots, N$, and then setting $\rho_{ij} = \delta_i \delta_j$. To see that this structure is always in $\COR_N$, approximate the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j$. If $\V$ is a $N \times L$ matrix with rows equal to the forecasters' information vectors, the corresponding (random) information structure is $\V \V' / L$, which, by construction, is always in $\COR_N$. Given that $\COR_N$ is a convex set, the expectation of  $\V \V' / L$ is also in $\COR_N$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j] = \delta_i$ and $\E[\v_i' \v_j] = \delta_i \delta_j$, respectively. This produces a broad range of information structures, both well- and ill-conditioned. In fact, if any $\delta_j = 0$, the resulting $\bSigma_{22}$ is singular.  To avoid this, the $\delta_j$'s are generated uniformly at random from the somewhat more realistic interval $[0.1, 0.9]$. Next,  the simulation draws $(Z_{S,k}, Z_{B_1,k}, \dots, Z_{B_N,k})' \stackrel{i.i.d.}{\sim} \mathcal{N}_{N+1}(\boldsymbol{0}, h(\bSigma_{22}))$ for each problem $k$. The aggregators observe the forecasts $\X_k =  (X_{1k}, \dots, X_{Nk})'$ and 
+
+Simulating forecasts requires a covariance matrix $\bSigma_{22}$ such that $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. A mechanism for randomly generating valid information structures is introduced in the following proposition. 
+\begin{proposition}
+\label{synth}
+First pick $\delta_j \in [0,1]$ for all $j = 1, \dots, N$, and then set $\rho_{ij} = \delta_i \delta_j$. The corresponding information structure satisfies $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+\end{proposition}
+
+This produces a broad range of information structures, both well- and ill-conditioned. In fact, if any $\delta_j = 0$, the resulting $\bSigma_{22}$ is singular.  To avoid this, the $\delta_j$'s are generated uniformly at random from the somewhat more realistic interval $[0.1, 0.9]$. The resulting information structure is then used to draw $(Z_{0k}, Z_{1k}, \dots, Z_{Nk})' \stackrel{i.i.d.}{\sim} \mathcal{N}_{N+1}(\boldsymbol{0}, h(\bSigma_{22}))$ for each problem $k$. The aggregators observe the forecasts $\X_k =  (X_{1k}, \dots, X_{Nk})'$ and 
 % For each event The  aggregators then observe $\Z_k^{-}$, where $\Z_k^{-} = (Z_{B_{1},k}, \dots, Z_{B_N, k})'$ holds only the forecasters' information variables such that $\Z_k = (Z_{S,k}, {\Z_k^{-}}')'$, 
- and predict $Y_{k}$ based on this information. The process is repeated a $5,000$ times under different values of $K$ and $N$, ranging from $5$ to $35$ with constant increments of $5$. 
+ and predict $Y_{k}$ based on this information. The process is repeated a $5,000$ times under different values of $K$ and $N$, each ranging from $5$ to $35$ with constant increments of $5$. 
 % The number of forecasters $N$ is fixed at $20$. 
+%This subsection compares the performance of several aggregators:
+The competing aggregators are listed in the following enumeration. 
+\begin{enumerate}[i)]
+\item  The revealed aggregator  $X_k''$ with the sample covariance matrix $\SS_Z$. Given that $\SS_Z$ is singular when $K<N$, its inverse is computed with the (Moore-Penrose) generalized inverse.
+\item The revealed aggregator $X_k''$ with $\mathcal{P}_{LSE}(\SS_Z : \kappa_{cov})$. Call this $X_{cov}''$. 
+%, where $\kappa_{cov}$ is found over a grid of $100$ values between $10$ and $1,000$. 
+\item The revealed aggregator  $X_k''$ with  $\mathcal{P}_{LSE}(\SS_Z : \kappa_{out})$.  
+%, where $\kappa_{out}$ is found over the same grid of values as $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. 
+The cross-validation uses five folds; that is,  $R = 5$. Call this $X_{out}''$. 
+\item  The revealed aggregator  $X_k''$ with the true information structure $\bSigma_{22}$. Call this $X_{true}''$. 
+\item The average forecast.
+\item The median forecast.
+\end{enumerate}
 
 \begin{figure}[t!]
+\vspace{-2em}
 \centering
 %\vspace{-2em}
 \hspace*{1em} 	\includegraphics{legendSim.pdf} % requires the graphicx package
-\vspace{-3.5em}
+\vspace{-4em}
 
         \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResSigma.pdf}
@@ -1500,19 +1521,6 @@ Simulating forecasts requires a covariance matrix $\bSigma_{22} \in \COR_N$. A r
         \caption{Estimation of the information structure and its condition number. Both are important for accuracy prediction of $Z_S$. The vertical line represents the number of forecasters, $N$, that has been fixed to $20$.}
         \label{SigmaEstimation}
 \end{figure}
-
-This subsection compares the performance of several aggregators:
-\begin{enumerate}[i)]
-\item  The revealed aggregator  $X_k''$ with the sample covariance matrix $\SS_Z$. Given that $\SS_Z$ is singular when $K<N$, its inverse is computed with the (Moore-Penrose) generalized inverse.
-\item The revealed aggregator $X_k''$ with $\mathcal{P}_{LSE}(\SS_Z : \kappa_{cov})$. Call this $X_{cov}''$. 
-%, where $\kappa_{cov}$ is found over a grid of $100$ values between $10$ and $1,000$. 
-\item The revealed aggregator  $X_k''$ with  $\mathcal{P}_{LSE}(\SS_Z : \kappa_{out})$.  
-%, where $\kappa_{out}$ is found over the same grid of values as $\mathcal{P}_{LSE}(\cdot : \kappa_{cov})$. 
-The cross-validation uses five folds; that is,  $R = 5$. Call this $X_{out}''$. 
-\item  The revealed aggregator  $X_k''$ with the true information structure $\bSigma_{22}$. Call this $X_{true}''$. 
-\item The average forecast.
-\item The median forecast.
-\end{enumerate}
 
 
 Recall  that accurate revealed aggregation stems both from a precise estimate of $\bSigma_{22}$ and a low condition number. This allows different strategies for achieving good accuracy. In fact, it turns out that the two selection procedures discussed in Section \ref{condSelection} make slightly different tradeoffs. This is illustrated in  Figure \ref{SigmaEstimation} that varies $K$ between $5$ and $35$ but keeps $N$ fixed at $20$. More specifically,  Figure \ref{Sigma} examines how $\mathcal{P}_{LSE}(\SS_Z : \kappa_{cov})$, $\mathcal{P}_{LSE}(\SS_Z : \kappa_{out})$, and $\SS_Z$ capture the true $\bSigma_{22}$. 
@@ -1534,20 +1542,21 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 %\end{figure}
 
 \begin{figure}[t!]
+\vspace{-2em}
 \centering
 %\vspace{-2em}
-\hspace*{0em} 	\includegraphics{legendSim2.pdf} % requires the graphicx package
-\vspace{-3.5em}
+\hspace*{1em} 	\includegraphics{legendSim2.pdf} % requires the graphicx package
+\vspace{-4 em}
 
     	\captionsetup[subfigure]{width=0.98\textwidth }
     \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResX.pdf}
-                \subcaption{Predictions errors under different value of $K$ and fixed $N = 20$.}
+                \subcaption{Prediction errors under different value of $K$ and fixed $N = 20$.}
                 \label{Nfixed}
         \end{subfigure}%
         \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResXN.pdf}
-                \subcaption{Predictions errors under different value of $N$ and fixed $K = 20$.}
+                \subcaption{Prediction errors under different value of $N$ and fixed $K = 20$.}
                                 \label{Kfixed}
         \end{subfigure}
          \caption{The accuracy to predict $Y_k$ under different values of $N$ and $K$. The aggregator $X_{true}''$ assumes knowledge of the true covariance matrix and hence represents  optimal accuracy.}
@@ -1557,7 +1566,7 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 
 
 
-These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the average squared error loss of the competing aggregators in predicting $Y_k$. More specifically, Figure \ref{Nfixed} varies $K$ but fixes $N = 20$, while Figure \ref{Kfixed}  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{S,k} \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y_k-0)^2] = 1.0$ can be considered as the upper bound in prediction error. The revealed aggregator $X_{true}''$, on the other hand, is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss at around $0.26$. They both show slight improvement as $N$ increased. In all cases, however, their loss is uniformly well above the loss of the revealed aggregator, suggesting that averaging aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They monotonically tend closer to the optimal as $K$ grows larger. They also collect information and improve similarly to the optimal rate as $N$ increases. However, when $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
+These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the average squared error loss of the competing aggregators in predicting $Y_k$. More specifically, Figure \ref{Nfixed} varies $K$ but fixes $N = 20$, while Figure \ref{Kfixed}  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{0k} \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y_k-0)^2] = 1.0$ can be considered as the upper bound in prediction error. The aggregator $X_{true}''$, on the other hand, is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss at around $0.26$. They both show slight improvement as $N$ increased. In all cases, however, their loss is uniformly well above the loss of the relevant revealed aggregators, suggesting that averaging aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They monotonically tend closer to the optimal as $K$ grows larger. They also collect information and improve similarly to the optimal rate as $N$ increases. However, when $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
   
 
 
@@ -1731,16 +1740,16 @@ In Section \ref{simulation} the prior of $Y_k$ was set to the true marginal dist
 \begin{quote}
 \textbf{Model Instance.} Let $Y_k \in \{0,1\}$ for $k = 1, \dots, K$. These outcomes link to the Gaussian information pool via the following function:
 \begin{align*}
-Y_k &= g(Z_{S,k}) = \begin{cases}
-1 & \text{ if } Z_{S,k} > t_k\\
+Y_k &= g(Z_{0k}) = \begin{cases}
+1 & \text{ if } Z_{0k} > t_k\\
 0 & \text{ otherwise},\\
 \end{cases}
 \end{align*}
-where $t_k \in \R$ is some threshold value. Therefore the link function $g(\cdot)$ is simply the indicator function $\one_{A_k}$ of the event $A_k = \{Z_{S,k} > t_k\}$. The prior probability of the $k$th event is $\P(Y_k = 1) = \Phi(-t_k)$, where $\Phi(\cdot)$ is the CDF of a standard Gaussian distribution. Given that the thresholds are allowed to vary among the events, each event has its own prior. 
+where $t_k \in \R$ is some threshold value. Therefore the link function $g(\cdot)$ is simply the indicator function $\one_{A_k}$ of the event $A_k = \{Z_{0k} > t_k\}$. The prior probability of the $k$th event is $\P(Y_k = 1) = \Phi(-t_k)$, where $\Phi(\cdot)$ is the CDF of a standard Gaussian distribution. Given that the thresholds are allowed to vary among the events, each event has its own prior. 
 %Overall, the events are quite different. Therefore it is important to allowing the threshold $t_k$ to change across problems. 
 The corresponding probability forecasts $X_{jk} \in [0,1]$ are
 \begin{align*}
-X_{jk} &= \E[Y_k | Z_{B_j,k}] = \Phi\left( \frac{Z_{B_j,k} - t_k}{\sqrt{1-\delta_j}}\right).
+X_{jk} &= \E[Y_k | Z_{jk}] = \Phi\left( \frac{Z_{jk} - t_k}{\sqrt{1-\delta_j}}\right).
 \end{align*}
 In a similar manner, 
 % if $\Z_k = (Z_{B_1, k}, \dots, Z_{B_N, k})'$ collects the forecasters' information variables, then 
@@ -1789,8 +1798,8 @@ This score takes values within the unit interval with lower values indicating hi
 \begin{figure}[t!]
 \vspace{-2em}
 \centering
-\hspace*{0em} 	\includegraphics[width=\textwidth]{legendReal.pdf} % requires the graphicx package
-\vspace{-3.5em}
+\hspace*{1em} 	\includegraphics[width=\textwidth]{legendReal.pdf} % requires the graphicx package
+\vspace{-4em}
 
         \centering
         \begin{subfigure}{0.32\textwidth}
@@ -2153,6 +2162,14 @@ Denote the common marginal mean with $\mu = \E[X_j]$ for all $j = 1, \dots, N$. 
 which then provides $\Var(X_i) \leq \Var(X_j)$. This inequality is tight because $X_i = X_j$ for $\F_i = \F_j$. 
 
 \end{enumerate}
+\end{proof}
+
+
+\subsection{Proof of Proposition \ref{synth}}
+\begin{proof}
+It is helpful to first establish membership in what is typically known as the correlation polytope $\COR_N :=  \conv\left\{
+\boldsymbol{x}\boldsymbol{x}' : \boldsymbol{x} \in
+\{0,1\}^N\right\}$. Begin by approximating the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j \in [0,1]$. If $\V$ is a $N \times L$ matrix with rows equal to the forecasters' information vectors, the corresponding (random) information structure is $\V \V' / L$, which, by construction, is always in $\COR_N$. Given that $\COR_N$ is a convex set, the expectation of  $\V \V' / L$ is also in $\COR_N$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j] = \delta_j$ and $\E[\v_i' \v_j] = \delta_i \delta_j$, respectively.  Finally, \cite{laurent1997connections} showed that all $\bSigma_{22} \in \COR_N$ satisfy $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
 \end{proof}
 
 
