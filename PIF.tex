@@ -2167,9 +2167,11 @@ which then provides $\Var(X_i) \leq \Var(X_j)$. This inequality is tight because
 
 \subsection{Proof of Proposition \ref{synth}}
 \begin{proof}
-It is helpful to first establish membership in what is typically known as the correlation polytope $\COR_N :=  \conv\left\{
-\boldsymbol{x}\boldsymbol{x}' : \boldsymbol{x} \in
-\{0,1\}^N\right\}$. Begin by approximating the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j \in [0,1]$. If $\V$ is a $N \times L$ matrix with rows equal to the forecasters' information vectors, the corresponding (random) information structure is $\V \V' / L$, which, by construction, is always in $\COR_N$. Given that $\COR_N$ is a convex set, the expectation of  $\V \V' / L$ is also in $\COR_N$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j] = \delta_j$ and $\E[\v_i' \v_j] = \delta_i \delta_j$, respectively.  Finally, \cite{laurent1997connections} showed that all $\bSigma_{22} \in \COR_N$ satisfy $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+%It is helpful to first establish membership in what is typically known as the correlation polytope $\COR_N :=  \conv\left\{
+%\boldsymbol{x}\boldsymbol{x}' : \boldsymbol{x} \in
+%\{0,1\}^N\right\}$. 
+Begin by approximating the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j \in [0,1]$. Let $\v_0 = \one$ be of a vector of $L$ ones. If $\V$ is a $(N+1) \times L$ matrix with the $k$th row equal to $\v_{k-1}/\sqrt{L}$, the corresponding Gramian matrix $\V \V' $ is always in $ \mathcal{S}_{+}^{N+1}$. Given that $\mathcal{S}_{+}^{N+1}$ is a convex set, the expectation of  $\V \V' $ is also in $\mathcal{S}_{+}^{N+1}$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j/L] = \delta_j$ and $\E[\v_i' \v_j/L] = \delta_i \delta_j$, respectively.  
+%Finally, \cite{laurent1997connections} showed that all $\bSigma_{22} \in \COR_N$ satisfy $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
 \end{proof}
 
 
