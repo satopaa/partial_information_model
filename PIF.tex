@@ -141,8 +141,34 @@ Ville A. Satop\"a\"a, Shane T. Jensen, Robin Pemantle, and Lyle H. Ungar\\
 %\thispagestyle{empty}
 
 \begin{abstract}
-
+Prediction polling is an increasingly popular form of crowdsourcing that inquires its participants about their best estimates of some quantity of interest, such as tomorrow's stock price or the likelihood of a particular future event happening. Historically, randomness in scientific estimation has  been generally
+assumed to arise from unmeasured or uncontrolled factors. However, 
+when combining subjective estimates, heterogeneity
+stemming from differences in the participants' information is often
+more important than measurement noise. This paper formalizes information diversity as an alternative source of heterogeneity and introduces a novel modeling framework that is particularly suited for prediction polls. A practical specification of this framework is proposed and applied to the task of aggregating probability and point estimates from two real-world prediction polls. In both cases our model outperforms the measurement-error-based aggregators, hence providing evidence in favor of information diversity being the more important source of heterogeneity. 
+%, namely probability and point forecasts. The data arises from real-world prediction polls. 
+%In particular, the probability forecast target important future events specified by the Intelligence Advanced Research Projects Activity (IARPA) while point forecasts estimate the weights of people. 
+%The framework is first introduced at the most general level. After this, a specific model is proposed
+%within that framework and applied to the task of aggregating
+%%that models the heterogeneity arising from forecasters that use 
+%%partially overlapping information sources, and applies that model to 
+%%the task of  aggregating
+% the probabilities given by a group of forecasters 
+%who predict whether an event will occur or not.
+% Our model describes 
+%the distribution of information across forecasters in terms of easily
+%interpretable parameters and shows how the optimal amount
+%of \textit{extremizing} of the average probability forecast (shifting
+%it closer to its nearest extreme) varies as a function of the forecasters'
+%information overlap.  Our model thus gives a more principled
+%understanding of the historically {\it ad hoc} practice of extremizing
+%average forecasts. Supplementary material for this article is available
+%online.\\
+\\
+\textit{Keywords:} Expert belief; Forecast heterogeneity; Judgmental forecasting; Model
+averaging; Noise reduction
 \end{abstract}
+
 
 %data generative process. 
 
@@ -168,37 +194,61 @@ Even though historically opinion polls have been the dominant form, in the recen
 % 
 % This paper develops methodology generally applicable for prediction polls. % 
 
-The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The focus, however, is on empirical work. Therefore, the methods are illustrated with case studies of real-world prediction polls.  The first study analyzes a forecasting tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as means to acquire accurate predictions on future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
+The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The methods are illustrated on two of the most common types of responses, namely prediction and point forecasts. In both cases the data arise from real-world prediction polls.  More specifically, the probability forecasts are from a tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as means to acquire accurate predictions on future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
 % This success is largely credited to the
 The GJP has performed large-scale prediction polling, recruiting 
 thousands of forecasters from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
 %Requirements included at least a Bachelor's degree and completion of psychological and political tests that took roughly two hours. These measures assessed cognitive styles, cognitive abilities, personality traits, political attitudes, and real-world knowledge. 
-These forecasters were then asked to estimate probabilities of the events specified by IARPA.  To illustrate, Figure \ref{Examples} shows the forecasts for two of these events.
+Over a period of time these forecasters were then asked to estimate probabilities of the events specified by IARPA. For each event the forecasters were allowed to make and update their estimates until the event resolved. To illustrate, Figure \ref{Example_prob} shows the forecasts for one of these events. In this example forecasting began on 30 July 2012 and ended on 30 December 2012 when the event resolved as "No" (represented by the red line at $0.0$). 
 % ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?".
-In general, the forecasters were allowed to make and update their estimates until the events resolved. The forecasters, however, reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset extremely sparse. 
+In general, the forecasters reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset very sparse. The point forecasts, on the other hand, were collected by \cite{moore2008use} who asked $416$ participants to guess the weights of $20$ people based on a series of pictures of these people. This is an experimental setup where each participant was required to respond to all the questions, resulting into a complete dataset. The responses are illustrated in Figure \ref{Example_point} that shows the boxplots of the guesses for each of the $20$ people. The red dots represent the corresponding true weights.
 
 %Each question has a timeframe during which the participating forecasters made and updated their estimates as frequently as they liked without penalty. For instance, the question in Figure \ref{Example1} has a timeframe of $154$ days, ranging from 30 July 2012  to 31 December 2012. In general, the forecasters updated their estimates very infrequently, making the dataset extremely sparse. 
 
 
+%\begin{figure}[t!]
+%	\captionsetup[subfigure]{width=0.98\textwidth }
+%        \centering
+%        \begin{subfigure}{0.495\textwidth}
+%                \includegraphics[width=\textwidth]{1127}
+%                \subcaption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
+%                                \label{Example1}
+%        \end{subfigure}
+%        \begin{subfigure}{0.495\textwidth}
+%                \includegraphics[width=\textwidth]{1160}
+%                \subcaption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
+%                                \label{Example2}
+%        \end{subfigure}             
+%        
+%        \caption{Two example problems. Given that neither event occurred, the forecasts converge towards the correct answer as the resolution day (the right most point) approaches. Problem (a) involved 522 forecasters, each making, on average, $6.4$ predictions. Problem (b), on the other hand, involved 521 forecasters with an average of $2.1$ predictions per forecaster. The points have been jittered slightly to make overlapping estimates visible.}
+%        \label{Examples}
+%\end{figure}
+
 \begin{figure}[t!]
-	\captionsetup[subfigure]{width=0.98\textwidth }
-        \centering
-        \begin{subfigure}{0.495\textwidth}
+%	\captionsetup[figure]{width=0.97\textwidth }
+\captionsetup{width=0.48\textwidth}
+%        \centering
+%        \begin{subfigure}[t]{0.495\textwidth}
+\begin{minipage}[t]{.5\textwidth}
                 \includegraphics[width=\textwidth]{1127}
-                \subcaption{Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?}
-                                \label{Example1}
-        \end{subfigure}
-        \begin{subfigure}{0.495\textwidth}
-                \includegraphics[width=\textwidth]{1160}
-                \subcaption{Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?}
-                                \label{Example2}
-        \end{subfigure}             
+                \caption{Probability forecasts of the event ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' The points have been jittered slightly to make overlaps visible.}
+                                \label{Example_prob}
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+%        \end{subfigure}
+%        \begin{subfigure}[t]{0.495\textwidth}
+                \includegraphics[width=\textwidth]{Weights}
+                \caption{Point forecasts of the weights of $20$ different people. The boxplots have been sorted to increase in the true weight. Some extreme values were omitted for the sake of clarity.}
+                                \label{Example_point}
+%        \end{subfigure}             
         
-        \caption{Two example problems. Given that neither event occurred, the forecasts converge towards the correct answer as the resolution day (the right most point) approaches. Problem (a) involved 522 forecasters, each making, on average, $6.4$ predictions. Problem (b), on the other hand, involved 521 forecasters with an average of $2.1$ predictions per forecaster. The points have been jittered slightly to make overlapping estimates visible.}
-        \label{Examples}
+%        \caption{Illustration of the real-world forecasts analyzed in this paper. In both subfigures the true values of the target quantities are drawn in red.}
+%        \label{Examples}
+\end{minipage}%
 \end{figure}
 
-The second case study, on the other hand, .... 
+
+
 
 
 %The success of the GJP can be largely credited to its extensive \textit{prediction polling}. This form of polling differs from the more classical \textit{opinion polling} sometimes in a subtle manner and is hence best described with a simple example: Consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. In broader terms, whereas an opinion poll is a survey of public opinion, prediction poll refers to a setup where multiple agents are collectively predicting the value of some quantity of interest. Prediction polling is, of course, not limited to probability forecasts but can be applied to others types, such as point estimates or even probability density functions, as well. Recently a large number of prediction polls of different types have emerged possibly because modern social and computer networks permit the collection of a large number of responses from a diverse set of sources, including both human or machine agents. This has given rise to crowdsourcing platforms, such as MTurk and Witkey, and many companies, such as Myriada, Lumenogic, and Inkling, that have managed to successfully  capitalize on the benefits of collective wisdom. 
@@ -306,6 +356,8 @@ The paper is structured as follows.  The next section reviews previous work on m
 future research.
 
 
+\marginpar{This really is a modeling framework; instead of taking the mean, we can built different kinds of models depending on the context}
+\marginpar{The framework is introduced by starting very general then going more specific.}
 
 %For instance, consider a group of forecasters making independent predictions of a company's future revenue. The team members  may vary largely in terms of skill and knowledge. 
 %\subsubsection{Bayesian Framework}
@@ -503,16 +555,19 @@ therefore isolating the task to one of noise reduction. In particular, the forec
 %forecast stream.  
 
 A forecast is typically assessed with a loss
-function $L(X_i, Y)$. Many choices, however, are possible, and
+function $L(X_i, Y)$. Many choices are possible, and
 an estimator that outperforms another under one loss function will not
 necessarily do so under a different one. In this paper  the focus is on loss functions that are minimized at the conditional expectation of $Y$ (given the forecaster's information).  This involves many well-known penalties such as the Kullback-Leibler divergence, Mahalanobis distance, and the quadratic loss \citep{banerjee2005optimality}. These loss functions can be considered \textit{revealing} because if a group of
 sophisticated forecasters operates under such a loss function,
 the assumption of conditionally unbiased forecasts is, to some degree,
 self-fulfilling. 
 
+\marginpar{the model is a bit different as before; negative correlation.}
 % Forecasters can improve their long run performance via training and active
 %feedback. Forecasters with competitive
 %motivation, sophistication, and historical data will probably do so.
+
+\marginpar{IN general unsupervised aggregation leads to garbage in garbage out methods.}
 
 % Secondly, the
 %assessment of the aggregated forecast is not uni-dimensional any more
@@ -550,11 +605,13 @@ model for forecast aggregation. How the prior is incorporated depends on the pro
  In any Bayesian setup,
 with a revealing loss function, it is more or less tautological that
 Forecaster $j$ reports $X_j = \E[Y \| \F_j]$, where $\F_j \subseteq \F$ is
-the \textit{information set} used by the forecaster. Therefore the forecasters operate under the same probability model but make predictions based on different information sets. 
-In particular, given that $\F_i \neq \F_j$ if $X_i \neq X_j$, forecast heterogeneity stems purely from \textit{information diversity}.
+the \textit{information set} used by the forecaster. This means that Forecaster $j$ may have access to some larger $\sigma$-field $\G$ but only decides to use $\F_j \subseteq \G$. For the purposes of aggregation, any available information discarded by the forecaster may as well not exist. The forecasters then operate under the same probability model but make predictions based on different information sets. 
+In particular, given that $\F_i \neq \F_j$ if $X_i \neq X_j$, forecast heterogeneity stems purely from \textit{information diversity}. 
 %To see that this assumption is not in any way restrictive, recall that a conditionally unbiased forecaster predicts $\E [Y \| X_j] = X_j$. Under the given probability model, conditioning on $X_j$ is equivalent to conditioning on $\sigma(X_j) = \F_j$, namely the smallest $\sigma$-field generated by $X_j$, and hence $\E [Y \| X_j] =  \E [Y \| \F_j] = X_j$. Consequently, the assumption
 % $X_j = \E [Y | \F_j]$ only requires the existence of a probability model, together with the assumption of conditional unbiasedness. 
  This is enough to provide the following proposition. The proof is deferred to the Appendix.
+ 
+ \marginpar{must explain that this is information used. This is important for the second app; in fact must be more careful about this throughout the paper. This is important distinction}
  
 \begin{proposition}
 \label{covstr}
@@ -565,9 +622,28 @@ Suppose $\E[Y|X_j]  = X_j$ for all $j =1, \dots, N$. Let $\F_j = \sigma(X_j)$ an
 \item $\Var(X_i) \leq \Var(X_j)$.  \label{third}
 \end{enumerate}
 \end{proposition}
-This proposition links the observed forecasts and the unknown $Y$. In particular, item \ref{first}) shows that the mean of $Y$ is simply the mean of the forecasts. Furthermore, if the forecasters report probability estimates, the prior distribution can be estimated from the data. Item \ref{second}) shows that $\Cov(X_j, Y) = \Var(X_j)$ because $Y = \E[Y | \F]$ and $\F_j \subset \F$ for all $j = 1, \dots, N$. This explains how the covariance matrix of the observables, namely the $X_j$'s extends to the unknown $Y$ (see Equation (\ref{NExperts})). Such extension allows $Y$ to be regressed on the $X_j$'s without a separate training set. This is specifically performed by the \textit{revealed} aggregator $X'' := \E [Y \|
+In words, item \ref{first}) shows that, on average, the target quantity and the forecasts agree. This provides guidance in estimating the prior of $Y$. 
+% This suggests that  if the $X_j$'s are probabilistic (such as densities), the prior distribution $\P(Y)$ can be estimated from the forecasts. On the other hand, if $X_j$ are point estimates, the prior mean $\E[Y]$ can be estimated from the $X_j$'s. 
+%
+%This suggests that all the relevant model parameters can be estimated in practice.
+%Furthermore, given that $X''$ and the $X_j$'s have the same support, the choice of $\delta_0$ is irrelevant when the $X_j$'s are point estimates. On the other hand, if the $X_j$'s are probabilistic (such as densities), $\delta_0$ can be estimated from them by referring to item \ref{first}) of Proposition \ref{covstr}.  For convenience and without loss of generality, the rest of the paper assumes that the link function performs scaling such that $\delta_0 = 1$ in (\ref{NExperts}).  
+Given that $Y = \E[Y | \F]$ and $\F_j \subseteq \F$ for all $j = 1, \dots, N$, item \ref{second}) shows that the covariance matrix $\bSigma_X$ of the $X_j$'s extends to the unknown $Y$ as follows:
+\begin{align}
+\Cov((Y, X_1, \dots, X_N)) &=  \left( \begin{matrix} 
+ \Var(Y)  & \diag(\bSigma_X)'  \\
+\diag(\bSigma_X) & \bSigma_X \\
+\end{matrix} \right), \label{cov_str}
+\end{align}
+where $\diag(\bSigma_X)$ is a vector of the diagonal elements of $\bSigma_X$
+%
+% $\Cov(X_j, Y) = \Var(X_j)$ because $Y = \E[Y | \F]$ and $\F_j \subseteq \F$ for all $j = 1, \dots, N$.
+%  This explains how the covariance matrix of the observables, namely the $X_j$'s extends to the unknown $Y$ (see Equation (\ref{NExperts})).
+   Such an extension allows $Y$ to be regressed on the $X_j$'s without a separate training set of past prediction problems with known outcomes. The resulting estimator, called the \textit{revealed} aggregator, is given by $X'' := \E [Y \|
 \F'']$, where $\F''$ is the $\sigma$-field generated (or revealed) by the forecasts
-$\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the information in the forecasts and is therefore the relevant estimator in each specific partial information model. Finally, item \ref{third}) shows that the variance of the forecasts increases in the amount of information. 
+$\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the information in the forecasts and is therefore the relevant estimator in each specific partial information model. Finally, item \ref{third}) shows that the variance of $X_j$ increases as Forecaster $j$  learns and becomes more informed. 
+
+
+%\marginpar{Discussion of item i should be place here. Keep it as one in the following text.}
 
 % Together these observations  
 %This arises directly from the existence of a probability model and the assumption of calibration because for a calibrated forecaster, $\E(\one_A | p) = p$, which shows constructively that $p$ is of the form $\E(A | \G)$ for some $\G$. 
@@ -643,10 +719,13 @@ $\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the inf
 %
 %Estimation of the latter quantity, on the other hand, relies on the correlation of the forecasts. To make this more specific, recall that two $\sigma$-algebras $\mathcal{F}_i$ and  $\mathcal{F}_j$ are called independent if for all $B \in \mathcal{F}_i$ and $C \in \mathcal{F}_j$ the events $B$ and $C$ are independent, i.e. $\P(B \cap C) = \P(B) \P(C)$. In other words, $\mathcal{F}_i$ does not provide any additional information about $\mathcal{F}_j$, and \textit{vice versa}. Therefore independent $\sigma$-fields can be considered \textit{informationally disjoint}. Given that $X_j$ is measurable with respect to $\mathcal{F}_j$,  forecasts based on informationally disjoint sets are independent and hence uncorrelated. At the other extreme, if $\mathcal{F}_i = \mathcal{F}_j$, the forecasts $X_i$ and $X_j$ are the same and have a perfect positive correlation.  Therefore it is reasonable to assume that the correlation between any two forecasts increases in size of the forecasters' information overlap. 
  
+% \subsection{Interpretation}
+% Explain the covariance structure and show how it can be interrupted. 
+% 
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-To apply the partial information framework in practice requires a joint probability distribution for the model variables. Any distribution can be used as long as it can incorporate the covariance structure described in the previous section.  In many applications, however, $Y$ and the $X_j$'s may not share a common support, making it difficult to directly state a joint distribution for them. One solution is to use a set of hidden variables, called the \textit{information variables}, that follow a joint multivariate Gaussian distribution with the correct covariance structure. More specifically, denote the information variables with $Z_0, Z_1, \dots, Z_N$ and let
+To apply the partial information framework in practice requires a joint probability distribution for the model variables. Any distribution can be used as long as it can incorporate the covariance pattern in (\ref{cov_str}).  In many applications, however, $Y$ and the $X_j$'s may not share a common support, making it difficult to directly state a joint distribution for them. One solution is to use a set of hidden variables, called the \textit{information variables}, that follow a joint multivariate Gaussian distribution with the correct covariance structure. More specifically, denote the information variables with $Z_0, Z_1, \dots, Z_N$ and let
 \begin{align}
 \left(\begin{matrix} Z_0 \\ Z_{1}\\ \vdots \\ Z_{N} \end{matrix}\right) &\sim \mathcal{N}_{N+1}\left( 
 %\left(\begin{matrix} 
@@ -663,11 +742,11 @@ To apply the partial information framework in practice requires a joint probabil
 \delta_2 & \rho_{2,1} & \delta_2 & \dots & \rho_{2,N}  \\ 
 \vdots & \vdots & \vdots & \ddots & \vdots  \\ 
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
- \end{array}\right)\right)  \label{NExperts}
+ \end{array}\right)\right).  \label{NExperts}
 \end{align}
-This \textit{distribution of information} has an easy interpretation: $\delta_j := \Var(Z_j)$ is the amount of information used by Forecaster $j$ and $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ is the information overlap between Forecasters $i$ and
+This \textit{distribution of information} has an easy interpretation: $\Var(Z_0) = 1.0$ is the total amount of information, $\delta_j := \Var(Z_j)$ is the amount of information used by Forecaster $j$, and $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ is the information overlap between Forecasters $i$ and
 $j$. Therefore the sub-matrix $\bSigma_{22}$ is naturally called the \textit{information structure}. The information variables link to $Y$ and the $X_j$'s via a \textit{link function} and the model assumptions. First, if $\mathcal{Y}$ denotes the support of $Y$, then 
- $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective link function specific to the model instance. For instance, if the prior distribution of $Y$ is $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$.  Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution. Second, given that the forecasts are conditionally unbiased, Forecaster $j$ predicts $X_j = \E[Y | Z_j]$. This gives a very flexible specification, yielding a broad range  of partial information models. Examples are discussed in Section \ref{empirical} that illustrates this \textit{Gaussian model} on several different types of outcomes.  
+ $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective link function specific to the model instance. For instance, if the prior distribution of $Y$ is $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution. Second, given that the forecasts are conditionally unbiased, Forecaster $j$ predicts $X_j = \E[Y | Z_j]$. This is overall  a very flexible specification that yields a broad range  of different partial information models. Examples are discussed in Section \ref{empirical} that illustrates the \textit{Gaussian model} on several different types of outcomes.  
 
 % The scale of these quantities is not relevant. Therefore $\Var(Y)$ has been fixed to $1$. 
 %The Gaussian information pool has an easy interpretation: the set $B_j$ contains the information used
@@ -734,7 +813,11 @@ the cues (or any linear combination of them) are independent
 and have small tails, then as $r \to \infty$, the joint distribution
 of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
 Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
-to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is especially useful in deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\bSigma_{12} \bSigma_{22}^{-1} \Z, 1-\bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21}\right).$$ This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. For more motivation and interpretation, see \cite{satopaamodeling}.
+to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is especially useful in deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z, 1-\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})\right).$$ This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. The term $\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
+%$\delta_0 = 1$ is from now on incorporated in the link function such that $\Var(Z_0) = 1$. 
+%Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution.
+%Therefore if the decision-maker only cares about a point estimate, the choice of $\delta_0$ is irrelevant. In the contrary, if 
+For more motivation and interpretation, see \cite{satopaamodeling}.
 
 % Therefore,
 %the actual scale (e.g., the fact that the covariances of
@@ -959,7 +1042,7 @@ h(\M)  :=
 \diag(\M) &\M\\
  \end{matrix}\right),
 \end{align*}
-where $\M \in \mathcal{S}^{N}_+$ and $\diag(\M)$ is a vector of the diagonal elements of $\M$, then estimation must performed under the condition $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+where $\M \in \mathcal{S}^{N}_+$, then estimation must performed under the condition $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
 
 
 %These elements, however, differ largely in their sensitivity to numerical operations. This is important because
@@ -1124,12 +1207,17 @@ Furthermore, it is not clear whether the dimension of this form can be reduced. 
 
 %\marginpar{would not call it unconstrained: naive that is obtained in a context specific manner. This projection method then allows for a corruption that is required for aggregation.}
 
-In many applications $\bSigma_{22}$ can be estimated easily with an unconstrained estimator such as the sample covariance matrix $\SS_Z$. Even though this section focuses on $\SS_Z$, the discussion generalizes to any unconstrained estimator via direct substitution of $\SS_Z$. Any such estimator can be improved by projecting it onto the feasible region. This approach, known sometimes as least squares estimation (LSE), has been studied extensively by many authors  (see, e.g., \citealt{soloveychik2013covariance, barton1997structured, henrion2012projection, malick2004dual, hu1991numerical}). It guarantees a globally optimal solution and facilitates  dimension reduction. 
+%\marginpar{it is really the constraint that makes the estimation difficult. This section introduces a correction step etc.}
+%\marginpar{There is really nothing Gaussian about this}
+
+In many applications $\bSigma_{22}$ can be estimated easily with an unconstrained estimator such as the sample covariance matrix $\SS_Z$. Any such estimator can be improved by projecting it onto the feasible region. This approach, known sometimes as least squares estimation (LSE), has been studied extensively by many authors  (see, e.g., \citealt{soloveychik2013covariance, barton1997structured, henrion2012projection, malick2004dual, hu1991numerical}). It guarantees a globally optimal solution and facilitates  dimension reduction. Furthermore, it does not rely on a parametric model and hence can be used to reinforce the constraints even in future non-Gaussian partial information models. 
 %If the true information structure $\bSigma_{22} \in \COR_N$, then the projection will be closer to the truth than the unconstrained estimator. Furthermore, given that the projection does not alter any unconstrained estimates already in the feasible region, it retains many properties of the unconstrained estimator. For instance, this paper focuses on projecting the sample covariance matrix  $\boldsymbol{S}_Z$ which, under the Gaussian model, is the unconstrained MLE of the true information structure. Given that $\boldsymbol{S}_Z$ is consistent, its projection is also consistent.
 %
 %\marginpar{This may not be true given our condition number constraint. In fact, there is no need to mention this at all. Focus on giving an equivalent problem.}
 %The associated loss function is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$, where $\Tr(\cdot)$ denotes the trace operator. 
-The first step is to define $\bSigma := h(\bSigma_{22})$ and project $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
+%
+
+Even though this section focuses on $\SS_Z$, the discussion generalizes to any unconstrained estimator via direct substitution of $\SS_Z$.  The first step is to define $\bSigma := h(\bSigma_{22})$ and project $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
 %The functional invariance of the MLE shows that $h(\boldsymbol{S}_Z)$ is an unconstrained MLE of  $h(\bSigma_{22}) = \bSigma$. 
 The estimation problem then becomes
 %A popular and efficient solution is to project an unconstrained estimator (such as a sample covariance matrix) on to the constrained space 
@@ -1187,11 +1275,12 @@ First, projecting a matrix $\M \in \mathcal{S}^{N+1}$  onto $\mathcal{C}_{lin}$ 
 %Then, $\s$ has length $N_s := \binom{N+1}{2} = (N+1)N/2$. If $\A_0$ is a $(N+1) \times (N_s - N - 1)$ binary matrix with ones only at positions $\left(i,  1+\sum_{j=0}^{i-3}(N-j)\right)$ for $i = 2, \dots, N+1$, 
 If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$ for $j = 1, \dots, N+1$, then the  linear constraints in (\ref{lse_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. The projection of  $\M$ onto $\mathcal{C}_{lin}$ is $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$, for $j = 2, \dots, N+1$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
 
-Second, \cite{tanaka2014positive} re-express the projection of $\M \in \mathcal{S}^{N+1}$ onto $\mathcal{C}_{sd}$ as a univariate optimization problem. To  describe this approach, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_{N+1}) \Q'$ and the univariate function 
+
+Second, \cite{tanaka2014positive} re-express the projection of $\M \in \mathcal{S}^{N+1}$ onto $\mathcal{C}_{sd}$ as an almost equivalent univariate optimization problem. The only difference is that their solution set also includes the zero-matrix $\boldsymbol{0}$. This can be handled explicitly in the implementation.  To describe their approach, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_{N+1}) \Q'$ and the univariate function 
 \begin{align*}
 g(\mu) &= \sum_{i=1}^{N+1} \left[ \left(\mu-l_i\right)^2_+ + \left(l_i - \kappa\mu\right)^2_+ \right],
 \end{align*}
-where $\Diag(\x)$ is a diagonal matrix with diagonal $\x$ and $(\cdot)_+$ is the positive part operator. The function $g(\mu)$ can be minimized very efficiently by solving a series of smaller convex problems, each with a closed form solution. Complete technical details of this are given in the Appendix.
+where $\Diag(\x)$ is a diagonal matrix with diagonal $\x$ and $(\cdot)_+$ is the positive part operator. The function $g(\mu)$ can be minimized very efficiently by solving a series of smaller convex problems, each with a closed form solution. The result is a binary-search-like algorithm whose complete technical details are deferred to the Appendix.
 %minimized efficiently. Technical details on a 
 %$g: \mu \in \R^+ \to \R^+$  that returns $(\mu - \tilde{l}_1)^2 + \dots + (\mu - \tilde{l}_a)^2 + (\tilde{l}_b - \kappa\mu)^2 + \dots + (\tilde{l}_{N+1} -  \kappa\mu)^2$, when $\tilde{l}_a \leq \mu \leq \tilde{l}_{a+1}$ and $\tilde{l}_{b-1} \leq \kappa\mu \leq \tilde{l}_b$. 
 If $\mu^* = \argmin_{\mu \geq 0} g(\mu)$ and 
@@ -1210,7 +1299,7 @@ l_j & \text{ otherwise}
 for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q$ is the projection of $\M$ onto $\mathcal{C}_{sd}$. Call this projection $\mathcal{P}_{sd}(\cdot : \kappa)$. 
 
 
- Algorithm \ref{proj_algo} uses these projections to solve (\ref{lse_problem}). Given that all the steps are in closed-form, except the univariate subroutine in $\mathcal{P}_{cond}(\cdot:\kappa)$, each iteration is very fast.  Overall time to convergence, of course, depends on the choice of the stopping criterion. Many intuitive criteria are possible. Given that $\bSigma_D \in \mathcal{C}_{sd}$ and $\bSigma_C \in \mathcal{C}_{lin}$, the stopping criterion $\max \{(\bSigma_{D}-\bSigma_{C})_{ij}^2\} < \epsilon$ suggests that the return value is in $\mathcal{C}_{sd}$ and close to $\mathcal{C}_{lin}$ in every direction. Based on our experience, the algorithm converges quite quickly. For instance, our implementation in C++ solves (\ref{lse_problem}) for $\epsilon = 10^{-5}$ and $N = 100$ in less than a second on a 1.7 GHz Intel Core i5 computer.  
+ Algorithm \ref{proj_algo} uses these projections to solve (\ref{lse_problem}). Each iteration projects twice on one set and once on the other set. The algorithm does not specify which projection should be called twice. Therefore, given that $\mathcal{P}_{sd}(\cdot:\kappa)$ takes longer to run than $\mathcal{P}_{lin}(\cdot)$, it is beneficial to choose to call $\mathcal{P}_{lin}(\cdot)$ twice. In general, the complexity of each iteration is determined largely by the spectral decomposition in $\mathcal{P}_{sd}(\cdot:\kappa)$. This, however, can be computed relatively fast for moderately large $N$. Therefore each iteration is fast.  Overall time to convergence, of course, depends on the choice of the stopping criterion. Many intuitive criteria are possible. Given that $\bSigma_D \in \mathcal{C}_{lin}$ and $\bSigma_C \in \mathcal{C}_{sd}$, the stopping criterion $\max \{(\bSigma_{D}-\bSigma_{C})_{ij}^2\} < \epsilon$ suggests that the return value is in $\mathcal{C}_{sd}$ and close to $\mathcal{C}_{lin}$ in every direction. Based on our experience, the algorithm converges sufficiently quickly. For instance, our implementation in C++ solves (\ref{lse_problem}) for $\epsilon = 10^{-5}$ and $N = 100$ in less than a second on a 1.7 GHz Intel Core i5 computer.  
 % This suggests that Algorithm \ref{proj_algo} is at least a partial response to difficulty (\ref{compProblem1}). 
  
  
@@ -1276,9 +1365,9 @@ for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q
 % \bLambda_{cond} &\leftarrow \bLambda_{cond} + (\bSigma_{lin} - \bSigma_{cond})  
 %\end{align*}
 
-\State $\bSigma_{B} \hspace{0.5em} \leftarrow \mathcal{P}_{sd}(\bSigma_{A} : \kappa)$
-\State $\bSigma_{C} \hspace{0.5em} \leftarrow \mathcal{P}_{lin}(\bSigma_{B})$
-\State $\bSigma_{D} \hspace{0.5em} \leftarrow \mathcal{P}_{sd}(\bSigma_{C} : \kappa)$
+\State $\bSigma_{B} \hspace{0.5em} \leftarrow \mathcal{P}_{lin}(\bSigma_{A})$
+\State $\bSigma_{C} \hspace{0.5em} \leftarrow \mathcal{P}_{sd}(\bSigma_{B}: \kappa)$
+\State $\bSigma_{D} \hspace{0.5em} \leftarrow \mathcal{P}_{lin}(\bSigma_{C})$
 \State $\Delta \hspace{1.2em}\leftarrow ||\bSigma_{B} - \bSigma_{C}||_F^2 / \Tr\left[(\bSigma_{B}-\bSigma_{D})' (\bSigma_{B}-\bSigma_{C} )\right]$
 \State $\bSigma_{A} \hspace{0.6em} \leftarrow \bSigma_{B} + \Delta(\bSigma_{D}-\bSigma_{B})$
 %\State $\lambda \hspace{1.5em} \leftarrow ||\bSigma_{B} - \bSigma_{C}||^2_F / \Tr((\bSigma_{B} - \bSigma_{D}) (\bSigma_{B} - \bSigma_{C}))$
@@ -1288,12 +1377,13 @@ for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q
 %\State $\bLambda_{cond} \leftarrow \bLambda_{cond} + (\bSigma_{lin} - \bSigma_{cond})$  
 \Until{$\max \left\{\left(\bSigma_{D}-\bSigma_{C}\right)_{ij}^2\right\} < \epsilon$}
 \State
-\Return $h^{-1}(\bSigma_{D})$
+\Return $h^{-1}(\bSigma_{C})$
 \EndProcedure
 \end{algorithmic}
 \label{algo}
 \end{algorithm}
 
+%\marginpar{do sd only once; and explain why this choice.}
 
 %
 %\begin{algorithm}[t]
@@ -1406,9 +1496,9 @@ Unfortunately, this approach suffers from several drawbacks: a) it introduces a 
 
 %\marginpar{emphasize this more!!}
 
-To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This is an in-sample approach that is tailored for prediction and can be used for choosing any tuning parameter under the partial information framework. First, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to predict  $Z_0$ from the $Z_{j}$'s. 
+To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This is an in-sample approach that can be used for choosing any tuning parameter under the partial information framework. First, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to regress  $Z_0$ on the $Z_{j}$'s. 
 %This matrix, however, is estimated only based on the observables $Z_j$. 
- Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from being unobserved, the variable $Z_S$ is theoretically no different to the observed $Z_{j}$'s. Therefore it is natural to let each of the $Z_{j}$'s in turn play the role of $Z_0$, predict its value based on $Z_{i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore, if $\Z_j^* = (Z_{j1}, \dots, Z_{jK})'$ collects the $j$th forecaster's information of the $K$ events, the chosen value of $\kappa$ is
+ Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from being unobserved, the variable $Z_0$ is theoretically no different to the observed $Z_{j}$'s. Therefore it is natural to let each of the $Z_{j}$'s in turn play the role of $Z_0$, predict its value based on $Z_{i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore, if $\Z_j^* = (Z_{j1}, \dots, Z_{jK})'$ collects the $j$th forecaster's information of the $K$ events, the chosen value of $\kappa$ is
   \begin{align}
 \kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS_{Z} : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
@@ -1416,7 +1506,7 @@ where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\S
 
 %\marginpar{this must be re-written better. This can be viewed as column-wise CV while the regular CV is row-wise.}
 
-Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance.  For instance, in the following empirical section, $\kappa$ is chosen over a grid of $100$ values between $10$ and $1,000$. 
+Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently (possibly in parallel on multicore machines) over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance.  For instance, in the following empirical section, $\kappa$ is chosen over a grid of $100$ values between $10$ and $1,000$. 
 
 
 %Given that it is particularly tailored for predicting $Z_S$, it is 
@@ -1473,17 +1563,18 @@ This section evaluates a) the Gaussian model both on synthetic and real-world fo
 The evaluation begins with synthetic data generated directly from the distribution of information (\ref{NExperts}). This yields the simplest instance of the Gaussian model:
 
 \begin{quote}
-{\bf Model Instance.}  The link function $g$ is the identity, the target quantity is $Y_k = g(Z_{0k}) = Z_{0k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{jk}] = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \bSigma_{12} \bSigma_{22}^{-1} \X_k$, where $\X_k = \Z_k$. 
+{\bf Model Instance.}  The link function $g$ is the identity, the target quantity is $Y_k = g(Z_{0k}) = Z_{0k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{jk}] = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \bSigma_{12} \bSigma_{22}^{-1} \X_k$. 
 \end{quote}
 
 
-Simulating forecasts requires a covariance matrix $\bSigma_{22}$ such that $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. A mechanism for randomly generating valid information structures is introduced in the following proposition. 
-\begin{proposition}
-\label{synth}
-First pick $\delta_j \in [0,1]$ for all $j = 1, \dots, N$, and then set $\rho_{ij} = \delta_i \delta_j$. The corresponding information structure satisfies $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
-\end{proposition}
-
-This produces a broad range of information structures, both well- and ill-conditioned. In fact, if any $\delta_j = 0$, the resulting $\bSigma_{22}$ is singular.  To avoid this, the $\delta_j$'s are generated uniformly at random from the somewhat more realistic interval $[0.1, 0.9]$. The resulting information structure is then used to draw $(Z_{0k}, Z_{1k}, \dots, Z_{Nk})' \stackrel{i.i.d.}{\sim} \mathcal{N}_{N+1}(\boldsymbol{0}, h(\bSigma_{22}))$ for each problem $k$. The aggregators observe the forecasts $\X_k =  (X_{1k}, \dots, X_{Nk})'$ and 
+Simulating forecasts requires a covariance matrix $\bSigma_{22}$ such that $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+One approach is to pick $\delta_j \in [0,1]$ for all $j = 1, \dots, N$, and then set $\rho_{ij} = \delta_i \delta_j$. If  $\bSigma_{22}$ is the resulting information structure, then $\bSigma_{22} - \diag(\bSigma_{22})\diag(\bSigma_{22})' = \Diag((\delta_1 - \delta_1^2, \dots, \delta_N - \delta_N^2)) \in \mathcal{S}_{+}^{N}$, which by the Schur complement is equivalent to $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+%A mechanism for randomly generating valid information structures is introduced in the following proposition. 
+%\begin{proposition}
+%\label{synth}
+%First pick $\delta_j \in [0,1]$ for all $j = 1, \dots, N$, and then set $\rho_{ij} = \delta_i \delta_j$. The corresponding information structure satisfies $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+%\end{proposition}
+This procedure generates a broad range of information structures, both well- and ill-conditioned. In fact, if any $\delta_j = 0$, the resulting $\bSigma_{22}$ is singular.  To avoid this, the $\delta_j$'s are generated uniformly at random from the somewhat more realistic interval $[0.1, 0.9]$. The resulting information structure is then used to draw $(Z_{0k}, Z_{1k}, \dots, Z_{Nk})' \stackrel{i.i.d.}{\sim} \mathcal{N}_{N+1}(\boldsymbol{0}, h(\bSigma_{22}))$ for each problem $k$. The aggregators observe the forecasts $\X_k =  (X_{1k}, \dots, X_{Nk})'$ and 
 % For each event The  aggregators then observe $\Z_k^{-}$, where $\Z_k^{-} = (Z_{B_{1},k}, \dots, Z_{B_N, k})'$ holds only the forecasters' information variables such that $\Z_k = (Z_{S,k}, {\Z_k^{-}}')'$, 
  and predict $Y_{k}$ based on this information. The process is repeated a $5,000$ times under different values of $K$ and $N$, each ranging from $5$ to $35$ with constant increments of $5$. 
 % The number of forecasters $N$ is fixed at $20$. 
@@ -1564,6 +1655,8 @@ Even though all estimators find $\bSigma_{22}$ more accurately as $K$ grows, $\m
 \end{figure}
 
 
+%\marginpar{May be worth saying here that CV is good if K is large but COV is better if N is large}
+
 
 
 These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the average squared error loss of the competing aggregators in predicting $Y_k$. More specifically, Figure \ref{Nfixed} varies $K$ but fixes $N = 20$, while Figure \ref{Kfixed}  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{0k} \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y_k-0)^2] = 1.0$ can be considered as the upper bound in prediction error. The aggregator $X_{true}''$, on the other hand, is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss at around $0.26$. They both show slight improvement as $N$ increased. In all cases, however, their loss is uniformly well above the loss of the relevant revealed aggregators, suggesting that averaging aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They monotonically tend closer to the optimal as $K$ grows larger. They also collect information and improve similarly to the optimal rate as $N$ increases. However, when $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
@@ -1620,7 +1713,7 @@ These two strategies lead to slightly different predictive behavior as is illust
 % 
 %\textit{Data.} 
 %Since 2011 the Good Judgment Project (GJP) has recruited thousands of forecasters to make probability estimates on different geopolitical events. 
- This subsection focuses on the second year of the Good Judgment Project (GJP). During this year the forecasters made probability estimates for $78$ events, each with two possible outcomes. Two of these events are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
+During the second year of the Good Judgment Project (GJP) the forecasters made probability estimates for $78$ events, each with two possible outcomes. Two of these events are illustrated in Figure \ref{Examples}. %Since 2011 t%Before the forecasts can be aggregated, however, several practical matters must be discussed. First, 
 Each prediction problem has a timeframe, defined as the number of days between the first day of forecasting and the anticipated resolution day. 
 % during which the forecasters make and update their predictions. 
 %To illustrate, two of
@@ -1764,6 +1857,8 @@ X_{k}'' &= \E[Y_k | \Z_k] = \Phi\left( \frac{\bSigma_{12}\bSigma_{22}^{-1}\Z_k -
 
 %\marginpar{We need to explain somewhere how we handle sparsity: gaussian dropping some terms is still gausisan with the given covariance sub matrix}
 
+%\marginpar{it may be worth discussing the difference between the initial estimate of tk and the final precision weighted one.}
+
 All the parameters of this model can be estimated from the data. The first step is to specify an unconstrained estimate of $\bSigma_{22}$. If the $t_k$'s do not change much, a reasonable and simple estimate is obtained  by transforming the sample covariance matrix  $\SS_P$ of the probit scores $P_{jk} := \Phi^{-1}(X_{jk})$. More specifically,  if $\D := \Diag( \dd ) \Diag(\one + \dd)^{-1}$, where $\dd = \diag(\SS_P)$, then an unconstrained estimator of $\bSigma_{22}$ is given by $\SS_Z = (\I_N-\D)^{1/2} \SS_P (\I_N-\D)^{1/2}$. Given that the GJP data holds many missing values, $\SS_P$ is computed by estimating each pairwise covariance separately based on all the events for which both forecasters made predictions. 
 %If the predictions are missing at random, the resulting $\SS_P$ is an unbiased estimator of $\Cov(\PP)$. 
 Next, choose a candidate value $\nu$ and estimate $\bSigma_{22}$ with $\mathcal{P}_{LSE}(\SS_Z : \nu)$. To estimate the thresholds $t_k$, let $\PP_k = (P_{1k}, \dots, P_{Nk})'$ and observe that $-\Diag(\one-\diag(\bSigma_{22}))^{1/2}\PP_{k} \sim \mathcal{N}_N(t_k \one_N, \bSigma_{22})$.
@@ -1774,7 +1869,7 @@ Next, choose a candidate value $\nu$ and estimate $\bSigma_{22}$ with $\mathcal{
  The threshold $t_k$ is then estimated by the precision-weighted average: 
 \begin{align*}
 %\hat{t}_k &= -\frac{\sum_{j=1}^N \sqrt{1-\hat{\delta}_j}P_{jk}/\hat{\delta}_j}{\sum_{j=1}^N 1/\hat{\delta}_j},
-\hat{t}_k &= -\frac{\PP_{k}' \Diag(\one-\diag(\hat{\bSigma}_{22}))^{1/2} \hat{\bSigma}_{22} \one}{\one' \hat{\bSigma}_{22} \one},
+\hat{t}_k &= -\frac{\PP_{k}' \Diag(\one-\diag(\hat{\bSigma}_{22}))^{1/2} \hat{\bSigma}_{22}^{-1} \one}{\one' \hat{\bSigma}_{22}^{-1} \one},
 \end{align*}
 where $\hat{\bSigma}_{22} = \mathcal{P}_{LSE}(\SS_Z : \nu)$. If $\PP_k$ has missing values, the corresponding rows and columns of $\hat{\bSigma}_{22}$ are dropped. Intuitively, this estimator gives more weight to the forecasters with very little information, i.e., their precision $1/\delta_j$ is high. The final $\kappa$ is chosen using conditional validation (see Section \ref{condSelection}) over a grid of $100$ candidate values $\nu$ between $10$ and $1,000$. The resulting revealed aggregator is denoted with $X_{cov}''$. 
 
@@ -1926,14 +2021,65 @@ This pattern generalizes to the entire group of forecasters. To illustrate, Figu
 \subsection{Real World Data 2: Point Forecasts}
 \label{continuousReal}
 \subsubsection{Dataset}
+\citet{moore2008use} hired $415$ undergraduates from Carnegie Mellon University to guess the weights of $20$ people based on a series of pictures of these people. The true weights ranged from $61$ to $230$ pounds, with a mean of $157.6$ pounds. This is an experimental setup where all the students were shown the same pictures and hence given the exact same information. 
+%They were, however, likely to pick up on difference cues.
+% and hence report heterogeneous estimates. 
+Therefore any information diversity arises purely from the participants' decisions to use different subsets of the same information. 
+%This provides an 
+Consequently, information diversity is likely to be low compared to Section \ref{binaryReal} where diversity also stemmed from differences in the information available to the forecasters.
+
+% The partial information framework, however, explains forecast heterogeneity with used information. Therefore 
+
+Similarly to Section \ref{binaryReal} the students' guesses were not debiased beforehand. The effect of extreme values was reduced by conducting a 90\% Winsorization \citep{hastings1947low}. This reduced the effect of some obvious outliers. For instance, some estimates were above 1000 pounds when none of the 20 people weighed more than 230 pounds.  Overall, Winsorization improved the performance of all the competing aggregators.
+
+
+
+%Nonetheless, the partial information model should be able to capture differences in the used information and utilize this to gain advantage over standard measurement-error aggregators. 
+
+%Consequently, the relative advantage of the partial information model cannot be expected to be as dramatic. 
+
+
 \subsubsection{Model Specification and Aggregation}
 \begin{quote}
-\textbf{Model Instance.} Suppose that the quantity of interest $Y$ and the predictions $X_j$ are real-valued. Denote the proper non-informative prior distribution with $Y \sim \mathcal{N}(\mu_0, \sigma_0^2)$. The individual forecasts $X_j \sim \mathcal{N}(\mu_j, \sigma_j^2)$, where $\sigma_0^2 \geq \sigma_i^2$; otherwise some forecast is considered less informative than the commonly agreed non-informative prior. Furthermore, the mean of the forecasts $\mu_j = \mu_0$ because the forecasts are assumed to be conditionally unbiased; that is, $\E[Y|X_j] = X_j$. This follows specifically from the conditional distribution $Y | X_j \sim \mathcal{N}(\mu_0 + (X_j - \mu_j), \sigma^2_0 - \sigma^2_j)$. Hence $\E[Y | X_j] = \mu_0 + (X_j - \mu_j)$, which is equal to $X_j$ if and only if $\mu_0 = \mu_j$.  The observables link to the information pool by $Z_S = (Y - \mu_0)/\sigma_0 \sim \mathcal{N}(0,1)$ and $Z_{B_j} = \left(X_j - \mu_0\right)/\sigma_0 \sim \mathcal{N}(0, \delta_j)$, where $\delta_j = \sigma_j^2/\sigma_0^2 \in [0,1]$. If $\Z = \left(Z_{B_1}, \dots, Z_{B_N}\right)'$, then the revealed aggregator is
+\textbf{Model Instance.} Suppose $Y_k$ and $X_{jk}$ are real-valued. Denote the proper non-informative prior distribution with $Y_k \sim \mathcal{N}(\mu_{0k}, \sigma_0^2)$. The individual forecasts $X_{jk} \sim \mathcal{N}(\mu_{0k}, \sigma_j^2)$, where $\sigma_0^2 \geq \sigma_j^2$ for all $j = 1, \dots, N$. 
+%Furthermore, by item \ref{first}) of Proposition \ref{covstr}, the mean of the forecasts $\mu_j = \mu_0$.
+% because the forecasts are assumed to be conditionally unbiased; that is, $\E[Y|X_j] = X_j$. This follows specifically from the conditional distribution $Y | X_j \sim \mathcal{N}(\mu_0 + (X_j - \mu_j), \sigma^2_0 - \sigma^2_j)$. Hence $\E[Y | X_j] = \mu_0 + (X_j - \mu_j)$, which is equal to $X_j$ if and only if $\mu_0 = \mu_j$. 
+  The observables link to the information variables by $Z_{0k} = (Y_k - \mu_{0k})/\sigma_0 \sim \mathcal{N}(0,1)$ and $Z_{jk} = \left(X_{jk} - \mu_{0k}\right)/\sigma_0 \sim \mathcal{N}(0, \delta_j)$, where $\delta_j = \sigma_j^2/\sigma_0^2 \in [0,1]$. If $\Z_k = \left(Z_{1k}, \dots, Z_{Nk}\right)'$, then the revealed aggregator for the $k$th problem is
 \begin{align}
-X'' =  \E\left[Y  | \F''\right] =  \E\left[Y | \Z\right] &= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} \Z \sigma_0 + \mu_0 \label{revPoint}
+X_k'' =  \E\left[Y_k | \Z_k\right] &= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} \Z_k \sigma_0 + \mu_{0k} \label{revPoint}
 \end{align}
 \end{quote}
-Given that $\E[X_j] = \mu_0$, the value of $\mu_0$ can be estimated with the sample mean of the $X_j$'s. The prior variance, however, is more challenging as all that is known is that it upper bounds the $\sigma_j^2$'s. Fortunately, the revealed aggregator is not affected by this choice. To make this specific, suppose that $\varepsilon \sigma_0^2$ for some $\varepsilon > 0$ was used instead of $\sigma_0^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma_{22}/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_0^2$ must be chosen.
+Under this model the prior distribution of $Y_k$ is specified by $\mu_{0k}$ and $\sigma_0^2$. Given that $\E[X_{jk}] = \mu_{0k}$, an initial estimate of $\mu_{0k}$ is given by the sample average $\hat{\mu}_{0k} = \sum_{j=1}^N X_{jk}/N$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_0^2$. Therefore any choice should lead to the same aggregates. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_0^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_0^2]$ and use the resulting likelihood to estimate $\sigma_0^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_0^2)$. The maximum likelihood estimator then is $\max\{\sigma_j^2\}$. This, however, has a downward bias, which can be corrected by a multiplicative factor of $(N+1)/N$. Replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{0k})^2/(K-1)$ then gives the final estimate $\hat{\sigma}_0^2 = (N+1)/N\max\{s_j\}$. Next the $X_{jk}$'s are transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ is projected to yield an estimate of $\bSigma_{22}$. The value of $\kappa$ is chosen with conditional validation discussed in Section \ref{condSelection}. Once the final estimate $\hat{\bSigma}_{22}$ has been determined, the prior means are updated with the precision-weighted averages $\hat{\mu}_{0k} = (\X_{k}' \hat{\bSigma}_{22}^{-1} \one)/(\one' \hat{\bSigma}_{22}^{-1} \one)$. Finally, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregates.
+
+\begin{figure}[t!]
+\captionsetup{width=0.48\textwidth}
+\vspace{-2em}
+        \centering
+        \begin{minipage}[b]{0.495\textwidth}
+	\hspace*{1em} 	\includegraphics[width=\textwidth]{legendPoints.pdf} % requires the graphicx package
+	\vspace{-5em}
+
+                \includegraphics[width=\textwidth]{PointEstimates.pdf}
+                \caption{Accuracy of the competing aggregators}
+                \label{pointsAcc}
+        \end{minipage}%
+        %\begin{subfigure}{0.455\textwidth}
+        \begin{minipage}[b]{0.495\textwidth}
+                 \includegraphics[width=\textwidth]{InfoPlotPoints.jpg}
+%	\vspace{0.8em}
+            \caption{Information diversity among the 416 participants}
+                                \label{ID416}
+        \end{minipage}
+\end{figure}
+
+The revealed aggregator is compared against the average and median estimates. Overall accuracy is measured with the root-mean-squared-error (RMSE) averaged over $10,000$ sub-samplings of the $415$ participants. In particular, each iteration chooses $N$ participants uniformly at random, aggregates their forecasts, and computes the quadratic loss. The size of the sub-samples is varied between $10$ and $100$ with increments of $10$. These scores are presented in Figure \ref{pointsAcc}. Similarly to the synthetic point forecasts in Section \ref{simulation}, the average outperforms the median across all $N$. The revealed aggregator $X_{cov}''$ is the most accurate once $N > 10$. Furthermore, it collects information more efficiently and hence increases the performance advantage as $N$ grows larger. This advantage, however, is not as dramatic as in Section \ref{binaryReal}. This can be explained by Figure \ref{ID416} that shows the estimated $\bSigma_{22}$ for all the 416 forecasters. The structure has been ordered such that the most knowledgeable forecasters are on the right. The plot is overall much more monochromatic than the one presented earlier in Figure \ref{top100}, suggesting that information diversity here is indeed much lower than in the GJP study. When information diversity is low, averaging aggregators, such as the simple average, tend to perform well \citep{satopaamodeling}. 
+
+
+% As mentioned earlier, the revealed aggregator is not affected by this choice. To make this specific, suppose that $\varepsilon \sigma_0^2$ for some $\varepsilon > 0$ was used instead of $\sigma_0^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma_{22}/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_0^2$ must be chosen.
+
+
+
+
 
 
 \section{Discussion}
@@ -2165,14 +2311,14 @@ which then provides $\Var(X_i) \leq \Var(X_j)$. This inequality is tight because
 \end{proof}
 
 
-\subsection{Proof of Proposition \ref{synth}}
-\begin{proof}
-%It is helpful to first establish membership in what is typically known as the correlation polytope $\COR_N :=  \conv\left\{
-%\boldsymbol{x}\boldsymbol{x}' : \boldsymbol{x} \in
-%\{0,1\}^N\right\}$. 
-Begin by approximating the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j \in [0,1]$. Let $\v_0 = \one$ be of a vector of $L$ ones. If $\V$ is a $(N+1) \times L$ matrix with the $k$th row equal to $\v_{k-1}/\sqrt{L}$, the corresponding Gramian matrix $\V \V' $ is always in $ \mathcal{S}_{+}^{N+1}$. Given that $\mathcal{S}_{+}^{N+1}$ is a convex set, the expectation of  $\V \V' $ is also in $\mathcal{S}_{+}^{N+1}$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j/L] = \delta_j$ and $\E[\v_i' \v_j/L] = \delta_i \delta_j$, respectively.  
-%Finally, \cite{laurent1997connections} showed that all $\bSigma_{22} \in \COR_N$ satisfy $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
-\end{proof}
+%\subsection{Proof of Proposition \ref{synth}}
+%\begin{proof}
+%%It is helpful to first establish membership in what is typically known as the correlation polytope $\COR_N :=  \conv\left\{
+%%\boldsymbol{x}\boldsymbol{x}' : \boldsymbol{x} \in
+%%\{0,1\}^N\right\}$. 
+%Begin by approximating the full information with a finite set of $L$ elements. Describe the $j$th forecaster's information with a binary vector $\v_j$ whose $L$ entries indicate which elements of the full information the forecaster knows. Suppose this vector is constructed by making $L$ independent draws from a Bernoulli distribution with success probability $\delta_j \in [0,1]$. Let $\v_0 = \one$ be of a vector of $L$ ones. If $\V$ is a $(N+1) \times L$ matrix with the $k$th row equal to $\v_{k-1}/\sqrt{L}$, the corresponding Gramian matrix $\V \V' $ is always in $ \mathcal{S}_{+}^{N+1}$. Given that $\mathcal{S}_{+}^{N+1}$ is a convex set, the expectation of  $\V \V' $ is also in $\mathcal{S}_{+}^{N+1}$. The diagonal and off-diagonal elements of this expectation are the desired $\E[\v_j' \v_j/L] = \delta_j$ and $\E[\v_i' \v_j/L] = \delta_i \delta_j$, respectively.  
+%%Finally, \cite{laurent1997connections} showed that all $\bSigma_{22} \in \COR_N$ satisfy $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+%\end{proof}
 
 
 \subsection{Finding $\mu^*$ for $\mathcal{P}_{sd}(\cdot : \kappa)$} 
@@ -2182,7 +2328,7 @@ Begin by approximating the full information with a finite set of $L$ elements. D
 \begin{algorithmic}[1]
 \Require $\kappa \geq 1$ and sample eigenvalues in ascending order $\l_1 \leq l_2 \leq \dots \leq l_{N+1}$.
 \Procedure{binary-search optimization}{}
-\State Initialize $D \leftarrow \max\{l_1,0\}/\kappa$ and  $U \leftarrow l_{N+1}$.
+\State Initialize $D \leftarrow \max\{l_1,0\}$ and  $U \leftarrow l_{N+1}/\kappa$.
 \State $\mu_0 \leftarrow (D + U)/2$
 %\State $\bLambda_{lin} \leftarrow \boldsymbol{0}$
 %\State $\bSigma_{cond} \leftarrow \mathcal{P}_{cond}(h(\boldsymbol{S}_Z) : \kappa)$.
@@ -2210,9 +2356,9 @@ This section describers a binary-search-like algorithm to solve
 \begin{align}
 \mu^* = \argmin_{\mu \geq 0 }g(\mu) &=\argmin_{\mu \geq 0 }\sum_{i=1}^{N} \left[ \left(\mu-l_i\right)^2_+ + \left(l_i - \kappa\mu\right)^2_+ \right] \label{globalMu}
 \end{align}
-First, it can be assumed that $\cond(h(\SS_Z)) = l_{N+1}/l_1 > \kappa$; otherwise, the projection can simply return $h(\SS_Z)$. Second, $l_1/\kappa \leq \mu \leq l_{N+1}$ because otherwise moving $\mu$ closer to the nearest sample eigenvalue decreases $g(\mu)$. Now, consider some value $\mu_n \geq 0$ and two index sets $\mathfrak{D}_n = \{i : l_i \leq \mu_n\}$ and $\mathfrak{U}_n = \{i : \mu_n\kappa \leq  l_i \}$. Then,
+First, it can be assumed that $\cond(h(\SS_Z)) \notin [0,\kappa]$; otherwise, the projection can simply return $h(\SS_Z)$. Second, $\max\{0, l_1\} \leq \mu \leq l_{N+1}/\kappa$ because otherwise moving $\mu$ closer to the nearest sample eigenvalue decreases $g(\mu)$. Now, consider some value $\mu_n \geq 0$ and two index sets $\mathfrak{D}_n = \{i : l_i \leq \mu_n\}$ and $\mathfrak{U}_n = \{i : \mu_n\kappa \leq  l_i \}$. Then,
 \begin{align*}
-g(\mu_n) &= \sum_{i \in \mathfrak{D}_n}  \left(\mu-l_i\right)^2  + \sum_{i \in \mathfrak{U}_n} \left(l_i - \kappa\mu\right)^2,
+g(\mu_n) &= \sum_{i \in \mathfrak{D}_n}  \left(\mu_n-l_i\right)^2  + \sum_{i \in \mathfrak{U}_n} \left(l_i - \kappa\mu_n\right)^2,
 \end{align*}
  which has a global minimum at 
 \begin{align*}
@@ -2227,9 +2373,18 @@ If no value is found, then $d(\mu) = 0$ and $u(\mu) = +\infty$.  Then,
 \mathfrak{d}_n &= \max \{d(\mu_n), d(\mu_n\kappa)/\kappa\}\\
 \mathfrak{u}_n &= \min \{u(\mu_n), u(\mu_n\kappa)/\kappa\}
 \end{align*}
- Of course, $\mu^*_n$ is the solution to (\ref{globalMu}) as long as moving from $\mu_n$ to $\mu^*_n$ does not change the index sets $\mathfrak{D}_n$ and $\mathfrak{U}_n$; that is, $\mu_n^* \in [\mathfrak{d}_n, \mathfrak{u}_n]$. If, on the other hand, $\mu_n^*$ is less than $\mathfrak{d}_n$ (or greater than $\mathfrak{u}_n$), the global minimum $\mu^*$ must be smaller than $\mathfrak{d}_n$ (or greater than $\mathfrak{u}_n$). If $\mu_n^*$ is, say, less than $\mathfrak{d}_n$, then a natural approach is to update $\mu_n$ to $\mu_{n+1}$ that is somewhere between $\mathfrak{d}_n$ and the smallest possible value of $\mu_{n+1}$.  This gives rise to a binary-search-like algorithm described in Algorithm \ref{projSD_algo}.
+ Of course, $\mu^*_n$ is the solution to (\ref{globalMu}) as long as $\mu_n^* \in [\mathfrak{d}_n, \mathfrak{u}_n]$. If, on the other hand, $\mu_n^*$ is less than $\mathfrak{d}_n$ (or greater than $\mathfrak{u}_n$), the global minimum $\mu^*$ must be smaller than $\mathfrak{d}_n$ (or greater than $\mathfrak{u}_n$). If $\mu_n^*$ is, say, less than $\mathfrak{d}_n$, then a natural approach is to update $\mu_n$ to $\mu_{n+1}$ that is somewhere between $\mathfrak{d}_n$ and some known lower bound of $\mu$.  This gives rise to a binary-search-like algorithm described in Algorithm \ref{projSD_algo}. 
  
+% To show that this algorithm converges, it is enough to prove that $U
+ 
+% The next proposition guarantees that the algorithm converges.
+% 
+% \begin{proposition}
+% Algorithm 
+% \end{proposition}
+% 
 
+% \marginpar{Proof convergence by showing the UPB-LWB decreases every iteration.}
  
 
 %\subsection{Maximum Likelihood Estimation}
