@@ -539,17 +539,17 @@ future research.
 \section{Partial Information Framework}
 \label{PIF}
 
-\subsection{Noise, Bias, and Assessment}
+\subsection{Forecasting Quality}
 \label{context}
 
 
 
-Consider $N$ forecaster and suppose Forecaster $j$ predicts $X_j$ for some (random) quantity of interest $Y$. The prediction $X_j$ is simply an estimator of $Y$. Therefore, as is the case with all estimators, 
+Consider $N$ forecaster and suppose Forecaster $j$ predicts $X_j$ for some (random) quantity of interest $Y$. This prediction $X_j$ is simply an estimator of $Y$. Therefore, as is the case with all estimators, 
 %If the forecaster operates under the quadratic loss function, the optimal strategy is to report the expected value of $Y$ given all the information 
 its deviation from the truth can be broken down into two components: bias and noise. On the
 theoretical level, it is important to separate these two problems because they are solved by different mechanisms.  This
 paper considers the aggregation problem for conditionally unbiased forecasts,
-therefore isolating the task to one of noise reduction. In particular, the forecasters are assumed to be conditionally unbiased such that $\E[Y | X_j] = X_j$ for all $j = 1, \dots, N$.  
+therefore isolating the task to one of noise reduction. In particular, the forecasters are assumed to be conditionally unbiased such that $\E[Y | X_j] = X_j$ for all $j = 1, \dots, N$; that is, among all those times Forecaster $j$ predicts $X_j$, the quantity of interest $Y$ is, on average, equal to $X_j$. This is an assumption about the quality of the forecast. In general some form of quality control is needed because no aggregator can be expected to turn nonsensical forecasts into accurate aggregate forecasts. 
 
 %A stream of conditionally biased forecasts can, in principle, be corrected by
 %translating $X_i$ into the forecast $\bar{Y}_i$, where $\bar{Y}_i$ is
@@ -566,8 +566,10 @@ therefore isolating the task to one of noise reduction. In particular, the forec
 %to briefly discuss the problem of assessing and improving a single
 %forecast stream.  
 
-A forecast is typically assessed with a loss
-function $L(X_i, Y)$. Many choices are possible, and
+Both aggregate and individual forecasts are typically assessed with a loss
+function.
+%$L(X_i, Y)$. 
+Many choices are possible, and
 an estimator that outperforms another under one loss function will not
 necessarily do so under a different one. In this paper  the focus is on loss functions that are minimized at the conditional expectation of $Y$ (given the forecaster's information).  This involves many well-known penalties such as the Kullback-Leibler divergence, Mahalanobis distance, and the quadratic loss \citep{banerjee2005optimality}. These loss functions can be considered \textit{revealing} because if a group of
 sophisticated forecasters operates under such a loss function,
@@ -579,7 +581,6 @@ self-fulfilling.
 %feedback. Forecasters with competitive
 %motivation, sophistication, and historical data will probably do so.
 
-\marginpar{IN general unsupervised aggregation leads to garbage in garbage out methods.}
 
 % Secondly, the
 %assessment of the aggregated forecast is not uni-dimensional any more
