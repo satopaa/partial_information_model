@@ -988,15 +988,15 @@ interpreted signal model, prior applications have typically explained forecast h
 $\theta$, which can be interpreted as the prediction made by an ideal forecaster. This is then somehow measured by the individual forecasters with mean-zero idiosyncratic error.  Therefore, each forecast is nothing but an independent draw from a common
 probability distribution centered at $\theta$.
 %, and the underlying probability model is just the classical statistical model for measurement with i.i.d. mean zero error.  
-Consequently, the resulting aggregators are different types of averages of the individual (transformed) predictions.
+Consequently, the resulting aggregators are different measures of central tendency, such as the average of the individual (transformed) predictions.
 
 
-This framework has become standard practice possibly because of its simplicity and familiarity.  Unfortunately, there are a number of disadvantages. First, measurement-error aggregators estimate $\theta$ instead of the realized value $y$ of the random variable $Y$. In general these aggregators cannot target $y$ because they do not incorporate a correlation structure between $Y$ and the $X_{j}$'s. The partial information framework, however, motivates a covariance structure among these variables and hence provides means to target $y$. 
+This framework has become standard practice possibly because of its simplicity and familiarity.  Unfortunately, there are a number of disadvantages. First, measurement-error aggregators estimate $\theta$ instead of the realized value $y$ of the random variable $Y$. In general these aggregators cannot target $y$ because they do not incorporate a correlation structure between $Y$ and the $X_{j}$'s. The partial information framework, however, motivates a covariance structure among these variables and hence can target $y$. 
 %This, however, may not be the correct target. For instance, the correct target in probability forecasting is the event indicator that lies on the boundary of
 %the sample space. 
 %In such cases important properties such as unbiasedness cannot be expected from the resulting aggregators. 
 Second, the standard assumption of conditional independence of the observations forces a specific and highly
-unrealistic structure on interpreted forecasts \citep{hong2009interpreted}. Any averaging aggregator is also constrained to
+unrealistic structure on interpreted forecasts \citep{hong2009interpreted}. Measurement-error aggregators are also constrained to
 the convex hull of the individual forecasts, which further contradicts the
 interpreted signal framework \citep{parunak2013characterizing}. Empirically, one sees
 for many datasets that an aggregator restricted to the convex hull
