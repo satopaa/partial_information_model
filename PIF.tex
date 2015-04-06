@@ -100,6 +100,7 @@
 \def\E{{\mathbb E}}
 \def\Var{{\rm Var}\,}
 \def\Cov{{\rm Cov}\,}
+\def\Corr{{\rm Corr}\,}
 \def\ee{\varepsilon}
 \def\|{\, | \,}
 \def\probit{p_{\rm probit}}
@@ -740,7 +741,7 @@ $\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the inf
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-To apply the partial information framework in practice requires a joint probability distribution for the model variables. Any distribution can be used as long as it can incorporate the covariance pattern in (\ref{cov_str}).  However, in many applications, such as probability forecasting of binary events, $Y$ and $X_j$ may not share a common support, making it difficult to directly state a joint distribution for them. One solution is to use a set of hidden variables, called the \textit{information variables}, that follow a joint multivariate Gaussian distribution with the correct covariance structure. More specifically, denote the information variables with $Z_0, Z_1, \dots, Z_N$ and let
+To apply the partial information framework in practice requires a joint probability distribution for the model variables. Any distribution can be used as long as it can utilize the covariance pattern in (\ref{cov_str}).  However, in many applications, such as probability forecasting of binary events, $Y$ and $X_j$ may not share a common support, making it difficult to directly state a joint distribution for them. One solution is to use a set of auxiliary variables, called the \textit{information variables}. More specifically, denote the information variables with $Z_0, Z_1, \dots, Z_N$, where $Z_0$ and $Z_j$, for $j = 1, \dots, N$, are associated with $Y$ and $X_j$, respectively. These variables follow a multivariate Gaussian distribution with the covariance pattern (\ref{cov_str}):
 \begin{align}
 \left(\begin{matrix} Z_0 \\ Z_{1}\\ \vdots \\ Z_{N} \end{matrix}\right) &\sim \mathcal{N}_{N+1}\left( 
 %\left(\begin{matrix} 
@@ -759,9 +760,11 @@ To apply the partial information framework in practice requires a joint probabil
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
  \end{array}\right)\right).  \label{NExperts}
 \end{align}
-This \textit{distribution of information} has an easy interpretation: $\Var(Z_0) = 1.0$ is the total amount of information, $\delta_j := \Var(Z_j)$ is the amount of information used by Forecaster $j$, and $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ is the information overlap between Forecasters $i$ and
-$j$. Therefore the sub-matrix $\bSigma_{22}$ is naturally called the \textit{information structure}. The information variables link to $Y$ and the $X_j$'s via a \textit{link function} and the model assumptions. First, if $\mathcal{Y}$ denotes the support of $Y$, then 
- $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective link function specific to the model instance. For instance, if the prior distribution of $Y$ is $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution. Second, given that the forecasts are conditionally unbiased, Forecaster $j$ predicts $X_j = \E[Y | Z_j]$. This is overall  a very flexible specification that yields a broad range  of different partial information models. Examples are discussed in Section \ref{empirical} that illustrates the \textit{Gaussian model} on several different types of outcomes.  
+The value of $Y$ is given by an appropriate transformation of $Z_0$. More specifically, if $\mathcal{Y}$ denotes the support of $Y$, then 
+ $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective \textit{link function} specific to the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. The rest of the information variables, $Z_j$ for $j = 1, \dots, N$, represent the forecasters' information. In particular, Forecaster $j$ first observes $Z_j$ and then makes a prediction about $Y$ conditional on this observation; that is, $X_j = \E[Y | \F_j = \sigma(Z_j)] = \E[Y | Z_j]$. This provides an easy interpretation of the model. In particular, note that $\Corr(X_j, Y) \to 1.0$ as $\Var(X_j) = \delta_j \to 1.0$. Therefore, $\Var(Z_0) = 1.0$ is the total amount of information, $\delta_j := \Var(Z_j)$ is the amount of information used by Forecaster $j$, and $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ is the information overlap between Forecasters $i$ and
+$j$. These variables are collected in the sub-matrix $\bSigma_{22}$ that summarizes  the information structure among the $N$ forecasters. 
+
+%Overall, this is  a very flexible specification that yields a broad range  of different partial information models. Examples are discussed in Section \ref{empirical} that illustrates and evaluates the \textit{Gaussian model} on probability and point forecasts.  
 
 % The scale of these quantities is not relevant. Therefore $\Var(Y)$ has been fixed to $1$. 
 %The Gaussian information pool has an easy interpretation: the set $B_j$ contains the information used
@@ -817,22 +820,22 @@ $j$. Therefore the sub-matrix $\bSigma_{22}$ is naturally called the \textit{inf
 %replacing $S$ by $[0,u]$ and $B_j$ by $u B_j$. 
 
 
-The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, \citet{broomell2009experts} discuss a model for subjective interpretation. They assume that
+The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, \citet{broomell2009experts} discuss a model in which 
+%. They assume that
 % recall the interpreted signal
 %model of~\citet{broomell2009experts}. They assume that
-Forecaster~$j$ forms an opinion based on $L_j (H_1 , \ldots , H_r)$,
-where each $L_j$ is a linear function of cues
-$H_1 , \ldots , H_r$ influencing the quantity of interest.  Proposing a linear model for subjective
+Forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
+$H_1 , \ldots , H_r$ influencing $Y$.  Proposing a linear model for subjective
 interpretation seems quite natural.  If
 the cues (or any linear combination of them) are independent
 and have small tails, then as $r \to \infty$, the joint distribution
 of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
 Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
-to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is especially useful in deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z, 1-\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})\right).$$ This leads to a closed-form revealed aggregator $X''$ in many different applications of the model. The term $\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
+to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is especially useful in deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z, 1-\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})\right).$$ This propagates into to a closed-form revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ in many different instances of the model. The term $\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
 %$\delta_0 = 1$ is from now on incorporated in the link function such that $\Var(Z_0) = 1$. 
 %Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution.
 %Therefore if the decision-maker only cares about a point estimate, the choice of $\delta_0$ is irrelevant. In the contrary, if 
-For more motivation and interpretation, see \cite{satopaamodeling}.
+For more motivation and interpretation of a slightly different yet closely related model, see \cite{satopaamodeling}.
 
 % Therefore,
 %the actual scale (e.g., the fact that the covariances of
@@ -1043,7 +1046,7 @@ However, estimating $\bSigma_{22}$ in full generality based on a single predicti
 %\end{align}
 %where $\conv(\cdot)$ denotes the convex hull operator and $\COR_N$ is known as the correlation polytope (also known as the boolean quadric polytope by some authors). All elements of $ \COR_N$ are symmetric, positive semidefinite, and hence valid covariance matrices. 
 %\citep{letchford2008binary}.  
-Estimating the information structure $\bSigma_{22}$ is equivalent to estimating a covariance matrix under the partial-information-motivated pattern described in (\ref{NExperts}). More specifically, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
+Estimating the information structure $\bSigma_{22}$ is equivalent to estimating a covariance matrix under the pattern (\ref{NExperts}). More specifically, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
 % denote the set of symmetric $N \times N$  matrices with $\mathcal{S}^N$, represent the set of  symmetric positive semidefinite $N \times N$ matrices with $\mathcal{S}_{+}^N$, and consider a one-to-one function $h$ that transforms a matrix $\M \in \mathcal{S}^{N}$ to  
 \begin{align*}
 h(\M)  := 
@@ -1058,8 +1061,6 @@ h(\M)  :=
  \end{matrix}\right),
 \end{align*}
 where $\M \in \mathcal{S}^{N}_+$, then estimation must performed under the condition $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
-
-
 %These elements, however, differ largely in their sensitivity to numerical operations. This is important because
 An accurate yet highly sensitive estimate of $\bSigma_{22}$, however, can still lead to imprecise aggregation. To see this, recall from Section \ref{gaussian} that the conditional mean of $Z$ given $\Z_0$ is  $\bSigma_{12} \bSigma_{22}^{-1} \Z$. As in many applications this mean ends up propagating to the final revealed aggregator $X''$, it deserves careful estimation. 
 %notice that the Gaussian revealed aggregator includes the term $\bSigma_{12} \bSigma_{22}^{-1} \Z$.
