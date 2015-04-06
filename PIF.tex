@@ -141,11 +141,23 @@ Ville A. Satop\"a\"a, Shane T. Jensen, Robin Pemantle, and Lyle H. Ungar\\
 %\thispagestyle{empty}
 
 \begin{abstract}
-Prediction polling is an increasingly popular form of crowdsourcing that inquires its participants about their best estimates of some quantity of interest, such as tomorrow's stock price or the likelihood of a particular future event happening. Historically, randomness in scientific estimation has  been generally
-assumed to arise from unmeasured or uncontrolled factors. However, 
-when combining subjective estimates, heterogeneity
+Prediction polling is an increasingly popular form of crowdsourcing in
+which multiple participants estimate the probability or magnitude of
+some future event. These estimates are then aggregated into a single
+forecast. Historically, randomness in scientific estimation has been
+generally assumed to arise from unmeasured factors which are viewed as
+measurement noise. However, when combining subjective estimates, heterogeneity
 stemming from differences in the participants' information is often
-more important than measurement noise. This paper formalizes information diversity as an alternative source of heterogeneity and introduces a novel modeling framework that is particularly suited for prediction polls. A practical specification of this framework is proposed and applied to the task of aggregating probability and point estimates from two real-world prediction polls. In both cases our model outperforms the measurement-error-based aggregators, hence providing evidence in favor of information diversity being the more important source of heterogeneity. 
+more important than measurement noise. This paper formalizes
+information diversity as an alternative source of such heterogeneity
+and introduces a novel modeling framework that is particularly
+well-suited for prediction polls. A practical specification of this
+framework is proposed and applied to the task of aggregating
+probability and point estimates from two real-world prediction
+polls. In both cases our model outperforms standard
+measurement-error-based aggregators, hence providing evidence in favor
+of information diversity being the more important source of
+heterogeneity.
 %, namely probability and point forecasts. The data arises from real-world prediction polls. 
 %In particular, the probability forecast target important future events specified by the Intelligence Advanced Research Projects Activity (IARPA) while point forecasts estimate the weights of people. 
 %The framework is first introduced at the most general level. After this, a specific model is proposed
@@ -194,12 +206,13 @@ Even though historically opinion polls have been the dominant form, in the recen
 % 
 % This paper develops methodology generally applicable for prediction polls. % 
 
-The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The methods are illustrated on two of the most common types of responses, namely prediction and point forecasts. In both cases the data arise from real-world prediction polls.  More specifically, the probability forecasts are from a tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as means to acquire accurate predictions on future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
+The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The methods are illustrated on real-world data involving two of the most common types of responses, namely prediction and point forecasts. In particular, the probability forecasts are from a tournament initiated in 2011 by the Intelligence Advanced Research Projects Activity (IARPA) as means to acquire accurate predictions on future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) has emerged as the clear winner. 
 % This success is largely credited to the
-The GJP has performed large-scale prediction polling, recruiting 
-thousands of forecasters from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
+The GJP has performed large-scale prediction polling, involving 
+thousands of forecasters.
+%from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
 %Requirements included at least a Bachelor's degree and completion of psychological and political tests that took roughly two hours. These measures assessed cognitive styles, cognitive abilities, personality traits, political attitudes, and real-world knowledge. 
-Over a period of time these forecasters were then asked to estimate probabilities of the events specified by IARPA. For each event the forecasters were allowed to make and update their estimates until the event resolved. To illustrate, Figure \ref{Example_prob} shows the forecasts for one of these events. In this example forecasting began on 30 July 2012 and ended on 30 December 2012 when the event resolved as "No" (represented by the red line at $0.0$). 
+Over a period of time these forecasters were then asked to estimate probabilities of the events specified by IARPA. The forecasters were allowed to make and update their estimates until the events resolved. To illustrate, Figure \ref{Example_prob} shows the forecasts for one of these events. In this example forecasting began on 30 July 2012 and ended on 30 December 2012 when the event resolved as "No" (represented by the red line at $0.0$). 
 % ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?".
 In general, the forecasters reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset very sparse. The point forecasts, on the other hand, were collected by \cite{moore2008use} who asked $416$ participants to guess the weights of $20$ people based on a series of pictures of these people. This is an experimental setup where each participant was required to respond to all the questions, resulting into a complete dataset. The responses are illustrated in Figure \ref{Example_point} that shows the boxplots of the guesses for each of the $20$ people. The red dots represent the corresponding true weights.
 
@@ -238,7 +251,7 @@ In general, the forecasters reported updates very infrequently. Furthermore, not
 %        \end{subfigure}
 %        \begin{subfigure}[t]{0.495\textwidth}
                 \includegraphics[width=\textwidth]{Weights}
-                \caption{Point forecasts of the weights of $20$ different people. The boxplots have been sorted to increase in the true weight. Some extreme values were omitted for the sake of clarity.}
+                \caption{Point forecasts of the weights of $20$ different people. The boxplots have been sorted to increase in the true weights (red dots). Some extreme values were omitted for the sake of clarity.}
                                 \label{Example_point}
 %        \end{subfigure}             
         
@@ -322,8 +335,7 @@ Once the predictions have been collected, the challenge is to combine them into 
 
 
 %This paper proposes a new source of heterogeneity called the \textit{information diversity}. 
-The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}, that serves as an alternative to measurement error. 
-Any variation in the reported forecasts is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}. The current paper, however, generalizes the framework, discusses model estimation, and derives specific partial information models for different types of forecasts. Under each model the optimal aggregator is derived and evaluated on actual forecasting data. The result is a noticeable performance improvement over the current state-of-the-arts measurement-error-based aggregators. This provides practical evidence in favor of information diversity as the dominant source of heterogeneity. 
+The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}, that serves as an alternative to measurement error. In particular,  any variation in the forecasts is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}.  They discuss a specification of the framework, which is convenient for theoretical analysis but can be somewhat restrictive for empirical applications. The current paper, however, is empirical without a focus on a particular type of forecast. Therefore the framework is first generalized beyond probability forecast. All unnecessary constraints are then removed, leading to a new specification of the framework, which is more appropriate for practical applications. This allows the decision-maker to build application-specific models and aggregators, instead of relying on the usual mean or median aggregates. In this paper such models are constructed for probability and point forecasts. The optimal aggregators under each model are evaluated on real-world forecasting data. The result is a noticeable performance improvement over the common measurement-error-based aggregators. This provides evidence in favor of information diversity being the more important  source of forecast heterogeneity. 
 
 
 
@@ -352,12 +364,12 @@ Any variation in the reported forecasts is assumed to stem from information avai
 
 
 %\subsection{Organization of the Paper}
-The paper is structured as follows.  The next section reviews previous work on modeling forecasts. Section \ref{PIF} begins by describing the partial information framework at its most general level and then ends by introducing a close yet practical specification of the framework. This specification culminates in a distribution that describes information diversity with a covariance matrix. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability forecasts made during the second year of the GJP and point estimates from... The final section concludes with a summary and discussion of
+The paper is structured as follows. Section \ref{PIF} first describes the partial information framework at its most general level and then introduces a close yet practical specification of the framework. 
+%This specification culminates in a distribution that describes information diversity with a covariance matrix. 
+The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability forecasts and point estimates from the two real-world studies discussed above. Finally, Section \ref{discussion} concludes with a summary and discussion of
 future research.
 
 
-\marginpar{This really is a modeling framework; instead of taking the mean, we can built different kinds of models depending on the context}
-\marginpar{The framework is introduced by starting very general then going more specific.}
 
 %For instance, consider a group of forecasters making independent predictions of a company's future revenue. The team members  may vary largely in terms of skill and knowledge. 
 %\subsubsection{Bayesian Framework}
@@ -562,7 +574,7 @@ sophisticated forecasters operates under such a loss function,
 the assumption of conditionally unbiased forecasts is, to some degree,
 self-fulfilling. 
 
-\marginpar{the model is a bit different as before; negative correlation.}
+%\marginpar{the model is a bit different as before; negative correlation.}
 % Forecasters can improve their long run performance via training and active
 %feedback. Forecasters with competitive
 %motivation, sophistication, and historical data will probably do so.
@@ -2083,6 +2095,7 @@ The revealed aggregator is compared against the average and median estimates. Ov
 
 
 \section{Discussion}
+\label{discussion}
 
 \section{Appendix A}
 %
