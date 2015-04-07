@@ -1937,7 +1937,7 @@ This score takes values within the unit interval with lower values suggesting be
                                 \label{lowUnc}
         \end{subfigure}             
         
-        \caption{This figure presents the Brier scores (BS) averaged of the 1,000 sub-samplings of $N$ forecasters. See Table \ref{scenarios} for descriptions of the different scenarios.}
+        \caption{This figure presents the Brier scores (BS) averaged over the 1,000 sub-samplings of the forecasters. See Table \ref{scenarios} for descriptions of the different scenarios.}
         \label{simReal}
 \end{figure}
 
@@ -2003,7 +2003,7 @@ The relative advantage, however, increases from HU to LU. This trend can be expl
 This subsection examines how closely the estimated $\bSigma_{22}$ reflects prior knowledge about the forecasters' information structure. 
 %The extent to which the revealed aggregator outperforms the averaging-aggregators, however, suggests that the GJP forecasters use very different information sets. This is not surprising because the individuals generally have different  interests and background knowledge.
 %More specifically, some sources of information diversity were controlled.
- In particular, the GJP assigned the forecasters to make predictions either in isolation or in teams. Furthermore, after the first year of the tournament, the top 1\% forecasters were elected to the elite group of ``super-forecasters''. These super-forecasters then worked in exclusive teams to make highly accurate predictions on the same events as the rest of the forecasters. Many of these characteristics directly suggest a level of information overlap. For instance, super-forecasters can be expected to have the highest $\delta_j$'s and forecasters in the same team should have a relatively high $\rho_{ij}$. 
+ In particular, the GJP assigned the forecasters to make predictions either in isolation or in teams. After the first year of the tournament, the top 1\% forecasters were elected to the elite group of ``super-forecasters''. These super-forecasters then worked in exclusive teams to make highly accurate predictions on the same events as the rest of the forecasters. Many of these characteristics directly suggest a level of information overlap. For instance, super-forecasters can be expected to have the highest $\delta_j$'s and forecasters in the same team should have a relatively high $\rho_{ij}$. 
 
 %the extent to which our prior knowledge on information overlap coincides with the estimated $\bSigma_{22}$. 
 
@@ -2027,7 +2027,7 @@ This subsection examines how closely the estimated $\bSigma_{22}$ reflects prior
         \end{subfigure}
 
        
-        \caption{The estimated information structure $\bSigma_{22}$ for the five most active forecasters and for all the $100$ forecasters in the dataset. Each forecaster worked either in isolation, in a non-super-forecaster team, or in a super-forecaster team. The super-forecasters generally have more information than the forecasters working in isolation.}
+        \caption{The estimated information structure $\bSigma_{22}$ for the five most active forecasters and for all the $100$ forecasters under the LU scenario. Each forecaster worked either in isolation, in a non-super-forecaster team, or in a super-forecaster team. The super-forecasters generally have more information than the forecasters working in isolation.}
         \label{SynthPlot}
 \end{figure}
 
@@ -2038,7 +2038,7 @@ The associated 100 forecasters involve 36 individuals predicting in isolation, 3
 
 
 
-This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the most (least) informed forecasters appear on the right (left). Furthermore, a colored rug has been appended on the top. This rug shows whether each forecaster worked in isolation, in a non-super-forecaster team, or in a super-forecaster team. Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. Therefore the colorful Figure  \ref{top100} suggests that the GJP forecasters have high information diversity. 
+This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays the estimated $\bSigma_{22}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the more informed forecasters appear on the right. Furthermore, a colored rug has been appended on the top. This rug shows whether each forecaster worked in isolation, in a non-super-forecaster team, or in a super-forecaster team. Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams were $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. Therefore the colorful Figure  \ref{top100} suggests that the GJP forecasters have high information diversity. 
 
 
 %\marginpar{This figure shows high information diversity. The further away it is from a single colored levelplto the higher diversity is.}
@@ -2047,7 +2047,7 @@ This pattern generalizes to the entire group of forecasters. To illustrate, Figu
 \subsection{Real World Data 2: Point Forecasts}
 \label{continuousReal}
 \subsubsection{Dataset}
-\citet{moore2008use} hired $415$ undergraduates from Carnegie Mellon University to guess the weights of $20$ people based on a series of pictures of these people. The true weights ranged from $61$ to $230$ pounds, with a mean of $157.6$ pounds. This is an experimental setup where all the students were shown the same pictures and hence given the exact same information. 
+\citet{moore2008use} hired $415$ undergraduates from Carnegie Mellon University to guess the weights of $20$ people based on a series of pictures. These target people were between 7 and 62 years old and had weights ranging from $61$ to $230$ pounds, with a mean of $157.6$ pounds. This is an experimental setup where all the students were shown the same pictures and hence given the exact same information. 
 %They were, however, likely to pick up on difference cues.
 % and hence report heterogeneous estimates. 
 Therefore any information diversity arises purely from the participants' decisions to use different subsets of the same information. 
@@ -2056,7 +2056,9 @@ Consequently, information diversity is likely to be low compared to Section \ref
 
 % The partial information framework, however, explains forecast heterogeneity with used information. Therefore 
 
-Similarly to Section \ref{binaryReal} the students' guesses were not debiased beforehand. The effect of extreme values was reduced by conducting a 90\% Winsorization \citep{hastings1947low}. This reduced the effect of some obvious outliers. For instance, some estimates were above 1000 pounds when none of the 20 people weighed more than 230 pounds.  Overall, Winsorization improved the performance of all the competing aggregators.
+Unlike in Section  \ref{binaryReal}, however, the Gaussian model was applied almost directly to the data. 
+%Similarly to Section \ref{binaryReal} the students' guesses were not debiased beforehand. T
+Only the effect of extreme values was reduced via a $90$\% Winsorization \citep{hastings1947low}. This handled some obvious outliers. For instance, the dataset contained estimates above $1000$ pounds and as low as $10$ pounds.  Winsorization generally improved the performance of all the competing aggregators.
 
 
 
