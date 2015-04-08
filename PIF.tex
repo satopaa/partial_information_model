@@ -1502,7 +1502,9 @@ for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q
 \subsection{Selecting the value of $\kappa$}
 \label{condSelection}
 %The only remaining component in model estimation is the selection of $\kappa$. 
-A practical application of Algorithm \ref{proj_algo} requires a value for the condition number constraint $\kappa$.
+Before Algorithm \ref{proj_algo} can be applied in practice, a value for $\kappa$ must be specified.
+% This subsection explains how this value can be chosen from the forecasts. 
+%A practical application of Algorithm \ref{proj_algo} requires a value for the condition number constraint $\kappa$.
 %Given that Algorithm \ref{proj_algo} requires a given $\kappa$, a principled approach to selecting this threshold should be described. 
 %The simplest approach is to find the value of $\kappa$ that maximizes the log-likelihood of the observed data. 
 %More specifically, let $\phi(\cdot | \bSigma)$ denote the PDF of a centered Gaussian distribution with covariance matrix $\bSigma$.  
@@ -1531,13 +1533,13 @@ Unfortunately, this approach suffers from several drawbacks: a) it introduces a 
 
 %\marginpar{emphasize this more!!}
 
-To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This is an in-sample approach that can be used for choosing any tuning parameter under the partial information framework. First, recall that the revealed aggregator $X''$ uses an estimate of the full covariance matrix $\bSigma$ to regress  $Z_0$ on the $Z_{j}$'s. 
+To address these drawbacks, the current paper introduces a new selection procedure called \textit{conditional validation}. This is an in-sample approach that can be used for choosing any tuning parameter under the partial information framework. To motivate, recall that the revealed aggregator $X''$ uses $\bSigma_{22}$ to regress  $Z_0$ on the $Z_{j}$'s. 
 %This matrix, however, is estimated only based on the observables $Z_j$. 
  Of course, the accuracy of this prediction cannot be known until the actual outcome is observed. However, apart from being unobserved, the variable $Z_0$ is theoretically no different to the observed $Z_{j}$'s. Therefore it is natural to let each of the $Z_{j}$'s in turn play the role of $Z_0$, predict its value based on $Z_{i}$ for $i \neq j$, and choose the value of $\nu$ that yields the best overall accuracy. Even though many accuracy measures could be chosen, this paper uses the conditional log-likelihood. Therefore, if $\Z_j^* = (Z_{j1}, \dots, Z_{jK})'$ collects the $j$th forecaster's information of the $K$ events, the chosen value of $\kappa$ is
   \begin{align}
-\kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS_{Z} : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
+\kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
-where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS_Z$ is computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Overall, the idea is similar to cross-validation but, instead of predicting across rows (observations), the prediction is now performed across columns (variables).  This is likely to be more appropriate in prediction polling-like setups that typically involve a large number of forecasters (large $N$) attending relatively few problems (small $K$). In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains more stable when $K$ is small. This is illustrated in the next section.
+where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS$ is the sample covariance matrix computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Overall, the idea is similar to cross-validation but, instead of predicting across rows (observations), the prediction is now performed across columns (variables).  This is likely to be more appropriate in prediction polling-like setups that typically involve a large number of forecasters (large $N$) attending relatively few problems (small $K$). In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}(\SS_{(r)} : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains more stable when $K$ is small. This is illustrated in the next section.
 
 %\marginpar{this must be re-written better. This can be viewed as column-wise CV while the regular CV is row-wise.}
 
