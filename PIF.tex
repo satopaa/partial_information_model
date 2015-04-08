@@ -1236,20 +1236,22 @@ Furthermore, it is not clear whether the dimension of this form can be reduced. 
 %\marginpar{it is really the constraint that makes the estimation difficult. This section introduces a correction step etc.}
 %\marginpar{There is really nothing Gaussian about this}
 
-Typically an unconstrained estimator of $\bSigma_{22}$ is easily available. The least squares approach (LSE) aims to improve such a naive estimate by projecting it onto the feasible region. 
+In many applications computing an unconstrained estimate $\SS$ of $\bSigma_{22}$ is easy. For instance, $\SS$ could be the sample covariance matrix  $\SS_Z$. The estimator $\SS$ can be naturally improved by projecting it onto the feasible region. This approach, sometimes known as the least squares approach (LSE), 
+%Typically an unconstrained estimator of $\bSigma_{22}$ is easily available. The least squares approach (LSE) aims to improve such a naive estimate by projecting it onto the feasible region. 
 % ny such estimator can be improved by projecting it onto the feasible region. This approach, known sometimes as least squares estimation (LSE), has been studied extensively by many authors  (see, e.g., \citealt{soloveychik2013covariance, barton1997structured, henrion2012projection, malick2004dual, hu1991numerical}). 
-This motivates a loss function that guarantees a globally optimal solution and facilitates dimension reduction. Furthermore, this does not rely on a parametric model and hence can be used to force the constraints even in future non-Gaussian partial information models. 
+motivates a loss function that guarantees a globally optimal solution and facilitates dimension reduction. Furthermore, it does not rely on a parametric model and hence can be used to force the constraints even in future non-Gaussian partial information models. 
 %If the true information structure $\bSigma_{22} \in \COR_N$, then the projection will be closer to the truth than the unconstrained estimator. Furthermore, given that the projection does not alter any unconstrained estimates already in the feasible region, it retains many properties of the unconstrained estimator. For instance, this paper focuses on projecting the sample covariance matrix  $\boldsymbol{S}_Z$ which, under the Gaussian model, is the unconstrained MLE of the true information structure. Given that $\boldsymbol{S}_Z$ is consistent, its projection is also consistent.
 %
 %\marginpar{This may not be true given our condition number constraint. In fact, there is no need to mention this at all. Focus on giving an equivalent problem.}
 %The associated loss function is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$, where $\Tr(\cdot)$ denotes the trace operator. 
 %
-Even though many choices are possible, suppose, for the sake of illustration, that the unconstrained estimate is $\SS_Z$. 
+%For the sake of illustration, the unconstrained estimate is here assumed to be $\SS_Z$ even though many other choices are possible. 
+%.suppose, for the sake of illustration, that the unconstrained estimate is $\SS_Z$. 
 %The discussion, of course, generalizes to any unconstrained estimator via direct substitution of $\SS_Z$. 
 %Even though this section focuses on $\SS_Z$, the discussion generalizes to any unconstrained estimator via direct substitution of $\SS_Z$.  The first step is to 
-Define $\bSigma := h(\bSigma_{22})$ and project $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
+%Define $\bSigma := h(\bSigma_{22})$ and project $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
 %The functional invariance of the MLE shows that $h(\boldsymbol{S}_Z)$ is an unconstrained MLE of  $h(\bSigma_{22}) = \bSigma$. 
-The LSE is then defined as the solution to
+From the computational perspective, it turns out to be more convenient to project $h(\SS)$ instead of $\SS$.  The LSE is then defined as $h^{-1}(\bSigma)$, where $\bSigma$ is the solution to
 %A popular and efficient solution is to project an unconstrained estimator (such as a sample covariance matrix) on to the constrained space 
 % and can be solved efficiently with standard techniques such as the interior point methods.  
 %$||\cdot||_F$ is the Frobenius norm and $\boldsymbol{S}_Z$ is an unconstrained estimate of the information structure. This is a convex optimization problem in $\bSigma_{22}$ 
@@ -1259,32 +1261,34 @@ The LSE is then defined as the solution to
 \begin{align}
  \label{lse_problem}
  \begin{split}
-\text{minimize } &  || \bSigma - h(\boldsymbol{S}_Z) ||_F^2\\
+\text{minimize } &  || \bSigma - h(\boldsymbol{S}) ||_F^2\\
 \text{subject to } & \bSigma \in \mathcal{S}_{+}^{N+1},\\
 %\text{subject to } & \bSigma \in \mathcal{S}_{+}^{N+1} \cap \R_+^{N+1},\\
 %&\bSigma \in \UNIT(N)\\
 & \cond(\bSigma) \leq \kappa,\\
-& \Tr(\A_j \bSigma) = b_j, \hspace{2em} (j = 1, \dots, N+1) 
+& \Tr(\A_j \bSigma) = b_j, \hspace{2em} (j = 1, \dots, N+1).
 \end{split}
 \end{align}
-where $\Tr(\cdot)$ is the trace operator and $||\cdot||_F^2$ is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$. Even though many other norms could be used, for the sake of simplicity, this paper only considers the Frobenius norm. 
+In this problem $\Tr(\cdot)$ is the trace operator and $||\cdot||_F^2$ is the squared Frobenius norm $||\M||_F^2 = \Tr(\M'\M)$. Even though many other norms could be used, for the sake of simplicity, this paper only considers the Frobenius norm. 
 
-The linear constraints in (\ref{lse_problem}) maintain the structure induced by $h(\cdot)$. In particular, $b_1 = 1$ and $\A_1$ is filled with zeros except $a_{11} = 1$. For $j \geq 2$, $b_j = 0$ and $\A_j$ is filled with zeros except $a_{jj} = 1$ and  $a_{j1} = a_{1j} = -1/2$. Posing the other two conditions on $\bSigma$ automatically forces these constraints on $\bSigma_{22}$ as well. To see this, note that $\bSigma_{22}$ is a principal sub-matrix of $\bSigma$. Therefore $\bSigma \in \mathcal{S}_{+}^{N+1}$ implies $\bSigma_{22} \in \mathcal{S}_{+}^{N}$. Furthermore, Cauchy's interlace theorem states that $\lambda_{min}(\bSigma) \leq \lambda_{min}(\bSigma_{22})$ and $\lambda_{max}(\bSigma_{22}) \leq \lambda_{max}(\bSigma)$ such that $\cond(\bSigma_{22}) \leq \cond(\bSigma) \leq \kappa$. Note that requiring $\cond(\bSigma) \leq \kappa$ instead of $\cond(\bSigma_{22}) \leq \kappa$ shrinks the region of feasible $\bSigma_{22}$'s. 
+The linear constraints in (\ref{lse_problem}) maintain the structure induced by the function $h(\cdot)$. 
+%In particular, $b_1 = 1$ and $\A_1$ is filled with zeros except $a_{11} = 1$. For $j \geq 2$, $b_j = 0$ and $\A_j$ is filled with zeros except $a_{jj} = 1$ and  $a_{j1} = a_{1j} = -1/2$. 
+Satisfying the other two conditions automatically suggests that $\bSigma_{22}$ also satisfies them. This follows from the fact that $\bSigma_{22}$ is a principal sub-matrix of $\bSigma$. Therefore $\bSigma \in \mathcal{S}_{+}^{N+1}$ implies $\bSigma_{22} \in \mathcal{S}_{+}^{N}$. Furthermore, Cauchy's interlace theorem states that $\lambda_{min}(\bSigma) \leq \lambda_{min}(\bSigma_{22})$ and $\lambda_{max}(\bSigma_{22}) \leq \lambda_{max}(\bSigma)$ such that $\cond(\bSigma_{22}) \leq \cond(\bSigma) \leq \kappa$. Of course, requiring $\cond(\bSigma) \leq \kappa$ instead of $\cond(\bSigma_{22}) \leq \kappa$ shrinks the region of feasible $\bSigma_{22}$'s. 
 %This, however, only affects the rate at which region grows in $\kappa$. 
- At this point, however, the exact value of $\kappa$ is arbitrary. The variance $\kappa$ only serves as means to control $\cond(\bSigma_{22})$.  
- Section \ref{condSelection} introduces a procedure to choose $\kappa$ from the data such that the final estimate of $\bSigma_{22}$ is well-conditioned. Under such an adaptive procedure, problem (\ref{lse_problem}) can be considered equivalent to projecting $\SS_Z$ onto the feasible region. 
+ At this point, however, the exact value of $\kappa$ is arbitrary and merely serves to control $\cond(\bSigma_{22})$.  
+ Section \ref{condSelection} introduces a procedure for choosing $\kappa$ from the data such that the final estimate of $\bSigma_{22}$ is well-conditioned. Under such an adaptive procedure, problem (\ref{lse_problem}) can be considered equivalent to projecting $\SS$ onto the feasible region. 
 
 %\marginpar{These are not exactly equivalent because the condition number constraint gets tighter on the info str. This value is somewhat arbitrary anyways. The only goal is to control the condition number.}
 
 
 %The relaxed problem (\ref{lse_problem}) is solved by projecting $ h(\boldsymbol{S}_Z)$ to the feasible set. 
-To solve problem (\ref{lse_problem}), express the feasible region as an intersection of two sets, namely 
+Problem (\ref{lse_problem}) can be solved by expressing  the feasible region as an intersection of two sets, namely 
 \begin{align*}
 \mathcal{C}_{sd} &= \left\{\bSigma : \bSigma \in \mathcal{S}_{+}^{N+1}, \cond(\bSigma) \leq \kappa\right\}, \text{ and }\\
 \mathcal{C}_{lin} &= \left\{\bSigma : \Tr(\A_j \bSigma) = b_j, j = 1, \dots, N+1\right\}.
 %& \R_+^{N+1}.
 \end{align*}
-Given that both of these sets are convex, projecting onto their intersection can be computed easily with the Directional Alternating Projection Algorithm \citep{gubin1967method}. This method makes progress by repeatedly projecting onto the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. Consequently, it is efficient only if projecting onto each of the individual sets is fast. Fortunately, this is the case for problem (\ref{lse_problem}). 
+Given that both of these sets are convex, projecting onto their intersection can be computed with the Directional Alternating Projection Algorithm \citep{gubin1967method}. This method makes progress by repeatedly projecting onto the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. Consequently, it is efficient only if projecting onto each of the individual sets is fast. Fortunately, as will be shown next, this is the case for the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. 
 
 
 %Dykstra's projection algorithm described \citep{boyle1986method}. Intuitively, the solution is found by iteratively projecting onto the sets $\mathcal{C}_{sd}$, $\mathcal{C}_{lin}$, and $\R_+^{N+1}$. 
@@ -1303,10 +1307,10 @@ Given that both of these sets are convex, projecting onto their intersection can
 
 First, projecting a matrix $\M \in \mathcal{S}^{N+1}$  onto $\mathcal{C}_{lin}$ is a linear map. To make this more specific, let $\m = \vec(\M)$ be a column-wise vectorization of $\M$. 
 %Then, $\s$ has length $N_s := \binom{N+1}{2} = (N+1)N/2$. If $\A_0$ is a $(N+1) \times (N_s - N - 1)$ binary matrix with ones only at positions $\left(i,  1+\sum_{j=0}^{i-3}(N-j)\right)$ for $i = 2, \dots, N+1$, 
-If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$ for $j = 1, \dots, N+1$, then the  linear constraints in (\ref{lse_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. The projection of  $\M$ onto $\mathcal{C}_{lin}$ then is $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and for $j \geq 2$ replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
+If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$, then the  linear constraints in (\ref{lse_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. The projection of  $\M$ onto $\mathcal{C}_{lin}$ then is given by $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and for $j \geq 2$ replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
 
 
-Second, \cite{tanaka2014positive} describe a univariate optimization problem that is almost equivalent to projecting $\M \in \mathcal{S}^{N+1}$ onto $\mathcal{C}_{sd}$. The only difference is that their solution set also includes the zero-matrix $\boldsymbol{0}$. Assuming that such a limiting case can be safely handled in the implementation, their approach offers a fast projection onto  $\mathcal{C}_{sd}$ even when $N$ is large. To make this more specific, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_{N+1}) \Q'$ and the univariate function 
+Second, \cite{tanaka2014positive} describe a univariate optimization problem that is almost equivalent to projecting $\M \in \mathcal{S}^{N+1}$ onto $\mathcal{C}_{sd}$. The only difference is that their solution set also includes the zero-matrix $\boldsymbol{0}$. Assuming that such a limiting case can be safely handled in the implementation, their approach offers a fast projection onto  $\mathcal{C}_{sd}$ even for a moderately large $N$. To describe this approach, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_{N+1}) \Q'$ and the univariate function 
 \begin{align*}
 g(\mu) &= \sum_{i=1}^{N+1} \left[ \left(\mu-l_i\right)^2_+ + \left(l_i - \kappa\mu\right)^2_+ \right],
 \end{align*}
@@ -1329,7 +1333,7 @@ l_j & \text{ otherwise}
 for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q$ is the projection of $\M$ onto $\mathcal{C}_{sd}$. Call this projection $\mathcal{P}_{sd}(\cdot : \kappa)$. 
 
 
- Algorithm \ref{proj_algo} uses these projections to solve (\ref{lse_problem}). Denote this algorithm with the operator $\mathcal{P}_{LSE}(\cdot : \kappa)$. Each iteration projects twice on one set and once on the other set. The general form of the algorithm, however, does not specify which projection should be called twice. Therefore, given that $\mathcal{P}_{sd}(\cdot:\kappa)$ takes longer to run than $\mathcal{P}_{lin}(\cdot)$, it is beneficial to choose to call $\mathcal{P}_{lin}(\cdot)$ twice.  The complexity of each iteration is determined largely by the spectral decomposition which is fairly fast for moderately large $N$. Overall time to convergence, of course, depends on the choice of the stopping criterion. Many intuitive criteria are possible. Given that $\bSigma_D \in \mathcal{C}_{lin}$ and $\bSigma_C \in \mathcal{C}_{sd}$, the stopping criterion $\max \{(\bSigma_{D}-\bSigma_{C})_{ij}^2\} < \epsilon$ suggests that the return value is in $\mathcal{C}_{sd}$ and close to $\mathcal{C}_{lin}$ in every direction. Based on our experience, the algorithm converges quite quickly. For instance, our implementation in C++ generally solves (\ref{lse_problem}) for $\epsilon = 10^{-5}$ and $N = 100$  in less than a second on a 1.7 GHz Intel Core i5 computer.  
+ Algorithm \ref{proj_algo} uses these projections to solve (\ref{lse_problem}).  Each iteration projects twice on one set and once on the other set. The general form of the algorithm, however, does not specify which projection should be called twice. Therefore, given that $\mathcal{P}_{sd}(\cdot:\kappa)$ takes longer to run than $\mathcal{P}_{lin}(\cdot)$, it is beneficial to choose to call $\mathcal{P}_{lin}(\cdot)$ twice. The complexity of each iteration is determined largely by the spectral decomposition which is fairly fast for moderately large $N$. Overall time to convergence, of course, depends on the choice of the stopping criterion. Many intuitive criteria are possible. Given that $\bSigma_D \in \mathcal{C}_{lin}$ and $\bSigma_C \in \mathcal{C}_{sd}$, the stopping criterion $\max \{(\bSigma_{D}-\bSigma_{C})_{ij}^2\} < \epsilon$ suggests that the return value is in $\mathcal{C}_{sd}$ and close to $\mathcal{C}_{lin}$ in every direction. Based on our experience, the algorithm converges quite quickly. For instance, our implementation in C++ generally solves (\ref{lse_problem}) for $\epsilon = 10^{-5}$ and $N = 100$  in less than a second on a 1.7 GHz Intel Core i5 computer.  For the remainder of the paper, projecting $\SS$ onto the feasible region is denoted with the operator $\mathcal{P}_{LSE}(\cdot : \kappa)$.
 % This suggests that Algorithm \ref{proj_algo} is at least a partial response to difficulty (\ref{compProblem1}). 
  
  
@@ -1378,12 +1382,12 @@ for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q
 %\end{algorithm}
 
 \begin{algorithm}[t]
-\caption{This procedure projects the point $h(\boldsymbol{S}_Z)$ onto the intersection $\mathcal{C}_{sd} \cap \mathcal{C}_{lin}$. Denote the projection with $\mathcal{P}_{LSE}(\cdot : \kappa)$. Throughout the paper, the stopping criterion is fixed at $\epsilon = 10^{-5}$.}
+\caption{This procedure projects the point $h(\boldsymbol{S})$ onto the intersection $\mathcal{C}_{sd} \cap \mathcal{C}_{lin}$. Denote the projection with $\mathcal{P}_{LSE}(\cdot : \kappa)$. Throughout the paper, the stopping criterion is fixed at $\epsilon = 10^{-5}$.}
 \label{proj_algo}
 \begin{algorithmic}[1]
-\Require Sample covariance matrix $\boldsymbol{S}_Z$, stopping criterion $\epsilon > 0$, and an upper bound on the condition number $\kappa \geq 1$. 
+\Require Unconstrained estimator $\SS$, stopping criterion $\epsilon > 0$, and an upper bound on the condition number $\kappa \geq 1$. 
 \Procedure{Directional Alternating Projection Algorithm}{}
-\State $\bSigma_{A} \leftarrow  h(\boldsymbol{S}_Z)$
+\State $\bSigma_{A} \leftarrow  h(\boldsymbol{S})$
 %\State $\bLambda_{lin} \leftarrow \boldsymbol{0}$
 %\State $\bSigma_{cond} \leftarrow \mathcal{P}_{cond}(h(\boldsymbol{S}_Z) : \kappa)$.
 \Repeat
