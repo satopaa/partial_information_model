@@ -743,7 +743,7 @@ $\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the inf
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-To apply the partial information framework in practice requires a joint probability distribution for the model variables. Any distribution can be used as long as it can utilize the covariance pattern in (\ref{cov_str}).  However, in many applications, such as probability forecasting of binary events, $Y$ and $X_j$ may not share a common support, making it difficult to directly state a joint distribution for them. One solution is to use a set of auxiliary variables, called the \textit{information variables}. More specifically, denote the information variables with $Z_0, Z_1, \dots, Z_N$, where $Z_0$ and $Z_j$, for $j = 1, \dots, N$, are associated with $Y$ and $X_j$, respectively. These variables follow a multivariate Gaussian distribution with the covariance pattern (\ref{cov_str}):
+A practical specification of the partial information framework begins with a joint probability distribution for the model variables. Any distribution can be used as long as it can utilize the covariance pattern in (\ref{cov_str}) and permits estimation of $Y$ given the $X_j$'s.  However, directly stating such a joint distribution in some applications, such as probability forecasting of binary events, can be difficult because $Y$ and $X_j$ may not share a common support. This can be generally addressed by introducing $N+1$ auxiliary \textit{information variables} denoted with $Z_0, Z_1, \dots, Z_N$. Let their joint distribution be multivariate Gaussian with the covariance pattern (\ref{cov_str}):
 \begin{align}
 \left(\begin{matrix} Z_0 \\ Z_{1}\\ \vdots \\ Z_{N} \end{matrix}\right) &\sim \mathcal{N}_{N+1}\left( 
 %\left(\begin{matrix} 
@@ -762,9 +762,11 @@ To apply the partial information framework in practice requires a joint probabil
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
  \end{array}\right)\right).  \label{NExperts}
 \end{align}
-The value of $Y$ is given by an appropriate transformation of $Z_0$. More specifically, if $\mathcal{Y}$ denotes the support of $Y$, then 
- $Y = g(Z_0)$, where $g: \R \to \mathcal{Y}$ is some surjective \textit{link function} specific to the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. The rest of the information variables, $Z_j$ for $j = 1, \dots, N$, represent the forecasters' information. In particular, Forecaster $j$ first observes $Z_j$ and then makes a prediction about $Y$ conditional on this observation; that is, $X_j = \E[Y | \F_j = \sigma(Z_j)] = \E[Y | Z_j]$. This provides an easy interpretation of the model. In particular, note that $\Corr(X_j, Y) \to 1.0$ as $\Var(X_j) = \delta_j \to 1.0$. Therefore, $\Var(Z_0) = 1.0$ can be viewed as the total amount of information, $\delta_j := \Var(Z_j)$ as the amount of information used by Forecaster $j$, and $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ as the information overlap between Forecasters $i$ and
-$j$. These variables are collected in the sub-matrix $\bSigma_{22}$ that summarizes  the information structure among the $N$ forecasters. 
+The variable $Z_0$ determines $Y$ via an appropriate transformation. More specifically, if $\mathcal{Y}$ denotes the support of $Y$, then 
+ $Y = g(Z_0)$ for some surjective \textit{link function} $g: \R \to \mathcal{Y}$ specified by the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. The remaining information variables, namely $Z_j$ for $j = 1, \dots, N$ summarize the forecasters' information. In particular, Forecaster $j$ observes $Z_j$ and makes a prediction about $Y$ conditional on this observation. Therefore, $X_j= \E[Y | Z_j]$ for $j = 1, \dots, N$. 
+ 
+The covariance parameters in (\ref{NExperts}) have an easy interpretation in terms of the forecasters' information. Given that $\Corr(X_j, Y) \to 1.0$ as $\Var(X_j) = \delta_j \to 1.0$, the variance term $\Var(Z_0) = 1.0$ represents the total amount of information and $\delta_j := \Var(Z_j) \in [0,1]$ is the amount of information used by Forecaster $j$.  Consequently, $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ can be viewed as the amount of information overlap between Forecasters $i$ and
+$j$. These variables are collected in the sub-matrix $\bSigma_{22}$ that represents the \textit{information structure} among the $N$ forecasters. 
 
 %Overall, this is  a very flexible specification that yields a broad range  of different partial information models. Examples are discussed in Section \ref{empirical} that illustrates and evaluates the \textit{Gaussian model} on probability and point forecasts.  
 
@@ -827,13 +829,18 @@ The choice of the Gaussian distribution can be motivated both from the intuitive
 % recall the interpreted signal
 %model of~\citet{broomell2009experts}. They assume that
 Forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
-$H_1 , \ldots , H_r$ influencing $Y$.  Proposing a linear model for subjective
-interpretation seems quite natural.  If
+$H_1 , \ldots , H_r$.
+% influencing $Y$.  
+%Proposing a linear model for subjective
+%interpretation seems quite natural.  
+If
 the cues (or any linear combination of them) are independent
 and have small tails, then as $r \to \infty$, the joint distribution
 of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
 Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
-to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. This is especially useful in deriving the revealed aggregator.   In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z, 1-\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})\right).$$ This propagates into to a closed-form revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ in many different instances of the model. The term $\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
+to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
+%This is especially useful in deriving the revealed aggregator.   
+In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z, 1-\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})\right).$$ This permits a closed-form revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ in many different instances of the model. The term $\diag(\bSigma_{22})' \bSigma_{22}^{-1}\diag(\bSigma_{22})$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma_{22})' \bSigma_{22}^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
 %$\delta_0 = 1$ is from now on incorporated in the link function such that $\Var(Z_0) = 1$. 
 %Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution.
 %Therefore if the decision-maker only cares about a point estimate, the choice of $\delta_0$ is irrelevant. In the contrary, if 
