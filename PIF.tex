@@ -1055,7 +1055,7 @@ However, estimating $\bSigma_{22}$ in full generality based on a single predicti
 %\end{align}
 %where $\conv(\cdot)$ denotes the convex hull operator and $\COR_N$ is known as the correlation polytope (also known as the boolean quadric polytope by some authors). All elements of $ \COR_N$ are symmetric, positive semidefinite, and hence valid covariance matrices. 
 %\citep{letchford2008binary}.  
-Estimating $\bSigma_{22}$ must be performed under the pattern (\ref{NExperts}). That is, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
+Estimation of $\bSigma_{22}$ is performed under the pattern in (\ref{NExperts}). In particular, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
 % denote the set of symmetric $N \times N$  matrices with $\mathcal{S}^N$, represent the set of  symmetric positive semidefinite $N \times N$ matrices with $\mathcal{S}_{+}^N$, and consider a one-to-one function $h$ that transforms a matrix $\M \in \mathcal{S}^{N}$ to  
 \begin{align*}
 h(\M)  := 
@@ -1070,11 +1070,11 @@ h(\M)  :=
  \end{matrix}\right),
 \end{align*}
 %where $\M \in \mathcal{S}^{N}_+$, 
-then estimation must performed under the condition $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+the final estimate must satisfy the condition $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
 %These elements, however, differ largely in their sensitivity to numerical operations. This is important because
-An accurate yet highly sensitive estimate of $\bSigma_{22}$, however, can still lead to imprecise aggregation. To see this, recall from Section \ref{gaussian} that the conditional mean of $Z_0$ given $\Z$ is  $\bSigma_{12} \bSigma_{22}^{-1} \Z$. Given that in many applications this term ends up propagating to the final revealed aggregator $X''$, it deserves careful estimation. 
+An accurate yet highly sensitive estimate, however, can still lead to imprecise aggregation. To see this, recall from Section \ref{gaussian} that the conditional mean of $Z_0$ given $\Z$ is  $\bSigma_{12} \bSigma_{22}^{-1} \Z$. This is an important term that is generally found in the final revealed aggregator $X''$ and hence has high influence on the final aggregation accuracy. 
 %notice that the Gaussian revealed aggregator includes the term $\bSigma_{12} \bSigma_{22}^{-1} \Z$.
- First, re-express the mean as $\w' \Z$, where $\w$ is the solution to $\bSigma_{12} = \w' \bSigma_{22}$. The rate at which the solution changes with respect to a change in $\bSigma_{12}$ depends on the condition number $\cond(\bSigma_{22}) := \lambda_{max}(\bSigma_{22}) / \lambda_{min}(\bSigma_{22})$, i.e., the ratio between the maximum and the minimum eigenvalues of $\bSigma_{22}$. If the condition number is very large, a small error in $\bSigma_{12}$ can cause a large error in $\w$. In the contrary, if the condition number is small, $\bSigma_{22}$ is called \textit{well-conditioned} and error in $\w$ will not be much larger than the error in $\bSigma_{12}$. Therefore, to prevent error from being largely amplified during aggregation, the estimation procedure also requires $\cond(\bSigma_{22}) \leq \kappa$ for a given threshold $\kappa \geq 1$. 
+ Re-express the term as $\w' \Z$, where $\w$ is the solution to $\bSigma_{12} = \w' \bSigma_{22}$. The rate at which the solution changes with respect to a change in $\bSigma_{12}$ depends on the condition number $\cond(\bSigma_{22}) := \lambda_{max}(\bSigma_{22}) / \lambda_{min}(\bSigma_{22})$, i.e., the ratio between the maximum and the minimum eigenvalues of $\bSigma_{22}$. If the condition number is very large, a small error in $\bSigma_{12}$ can cause a large error in $\w$. In the contrary, if the condition number is small, $\bSigma_{22}$ is called \textit{well-conditioned} and error in $\w$ will not be much larger than the error in $\bSigma_{12}$. Therefore, to prevent error from being largely amplified during aggregation, the estimation procedure also requires $\cond(\bSigma_{22}) \leq \kappa$ for a given threshold $\kappa \geq 1$. 
  
 %  provides beneficial regularization, which is particularly important under small sample sizes. 
 % \marginpar{Let's not talk about regularization as this was not the purpose ever}
