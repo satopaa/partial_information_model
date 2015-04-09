@@ -1576,7 +1576,7 @@ Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-conve
 
 \section{Empirical Analysis}
 \label{empirical}
-This section evaluates a) the Gaussian model both on synthetic and real-world forecasting data, and b) illustrates how the Gaussian model can be applied to different types of forecasting tasks. Each task involves $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model then consist of the following components: the information variables $Z_{0k}, Z_{1k}, \dots, Z_{Nk}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{jk}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{0k})$ for all $k = 1, \dots, K$.
+This section evaluates the Gaussian model on synthetic and real-world forecasting data. A secondary goal is to illustrate how the Gaussian model can be applied to different types of forecasting tasks. Each these illustrations assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model then consist of the following components: the information variables $Z_{0k}, Z_{1k}, \dots, Z_{Nk}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{jk}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{0k})$ for all $k = 1, \dots, K$.
 %\end{enumerate}
 %
 %\begin{align*}
@@ -1606,7 +1606,7 @@ The evaluation naturally begins with synthetic data generated directly from (\re
 \end{quote}
 
 
-Simulating forecasts requires a covariance matrix $\bSigma_{22}$ such that $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
+Simulating forecasts from (\ref{NExperts}) requires a covariance matrix $\bSigma_{22}$ such that $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
 One approach is to pick $\delta_j \in [0,1]$ for all $j = 1, \dots, N$, and then set $\rho_{ij} = \delta_i \delta_j$. If  $\bSigma_{22}$ is the resulting information structure, then $\bSigma_{22} - \diag(\bSigma_{22})\diag(\bSigma_{22})' = \Diag((\delta_1 - \delta_1^2, \dots, \delta_N - \delta_N^2)) \in \mathcal{S}_{+}^{N}$, which by the Schur complement is equivalent to $h(\bSigma_{22}) \in \mathcal{S}_{+}^{N+1}$. 
 %A mechanism for randomly generating valid information structures is introduced in the following proposition. 
 %\begin{proposition}
@@ -1630,7 +1630,7 @@ where the cross-validation uses five folds and $\kappa$ is found using the same 
 \item The average forecast.
 \item The median forecast.
 \end{enumerate}
-The overall process is repeated a $5,000$ times under different values of $K$ and $N$, each ranging from $5$ to $35$ with constant increments of $5$. 
+The overall process is repeated a $5,000$ times under different values of $K$ and $N$, each ranging from $5$ to $35$ with constant increments of $5$. In the end the results are averages within each pair of $N$ and $K$.
 
 
 \begin{figure}[t!]
@@ -1683,15 +1683,15 @@ Even though all estimators become more accurate as $K$ grows, $\mathcal{P}_{LSE}
     	\captionsetup[subfigure]{width=0.98\textwidth }
     \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResX.pdf}
-                \subcaption{Prediction errors under different value of $K$ but fixed $N = 20$.}
+                \subcaption{RMSE under different $K$ but fixed $N = 20$.}
                 \label{Nfixed}
         \end{subfigure}%
         \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResXN.pdf}
-                \subcaption{Prediction errors under different value of $N$ but fixed $K = 20$.}
+                \subcaption{RMSE under different $N$ but fixed $K = 20$.}
                                 \label{Kfixed}
         \end{subfigure}
-         \caption{The accuracy to predict $Y_k$ under different values of $N$ and $K$. The aggregator $X_{true}''$ assumes knowledge of the true covariance matrix and hence represents  optimal accuracy.}
+         \caption{The accuracy to predict $Y_k$ under different values of $N$ and $K$. Accuracy is measured in terms of the root-mean-squared-error (RMSE). The aggregator $X_{true}''$ assumes knowledge of the true information matrix and hence represents optimal accuracy.}
         \label{XEstimation}
 \end{figure}
 
@@ -1700,7 +1700,7 @@ Even though all estimators become more accurate as $K$ grows, $\mathcal{P}_{LSE}
 
 
 
-These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the average squared error loss of the competing aggregators in predicting $Y_k$. Figure \ref{Nfixed} varies $K$ but fixes $N = 20$.  Figure \ref{Kfixed}, on the other hand,  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{0k} \sim \mathcal{N}(0,1)$, the loss of the prior mean $\E[(Y_k-0)^2] = 1.0$ can be considered as the upper bound in prediction error. On the other end, the aggregator $X_{true}''$ is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $1.0$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with average loss at around $0.26$. They both show slight improvement as $N$ increased. In all cases, however, their loss is uniformly well above the loss of the revealed aggregators, suggesting that averaging aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They monotonically tend closer to the optimal as $K$ grows larger. They also collect information and appear to improve at the optimal rate as $N$ increases. This can be seen in the way the performance gap from $X_{true}$ to  $X_{out}''$ and $X_{cov}''$ remains rather constant as $N$ increases. When $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
+These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the RMSE's of the competing aggregators in predicting $Y_k$. Figure \ref{Nfixed} varies $K$ but fixes $N = 20$.  Figure \ref{Kfixed}, on the other hand,  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{0k} \sim \mathcal{N}(0,1)$, the RMSE of the prior mean $\E[\sqrt{(Y_k-0)^2}] = \E[|Y_k|] = \sqrt{2/\pi} \approx 0.8$ can be considered as the upper bound in prediction error. On the other end, the aggregator $X_{true}''$ is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $0.8$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with RMSE around $0.5$. They both show slight improvement as $N$ increased. In all cases, however, their RMSE is uniformly well above that of the revealed aggregators, suggesting that averaging aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They collect information and appear to improve at the optimal rate as $N$ increases. This can be seen in the way the performance gap from $X_{true}$ to  $X_{out}''$ and $X_{cov}''$ remains rather constant as $N$ increases. The gap, however, decreases as $K$ grows larger.  When $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
   
  
 
@@ -1920,13 +1920,15 @@ where $\hat{\bSigma}_{22} = \mathcal{P}_{LSE}(\SS : \kappa_{cov})$ is the final 
 %\textit{Analysis.} 
 This aggregator is benchmarked against the state-of-the-art measurement-error aggregators, namely the average probability, median probability, average probit-score, and average log-odds. To avoid infinite log-odds
 and probit scores, extreme forecasts $X_{jk} = 0$ and $1$ were
-censored to $X_{jk} = 0.001$ and $0.999$, respectively. The results remain insensitive to the exact choice of censoring as long as this is done in a reasonable manner to keep the extreme probabilities from becoming highly influential in the logit- or probit-space. The accuracy of an aggregate $X_k$ is measured with the mean Brier score (BS) defined as quadratic loss between the aggregate and the event indicator:
-%Consider $K$
-%events and collect all $N_k$ probability forecasts for event $A_k$ into a vector $\boldsymbol{p}_k \in [0,1]^{N_k}$. Then, BS for aggregator $\text{Agg}:[0,1]^{N_k} \to [0,1]$ is 
- \begin{align*}
-\text{BS} &= \frac{1}{K} \sum_{k=1}^K \left(X_k- \one_{A_k}\right)^2.
- \end{align*}
-This score takes values within the unit interval with lower values suggesting better accuracy. Instead of considering all the forecasts at once, the aggregators are evaluated under different $N$ via repeated subsampling of the $100$ most active forecasters; that is, choose $N$ forecasters uniformly at random, aggregate their forecasts, and compute the BS. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. In the rare occasion where no pairwise overlap is available between one or more pairs of the selected forecasters, the subsampling is repeated until all pairs have at least one problem in common. 
+censored to $X_{jk} = 0.001$ and $0.999$, respectively. The results remain insensitive to the exact choice of censoring as long as this is done in a reasonable manner to keep the extreme probabilities from becoming highly influential in the logit- or probit-space. Similarly to before, the accuracy of the aggregates is measured with the RMSE.
+% $X_k$ is measured with the mean Brier score (BS) defined as quadratic loss between the aggregate and the event indicator:
+%%Consider $K$
+%%events and collect all $N_k$ probability forecasts for event $A_k$ into a vector $\boldsymbol{p}_k \in [0,1]^{N_k}$. Then, BS for aggregator $\text{Agg}:[0,1]^{N_k} \to [0,1]$ is 
+% \begin{align*}
+%\text{BS} &= \frac{1}{K} \sum_{k=1}^K \left(X_k- \one_{A_k}\right)^2.
+% \end{align*}
+%This score takes values within the unit interval with lower values suggesting better accuracy.
+ Instead of considering all the forecasts at once, the aggregators are evaluated under different $N$ via repeated subsampling of the $100$ most active forecasters; that is, choose $N$ forecasters uniformly at random, aggregate their forecasts, and compute the RSME. This is repeated 1,000 times with $N = 5, 10, \dots, 50$ forecasters. In the rare occasion where no pairwise overlap is available between one or more pairs of the selected forecasters, the subsampling is repeated until all pairs have at least one problem in common. 
 %The simulation study is performed separately for the HU and LU setups. 
 
 
@@ -1954,11 +1956,11 @@ This score takes values within the unit interval with lower values suggesting be
                                 \label{lowUnc}
         \end{subfigure}             
         
-        \caption{This figure presents the Brier scores (BS) averaged over the 1,000 sub-samplings of the forecasters. See Table \ref{scenarios} for descriptions of the different scenarios.}
+        \caption{RMSE averaged over the 1,000 sub-samplings of the forecasters. See Table \ref{scenarios} for descriptions of the different scenarios.}
         \label{simReal}
 \end{figure}
 
-Figure \ref{simReal} shows the average BS under the three scenarios described in Table \ref{scenarios}. Notice that the scores become uniformly worse from HU to LU. This reflects the decreasing level of uncertainty. 
+Figure \ref{simReal} shows the average RMSE under the three scenarios described in Table \ref{scenarios}. Notice that the scores become uniformly worse from HU to LU. This reflects the decreasing level of uncertainty. 
 %All scenarios, however, tell a similar story about the relative accuracies of the competing aggregators. First,
 In all the figures the measurement-error aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Despite the level of uncertainty, the revealed aggregator $X_{cov}''$ outperforms the averaging aggregators as long as $K \geq 10$. 
 %This provides evidence in favor of information diversity being the more important source of forecast heterogeneity. 
