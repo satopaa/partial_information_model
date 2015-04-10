@@ -230,16 +230,19 @@ Even though historically opinion polls have been the dominant form, in the recen
 \end{minipage}%
 \end{figure}
 
-The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The methods are illustrated on real-world data involving two common types of responses, namely probability and point forecasts. The probability forecasts were collected during a forecasting tournament that the Intelligence Advanced Research Projects Activity (IARPA) initiated in 2011 as means to estimate the likelihoods of future international political events. Among the participating teams, the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) 
+The current paper introduces statistical methodology designed specifically for the rapidly growing practice of prediction polling. The methods are illustrated on real-world data involving two common types of responses, namely probability and point forecasts. The probability forecasts were collected 
+%during a forecasting tournament that the Intelligence Advanced Research Projects Activity (IARPA) initiated in 2011 as means to estimate the likelihoods of future international political events. Among the participating teams,
+by the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psychological}) as a means to estimate the likelihoods of international political future events deemed important by the Intelligence Advanced Research Projects Activity (IARPA). 
 %has emerged as the clear winner. 
 %% This success is largely credited to the
-%Its strategy 
-has relied on large-scale prediction polling, involving 
-thousands of forecasters making probability estimates
+%%Its strategy 
+%has relied on large-scale prediction polling, involving 
+%thousands of forecasters making probability estimates
 %from professional societies, research centers, alumni associations, science bloggers, and word of mouth. 
 %Requirements included at least a Bachelor's degree and completion of psychological and political tests that took roughly two hours. These measures assessed cognitive styles, cognitive abilities, personality traits, political attitudes, and real-world knowledge. 
 %Over a period of time these forecasters were then asked to estimate 
- of the events specified by IARPA. These forecasters were allowed to make and update their estimates until the events resolved. To illustrate, Figure \ref{Example_prob} shows the forecasts for one of these events. In this example forecasting began on 30 July 2012 and ended on 30 December 2012 when the event resolved as ``No'' (represented by the red line at $0.0$). 
+% of the events specified by IARPA. These forecasters were allowed to
+ They have recruited thousands of forecasters, each making and updating estimates until the events resolved. To illustrate, Figure \ref{Example_prob} shows the forecasts for one of these events. In this example forecasting began on 30 July 2012 and ended on 30 December 2012 when the event resolved as ``No'' (represented by the red line at $0.0$). 
 % ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?".
 In general, the forecasters reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset very sparse. The point forecasts, on the other hand, were collected by \cite{moore2008use} who recruited $416$ undergraduates from Carnegie Mellon Univesity to guess the weights of $20$ people based on a series of pictures. This is an experimental setup where each participant was required to respond to all the questions, resulting into a complete dataset. The responses are illustrated in Figure \ref{Example_point} that shows the boxplots of the guesses for each of the $20$ people. The red dots represent the corresponding true weights.
 
@@ -341,7 +344,8 @@ Once the predictions have been collected, the challenge is to combine them into 
 
 
 %This paper proposes a new source of heterogeneity called the \textit{information diversity}. 
-The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}, that serves as an alternative to measurement error. In particular,  any variation in the forecasts is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}.  They discuss a specification of the framework, which is convenient for theoretical analysis but can be somewhat restrictive for empirical applications. The current paper, however, is empirical without a focus on a particular type of forecast. Therefore the framework is generalized beyond probability forecast and all unnecessary constraints are removed, leading to a new specification that is more appropriate for practical applications. This allows the decision-maker to build context-specific models and aggregators, instead of relying on the usual mean or median aggregates. In this paper such models are constructed and evaluated on real-world  probability and point forecasts. The resulting partial information aggregators achieve a noticeable performance improvement over the common measurement-error-based aggregators, suggesting that  information diversity is the more important  source of forecast heterogeneity. 
+The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}, that serves as an alternative to measurement error. In particular,  any variation in the forecasts is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. This framework was originally introduced for probability forecasts in a theory-orientated paper by \cite{satopaamodeling}.  They discuss a specification of the framework, which is convenient for theoretical analysis but can be somewhat restrictive for empirical applications. The current paper, however, is empirical without a focus on a particular type of forecast. Therefore the framework is generalized beyond probability forecast and all unnecessary constraints are removed, leading to a new specification that is more appropriate for practical applications. This allows the decision-maker to build context-specific models and aggregators, instead of relying on the usual mean or median aggregates.
+
 
 
 
@@ -372,7 +376,8 @@ The main contribution of this paper is a new source of forecast heterogeneity, c
 %\subsection{Organization of the Paper}
 The paper is structured as follows. Section \ref{PIF} first describes the partial information framework at its most general level and then introduces a close yet practical specification of the framework. 
 %This specification culminates in a distribution that describes information diversity with a covariance matrix. 
-The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability and point forecasts from the two real-world prediction polls discussed above. Finally, Section \ref{discussion} concludes with a summary and discussion of
+The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability and point forecasts from the two real-world prediction polls discussed above. The resulting partial information aggregators achieve a noticeable performance improvement over the common measurement-error-based aggregators, suggesting that  information diversity is the more important  source of forecast heterogeneity. 
+ Finally, Section \ref{discussion} concludes with a summary and discussion of
 future research.
 
 
@@ -634,7 +639,7 @@ Forecaster $j$ predicts $X_j = \E[Y \| \F_j]$ based on some partial information 
 % $X_j = \E [Y | \F_j]$ only requires the existence of a probability model, together with the assumption of conditional unbiasedness. 
  
  
- This is enough to provide the following proposition that relates the target quantity to any conditionally unbiased forecasts. The proof is deferred to the Appendix.
+ This is enough to provide the following proposition that relates the target quantity to the forecasts. The proof is deferred to the Appendix.
  \begin{proposition}
 \label{covstr}
 Suppose $\E[Y|X_j]  = X_j$ for all $j =1, \dots, N$. Denote $\F_j = \sigma(X_j)$ and consider a sub-$\sigma$-field $\sigma(X_i) = \F_i \subseteq \F_j$ for some other forecast $X_i$. Then,
@@ -645,7 +650,7 @@ Suppose $\E[Y|X_j]  = X_j$ for all $j =1, \dots, N$. Denote $\F_j = \sigma(X_j)$
 \end{enumerate}
 \end{proposition}
 \noindent
-According to item \ref{first}) the target quantity and the forecasts agree in expectation. This is particularly useful as it provides guidance in estimating the prior of $Y$. 
+Item \ref{first}) states that the target quantity and the forecasts agree in expectation. This is particularly useful as it provides guidance in estimating the prior of $Y$. 
 % This suggests that  if the $X_j$'s are probabilistic (such as densities), the prior distribution $\P(Y)$ can be estimated from the forecasts. On the other hand, if $X_j$ are point estimates, the prior mean $\E[Y]$ can be estimated from the $X_j$'s. 
 %
 %This suggests that all the relevant model parameters can be estimated in practice.
@@ -657,13 +662,19 @@ Given that $Y = \E[Y | \F]$ and $\F_j \subseteq \F$ for all $j = 1, \dots, N$, i
 \diag(\bSigma_X) & \bSigma_X \\
 \end{matrix} \right), \label{cov_str}
 \end{align}
-where $\diag(\bSigma_X)$ represents the diagonal of $\bSigma_X$.
+where $\diag(\bSigma_X)$ denotes the diagonal of $\bSigma_X$.
 %
 % $\Cov(X_j, Y) = \Var(X_j)$ because $Y = \E[Y | \F]$ and $\F_j \subseteq \F$ for all $j = 1, \dots, N$.
 %  This explains how the covariance matrix of the observables, namely the $X_j$'s extends to the unknown $Y$ (see Equation (\ref{NExperts})).
 This allows $Y$ to be regressed on the $X_j$'s without a separate training set of past predictions and known outcomes. The resulting estimator, called the \textit{revealed} aggregator, is denoted with $X'' := \E [Y \|
 \F'']$, where $\F'' := \sigma(X_1, \dots, X_N)$ is the $\sigma$-field generated (or revealed) by the forecasts
-$\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the information in the forecasts and is therefore the relevant estimator in each specific partial information model. Finally, item \ref{third}) shows that the variance of $X_j$ increases as Forecaster $j$  learns and becomes more informed about $Y$. 
+$\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the information in the forecasts and is therefore the relevant estimator in each specific partial information model. Finally, item \ref{third}) shows that $\Var(X_j)$ increases to $\Var(Y)$ as Forecaster $j$  learns and becomes more informed about $Y$. Therefore $\Var(Y)$ is the total amount of available information and $\Var(X_j)$ is the amount of information used by Forecaster $j$. 
+%and $\Var(X_j)$ quantify the amount of information in $\F$ and $\F_j$, respectively.  
+%represents the total amount of information and $\Var(X_j)$ is the amount of information used by Forecaster $j$.
+ Consequently, $\Cov (X_{i} , X_{j})$ can be viewed as the amount of information overlap between Forecasters $i$ and
+$j$. 
+%These variables are collected in the sub-matrix $\bSigma$ that represents the \textit{information structure} among the $N$ forecasters. 
+
 
 
 %\marginpar{Discussion of item i should be place here. Keep it as one in the following text.}
@@ -748,7 +759,38 @@ $\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the inf
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-A practical specification of the partial information framework begins with a joint probability distribution for the model variables. Any distribution can be used as long as it can utilize the covariance pattern in (\ref{cov_str}) and permits estimation of $Y$ given the $X_j$'s.  However, directly stating such a joint distribution in some applications, such as probability forecasting of binary events, can be difficult because $Y$ and $X_j$ may not share a common support. This can be generally addressed by introducing $N+1$ auxiliary \textit{information variables} denoted with $Z_0, Z_1, \dots, Z_N$. Let their joint distribution be multivariate Gaussian with the covariance pattern (\ref{cov_str}):
+The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology. The conditional distributions of a multivariate Gaussian distribution also have simple forms within the Gaussian family. This is particularly useful in deriving the revealed aggregator. 
+%Furthermore, it has  
+
+% Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
+%This is especially useful in deriving the revealed aggregator.   
+
+
+
+%has the additional benefit of providing easy access to the revealed aggregator $X'' = \E[Y|X_1, \dots, X_N]$. 
+%In particular, if $Y, X_1, \dots, X_N$ follow a multivariate Gaussian distribution, then $Y|X_1, \dots, X_N$ is a also Gaussian with simple well-known forms for the mean and variance parameters.
+
+
+%Furthermore, given that the main task is to predict $Y$ from the $X_j$'s, the chosen distribution should also facilitate easy derivation of the revealed aggregator $X'' = \E[Y|X_1, \dots, X_N]$. Both of these requirements point towards a multivariate Gaussian distribution. 
+
+From the intuitive point of view, the choice of the Gaussian distribution is motivated by the model of \citet{broomell2009experts}. 
+%They discuss a model in which 
+. They assume that
+% recall the interpreted signal
+%model of~\citet{broomell2009experts}. They assume that
+Forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
+$H_1 , \ldots , H_M$.
+% influencing $Y$.  
+%Proposing a linear model for subjective
+%interpretation seems quite natural.  
+If
+the cues (or any linear combination of them) are independent
+and have small tails, then as $M \to \infty$, the joint distribution
+of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
+Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
+to model the forecasters' observations as jointly Gaussian. 
+
+Unfortunately, in many setups $Y$ and $X_j$ may not be real-valued. For instance, in probability forecasting of binary events, it is common to let $Y \in \{0,1\}$ and $X_j \in [0,1]$. This limitation, however, can be handled by borrowing from the theory of generalized linear models \citep{mccullagh1989generalized} and utilizing a \textit{link function}. To make this concrete, consider $N+1$ auxiliary variables, called the \textit{information variables}, that follow a multivariate Gaussian with the covariance pattern (\ref{cov_str}):
 \begin{align}
 \left(\begin{matrix} Z_0 \\ Z_{1}\\ \vdots \\ Z_{N} \end{matrix}\right) &\sim \mathcal{N}_{N+1}\left( 
 %\left(\begin{matrix} 
@@ -767,14 +809,36 @@ A practical specification of the partial information framework begins with a joi
 \delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
  \end{array}\right)\right).  \label{NExperts}
 \end{align}
-The variable $Z_0$ determines $Y$ via an appropriate transformation. More specifically, if $\mathcal{Y}$ denotes the support of $Y$, then 
- $Y = g(Z_0)$ for some surjective \textit{link function} $g: \R \to \mathcal{Y}$ specified by the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. The remaining information variables, namely $Z_j$ for $j = 1, \dots, N$ summarize the forecasters' information. In particular, Forecaster $j$ observes $Z_j$ and makes a prediction about $Y$ conditional on this observation. Therefore, $X_j= \E[Y | Z_j]$ for $j = 1, \dots, N$. 
- 
-The covariance parameters in (\ref{NExperts}) have an easy interpretation in terms of the forecasters' information. Given that $\Corr(X_j, Y) \to 1.0$ as $\Var(X_j) = \delta_j \to 1.0$, the variance term $\Var(Z_0) = 1.0$ represents the total amount of information and $\delta_j := \Var(Z_j) \in [0,1]$ is the amount of information used by Forecaster $j$.  Consequently, $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ can be viewed as the amount of information overlap between Forecasters $i$ and
-$j$. These variables are collected in the sub-matrix $\bSigma$ that represents the \textit{information structure} among the $N$ forecasters. 
+%Practical application of the revealed aggregator $X'' = \E[Y|X_1, \dots, X_N]$ begins with an understanding of how $Y$ and $X_j$ change together.  Therefore 
+%A practical specification of the partial information framework begins with a joint probability distribution for the model variables. Any distribution can be used as long as it can utilize the covariance pattern in (\ref{cov_str}) and permits estimation of $Y$ given the $X_j$'s.  However, directly stating such a joint distribution in some applications, such as probability forecasting of binary events, can be difficult because $Y$ and $X_j$ may not share a common support. This can be generally addressed by introducing $N+1$ auxiliary \textit{information variables} denoted with $Z_0, Z_1, \dots, Z_N$. Let their joint distribution be multivariate Gaussian with the covariance pattern (\ref{cov_str}):
+%\begin{align}
+%\left(\begin{matrix} Z_0 \\ Z_{1}\\ \vdots \\ Z_{N} \end{matrix}\right) &\sim \mathcal{N}_{N+1}\left( 
+%%\left(\begin{matrix} 
+%%\mu_1 \\ \boldsymbol{\mu}_2
+%% \end{matrix}\right) =
+% \boldsymbol{0}, \left(\begin{matrix} 
+%1 & \diag(\bSigma)'\\
+%\diag(\bSigma) &\bSigma\\
+% \end{matrix}\right) 
+% :=
+% \left(\begin{array}{c | c c cc }
+%1 & \delta_1 & \delta_2 & \dots & \delta_N  \\ \hline
+%\delta_1 & \delta_1 &\rho_{1,2} & \dots & \rho_{1,N}   \\ 
+%\delta_2 & \rho_{2,1} & \delta_2 & \dots & \rho_{2,N}  \\ 
+%\vdots & \vdots & \vdots & \ddots & \vdots  \\ 
+%\delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
+% \end{array}\right)\right).  \label{NExperts}
+%\end{align}
+The target quantity is then given by $Y = g(Z_0)$, where $g$ is a context-specific link function. In general it makes sense to have $g$ map the real numbers to the support of $Y$. For instance, if $Y \in \{0,1\}$, then $g : \R \to \{0,1\}$.
+% $Y$ via an appropriate transformation. More specifically, if $\mathcal{Y}$ denotes the support of $Y$, then 
+% $Y = g(Z_0)$ for some surjective \textit{link function} $g: \R \to \mathcal{Y}$ specified by the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_0) = Z_0 \sigma_0 + \mu_0$. 
+ The remaining information variables summarize the forecasters' information. In particular, Forecaster $j$ observes $Z_j$ and makes a prediction about $Y$ conditional on this observation. Therefore, $X_j= \E[Y | Z_j]$ for $j = 1, \dots, N$. 
 
+
+ This construction describes the general \textit{Gaussian model}, which is very flexible and encompasses a diverse set of model instances through different choices of the link function. In other words, each model instance is fully specified by its link function. For each such instance, the general model provides easy access to the revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ through aggregation of the information variables. 
+%The covariance parameters in (\ref{NExperts}) have an easy interpretation in terms of the forecasters' information. Given that $\Corr(X_j, Y) \to 1.0$ as $\Var(X_j) = \delta_j \to 1.0$, the variance term $\Var(Z_0) = 1.0$ represents the total amount of information and $\delta_j := \Var(Z_j) \in [0,1]$ is the amount of information used by Forecaster $j$.  Consequently, $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ can be viewed as the amount of information overlap between Forecasters $i$ and
+%$j$. These variables are collected in the sub-matrix $\bSigma$ that represents the \textit{information structure} among the $N$ forecasters. 
 %Overall, this is  a very flexible specification that yields a broad range  of different partial information models. Examples are discussed in Section \ref{empirical} that illustrates and evaluates the \textit{Gaussian model} on probability and point forecasts.  
-
 % The scale of these quantities is not relevant. Therefore $\Var(Y)$ has been fixed to $1$. 
 %The Gaussian information pool has an easy interpretation: the set $B_j$ contains the information used
 %by Forecaster $j$. No assumption is necessary as to whether this
@@ -786,13 +850,8 @@ $j$. These variables are collected in the sub-matrix $\bSigma$ that represents t
 %been abstracted away.
 %Quantitatively, information is parametrized
 %by the length measure on the unit interval $S$. This allows us to define 
-
-
-
 %
 %This is a \textit{distribution of information} that can be combined with an appropriate \textit{link function} $g: \R \to \mathcal{Y}$ to yield a broad range  of partial information models. 
-
-
 %In practice it is unlikely that the information sets $\mathcal{F}_j$  can ever be known with fine precision. Therefore it is necessary to make reasonable assumptions that yield plausible yet generic information structures.
 %The key insight in constructing a close yet practical specification of the partial information framework is to approximate the full information with a pool of information particles. Each particle, which can be interpreted as representing the smallest unit of information, is either positive or negative. The total sum (integral) of these particles determines the final value of the target quantity $Y$. 
 %%The positive particles increase the target quantity $Z$, 
@@ -827,29 +886,36 @@ $j$. These variables are collected in the sub-matrix $\bSigma$ that represents t
 %by the length measure on the unit interval $S$. This allows us to define $\delta_j := |B_j|$ as the amount of information used by Forecaster $j$ and $\rho_{ij} := \Cov (Z_{B_i} , Z_{B_j}) = |B_{i} \cap B_{j}|$ as the information overlap between Forecasters $i$ and
 %$j$. The scale of these quantities is not relevant because the Gaussian information pool is invariant under rescaling,
 %replacing $S$ by $[0,u]$ and $B_j$ by $u B_j$. 
-
-
-The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, \citet{broomell2009experts} discuss a model in which 
-%. They assume that
-% recall the interpreted signal
-%model of~\citet{broomell2009experts}. They assume that
-Forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
-$H_1 , \ldots , H_r$.
-% influencing $Y$.  
-%Proposing a linear model for subjective
-%interpretation seems quite natural.  
-If
-the cues (or any linear combination of them) are independent
-and have small tails, then as $r \to \infty$, the joint distribution
-of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
-Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
-to model the forecasters' observations as jointly Gaussian.  Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
+%
+%The choice of the Gaussian distribution can be motivated both from the intuitive and technical points of view. First, \citet{broomell2009experts} discuss a model in which 
+%%. They assume that
+%% recall the interpreted signal
+%%model of~\citet{broomell2009experts}. They assume that
+%Forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
+%$H_1 , \ldots , H_r$.
+%% influencing $Y$.  
+%%Proposing a linear model for subjective
+%%interpretation seems quite natural.  
+%If
+%the cues (or any linear combination of them) are independent
+%and have small tails, then as $r \to \infty$, the joint distribution
+%of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
+%Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
+%to model the forecasters' observations as jointly Gaussian. 
+%
+% Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
 %This is especially useful in deriving the revealed aggregator.   
-In particular, if $\Z = (Z_{1}, \dots, Z_{N})'$, then $$Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma)' \bSigma^{-1} \Z, 1-\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)\right).$$ This permits a closed-form revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ in many different instances of the model. The term $\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma)' \bSigma^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
+More specifically, if $\Z = (Z_{1}, \dots, Z_{N})'$, then 
+\begin{align*}
+Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma)' \bSigma^{-1} \Z, 1-\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)\right).
+\end{align*}
+The revealed aggregator is then nothing more than the expected value of $g(Z_0|\Z)$. This can be expressed in closed-form for many reasonable link functions. 
+%Section \ref{empirical} illustrates the Gaussian model on point and probability forecasts. 
+%The term $\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma)' \bSigma^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
 %$\delta_0 = 1$ is from now on incorporated in the link function such that $\Var(Z_0) = 1$. 
 %Therefore  the link function is assumed to transform $Z_0$ such that $Y$ follows the correct prior distribution.
 %Therefore if the decision-maker only cares about a point estimate, the choice of $\delta_0$ is irrelevant. In the contrary, if 
-For more motivation and interpretation of a slightly different yet closely related model, see \cite{satopaamodeling}.
+%For more motivation and interpretation of a slightly different yet closely related model, see \cite{satopaamodeling}.
 
 % Therefore,
 %the actual scale (e.g., the fact that the covariances of
@@ -1077,7 +1143,7 @@ h(\M)  :=
 %where $\M \in \mathcal{S}^{N}_+$, 
 the final estimate must satisfy the condition $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
 %These elements, however, differ largely in their sensitivity to numerical operations. This is important because
-An accurate yet highly sensitive estimate, however, can still lead to imprecise aggregation. To see this, recall from Section \ref{gaussian} that the conditional mean of $Z_0$ given $\Z$ is  $\diag(\bSigma)' \bSigma^{-1} \Z$. This is an important term that is generally found in the final revealed aggregator $X''$ and hence has high influence on the final aggregation accuracy. 
+An accurate yet highly sensitive estimate, however, can still lead to imprecise aggregation. To see this, recall from Section \ref{gaussian} that the conditional mean of $Z_0$ given $\Z$ is  $\diag(\bSigma)' \bSigma^{-1} \Z$. This is an important term that is generally found in the revealed aggregator $X''$. Therefore it has high influence on the final aggregation accuracy. 
 %notice that the Gaussian revealed aggregator includes the term $\diag(\bSigma)' \bSigma^{-1} \Z$.
  Re-express the term as $\w' \Z$, where $\w$ is the solution to $\diag(\bSigma) = \bSigma \w$. The rate at which the solution changes with respect to a change in $\diag(\bSigma)$ depends on the condition number $\cond(\bSigma) := \lambda_{max}(\bSigma) / \lambda_{min}(\bSigma)$, i.e., the ratio between the maximum and the minimum eigenvalues of $\bSigma$. If the condition number is very large, a small error in $\diag(\bSigma)'$ can cause a large error in $\w$. In the contrary, if the condition number is small, $\bSigma$ is called \textit{well-conditioned} and error in $\w$ will not be much larger than the error in $\diag(\bSigma)$. Therefore, to prevent error from being largely amplified during aggregation, the estimation procedure also requires $\cond(\bSigma) \leq \kappa$ for a given threshold $\kappa \geq 1$. 
  
@@ -1580,7 +1646,16 @@ Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-conve
 
 \section{Empirical Analysis}
 \label{empirical}
-This section evaluates the Gaussian model on synthetic and real-world forecasting data. A secondary goal is to illustrate how the Gaussian model can be applied to different types of forecasting tasks. Each these illustrations assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model then consist of the following components: the information variables $Z_{0k}, Z_{1k}, \dots, Z_{Nk}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{jk}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{0k})$ for all $k = 1, \dots, K$.
+This section evaluates the Gaussian model on synthetic and real-world forecasting data. A secondary goal is to illustrate how the Gaussian model can be applied to different types of forecasting tasks. Each these illustrations assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model is then fully specified by the link function. 
+
+% following two elements: 
+%\begin{enumerate}
+%%\item The information variables $Z_{0k}, Z_{1k}, \dots, Z_{Nk}$.
+%\item A link function $g$ such that $Y_k = g(Z_{0k})$, and
+%\item The forecasts $X_{jk} = \E[Y_k | Z_{jk}]$
+%\end{enumerate}
+%for all $j = 1, \dots, N$ and $k = 1, \dots, K$.
+%the information variables $Z_{0k}, Z_{1k}, \dots, Z_{Nk}$, a target quantity $Y_k  \in \mathcal{Y}$, the forecasts $X_{jk} = \E[Y_k | Z_{jk}]$, and a surjective link function $g: \R \to \mathcal{Y}$ such that $Y_k = g(Z_{0k})$ for all $k = 1, \dots, K$.
 %\end{enumerate}
 %
 %\begin{align*}
@@ -1606,7 +1681,7 @@ This section evaluates the Gaussian model on synthetic and real-world forecastin
 The evaluation naturally begins with synthetic data generated directly from (\ref{NExperts}). This  provides insight into the behavior of the estimation procedure and also introduces the simplest instance of the Gaussian model:
 
 \begin{quote}
-{\bf Model Instance.}  The link function $g$ is the identity, the target quantity is $Y_k = g(Z_{0k}) = Z_{0k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{jk}] = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \diag(\bSigma)' \bSigma^{-1} \X_k$. 
+{\bf Model Instance.}  The link function $g$ is the identity. Consequently, the target quantity is $Y_k = g(Z_{0k}) = Z_{0k}$, and the forecasts are $X_{jk} = \E[Y_k | Z_{jk}] = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \diag(\bSigma)' \bSigma^{-1} \X_k$. 
 \end{quote}
 
 
@@ -1699,6 +1774,7 @@ Even though all estimators become more accurate as $K$ grows, $\bSigma_{out}$ an
         \label{XEstimation}
 \end{figure}
 
+%\marginpar{explain that first improves sigma then lower condition number}
 
 %\marginpar{May be worth saying here that CV is good if K is large but COV is better if N is large}
 
@@ -2100,7 +2176,7 @@ Only the effect of extreme values was reduced via a $90$\% Winsorization \citep{
 X_k'' =  \E\left[Y_k | \Z_k\right] &= \diag(\bSigma)' \bSigma^{-1} \Z_k \sigma_0 + \mu_{0k}. \label{revPoint}
 \end{align}
 \end{quote}
-Under this model the prior distribution of $Y_k$ is specified by $\mu_{0k}$ and $\sigma_0^2$. Given that $\E[X_{jk}] = \mu_{0k}$, the sample average $\hat{\mu}_{0k} = \sum_{j=1}^N X_{jk}/N$ provides an initial estimate of $\mu_{0k}$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_0^2$. Therefore any choice should lead to the same aggregates. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_0^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_0^2]$ and use the resulting likelihood to estimate $\sigma_0^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_0^2)$, which leads to the maximum likelihood estimator $\max\{\sigma_j^2\}$. This has a downward bias that can be corrected by a multiplicative factor of $(N+1)/N$. Therefore, replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{0k})^2/(K-1)$ gives the final estimate $\hat{\sigma}_0^2 = (N+1)/N\max\{s_j\}$. With these estimates the $X_{jk}$'s are transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ is projected to yield an estimate of $\bSigma$. The value of $\kappa_{cov}$ is chosen with conditional validation over a grid of $10$ values between $10$ and $10,000$. Once the final estimate $\bSigma_{cov}$ has been determined, the prior means are updated with the precision-weighted averages $\hat{\mu}_{0k} = (\X_{k}' \bSigma_{cov}^{-1} \one)/(\one' \bSigma_{cov}^{-1} \one)$. In the end, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregates.
+Under this model the prior distribution of $Y_k$ is specified by $\mu_{0k}$ and $\sigma_0^2$. Given that $\E[X_{jk}] = \mu_{0k}$, the sample average $\hat{\mu}_{0k} = \sum_{j=1}^N X_{jk}/N$ provides an initial estimate of $\mu_{0k}$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_0^2$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. Therefore any choice of $\sigma_0^2$ should lead to the same aggregates. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_0^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_0^2]$ and use the resulting likelihood to estimate $\sigma_0^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_0^2)$, which leads to the maximum likelihood estimator $\max\{\sigma_j^2\}$. This has a downward bias that can be corrected by a multiplicative factor of $(N+1)/N$. Therefore, replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{0k})^2/(K-1)$ gives the final estimate $\hat{\sigma}_0^2 = (N+1)/N\max\{s_j\}$. With these estimates the $X_{jk}$'s are transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ is projected to yield an estimate of $\bSigma$. The value of $\kappa_{cov}$ is chosen with conditional validation over a grid of $10$ values between $10$ and $10,000$. Once the final estimate $\bSigma_{cov}$ has been determined, the prior means are updated with the precision-weighted averages $\hat{\mu}_{0k} = (\X_{k}' \bSigma_{cov}^{-1} \one)/(\one' \bSigma_{cov}^{-1} \one)$. In the end, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregates.
 
 \begin{figure}[t!]
 \captionsetup{width=0.48\textwidth}
@@ -2127,6 +2203,7 @@ The revealed aggregator is compared against the average and median estimates. Ov
 
 Overall, however, the advantage is not as dramatic as in Section \ref{binaryReal}. This can be explained by Figure \ref{ID416} that shows $\bSigma_{cov}$ for all the 416 forecasters. The structure has been ordered such that the most knowledgeable forecasters are on the right. This plot is much more monochromatic than the one presented earlier in Figure \ref{top100}, suggesting that information diversity among the 416 students is indeed much lower than among the GJP forecasters. When information diversity is low, averaging aggregators, such as the simple average, tend to perform relatively well \citep{satopaamodeling}. 
 
+\marginpar{Try with all 416. See what the results look like}
 
 % As mentioned earlier, the revealed aggregator is not affected by this choice. To make this specific, suppose that $\varepsilon \sigma_0^2$ for some $\varepsilon > 0$ was used instead of $\sigma_0^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_0^2$ must be chosen.
 
