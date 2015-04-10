@@ -1648,7 +1648,9 @@ Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-conve
 
 \section{Empirical Analysis}
 \label{empirical}
-This section evaluates the Gaussian model on synthetic and real-world forecasting data. A secondary goal is to illustrate how the Gaussian model can be applied to different types of forecasting tasks. Each these illustrations assumes $N$ forecasters attending $K$ prediction problems. An instance of the Gaussian model is then fully specified by the link function. 
+This section evaluates the Gaussian model on synthetic and real-world forecasting data. This produces several model instances that illustrate how the Gaussian model can be applied to different types of forecasting tasks. Each case assumes $N$ forecasters attending $K$ prediction problems. 
+
+%An instance of the Gaussian model is then fully specified by the link function. 
 
 % following two elements: 
 %\begin{enumerate}
@@ -1688,7 +1690,7 @@ The evaluation naturally begins with synthetic data generated directly from (\re
 
 
 Simulating forecasts from (\ref{NExperts}) requires a covariance matrix $\bSigma$ such that $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
-One approach is to pick $\delta_j \in [0,1]$ for all $j = 1, \dots, N$, and then set $\rho_{ij} = \delta_i \delta_j$. If  $\bSigma$ is the resulting information structure, then $\bSigma - \diag(\bSigma)\diag(\bSigma)' = \Diag((\delta_1 - \delta_1^2, \dots, \delta_N - \delta_N^2)) \in \mathcal{S}_{+}^{N}$, which by the Schur complement is equivalent to $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
+One approach is to pick $\delta_j \in [0,1]$ and set $\rho_{ij} = \delta_i \delta_j$ for all $i \neq j$. If  $\bSigma$ is the resulting information structure, then $\bSigma - \diag(\bSigma)\diag(\bSigma)' = \Diag((\delta_1 - \delta_1^2, \dots, \delta_N - \delta_N^2)) \in \mathcal{S}_{+}^{N}$, which by the Schur complement is equivalent to $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
 %A mechanism for randomly generating valid information structures is introduced in the following proposition. 
 %\begin{proposition}
 %\label{synth}
@@ -1701,7 +1703,7 @@ This procedure generates a broad range of information structures, both well- and
  % The number of forecasters $N$ is fixed at $20$. 
 %This subsection compares the performance of several aggregators:
 %The competing aggregators are listed in the following enumeration.  
-\begin{enumerate}[i)]
+\begin{enumerate}
 \item  The revealed aggregator  $X_k''$ with the sample covariance matrix $\SS_Z$. Given that $\SS_Z$ is singular when $K<N$, its inverse is computed with the (Moore-Penrose) generalized inverse.
 \item The revealed aggregator $X_k''$ with $\bSigma_{cov}$. The condition number constraint $\kappa_{cov}$ is found over a grid of $100$ values between $10$ and $1,000$. Denote this aggregator with $X_{cov}''$. 
 \item The revealed aggregator  $X_k''$ with $\bSigma_{out}$.  
@@ -1711,7 +1713,7 @@ The cross-validation uses five folds and $\kappa$ is found using the same grid a
 \item The average forecast.
 \item The median forecast.
 \end{enumerate}
-The overall process is repeated a $5,000$ times under different values of $K$ and $N$, each ranging from $5$ to $35$ with constant increments of $5$. In the end the results are averages within each pair of $N$ and $K$.
+Note that aggregators $1-4$ are based on partial information while aggregators $5$ and $6$ stem from measurement error. The overall process is repeated a $5,000$ times under different values of $K$ and $N$, each ranging from $5$ to $35$ with constant increments of $5$. In the end the results are averaged within each combination of $N$ and $K$.
 
 
 \begin{figure}[t!]
@@ -1731,7 +1733,7 @@ The overall process is repeated a $5,000$ times under different values of $K$ an
                 \caption{Average condition numbers of the estimates}
                                 \label{SigmaInv}
         \end{subfigure}
-        \caption{Estimation of the information structure and the average  condition numbers of the estimates. Both are important for accurate prediction of $Y_k$. The vertical dashed line represents the number of forecasters fixed at $N = 20$.}
+        \caption{Estimation of the information structure and the average  condition numbers of the estimates. Both are important for accurate prediction of $Y_k$. The vertical dashed lines represents the number of forecasters fixed at $N = 20$.}
         \label{SigmaEstimation}
 \end{figure}
 
@@ -1764,15 +1766,15 @@ Even though all estimators become more accurate as $K$ grows, $\bSigma_{out}$ an
     	\captionsetup[subfigure]{width=0.98\textwidth }
     \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResX.pdf}
-                \subcaption{RMSE under different $K$ but fixed $N = 20$.}
+                \subcaption{Prediction accuracy under different $K$ but fixed $N = 20$.}
                 \label{Nfixed}
         \end{subfigure}%
         \begin{subfigure}{0.5\textwidth}
                 \includegraphics[width=\textwidth]{simResXN.pdf}
-                \subcaption{RMSE under different $N$ but fixed $K = 20$.}
+                \subcaption{Prediction accuracy under different $N$ but fixed $K = 20$.}
                                 \label{Kfixed}
         \end{subfigure}
-         \caption{The accuracy to predict $Y_k$ under different values of $N$ and $K$. Accuracy is measured in terms of the root-mean-squared-error (RMSE). The aggregator $X_{true}''$ assumes knowledge of the true information matrix and hence represents optimal accuracy.}
+         \caption{The accuracy to predict $Y_k$ under different values of $N$ and $K$. The aggregator $X_{true}''$ assumes knowledge of the true information matrix and hence represents optimal accuracy.}
         \label{XEstimation}
 \end{figure}
 
@@ -1782,7 +1784,7 @@ Even though all estimators become more accurate as $K$ grows, $\bSigma_{out}$ an
 
 
 
-These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the RMSE's of the competing aggregators in predicting $Y_k$. Figure \ref{Nfixed} varies $K$ but fixes $N = 20$.  Figure \ref{Kfixed}, on the other hand,  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{0k} \sim \mathcal{N}(0,1)$, the RMSE of the prior mean $\E[\sqrt{(Y_k-0)^2}] = \E[|Y_k|] = \sqrt{2/\pi} \approx 0.8$ can be considered as the upper bound in prediction error. On the other end, the aggregator $X_{true}''$ is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $0.8$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with RMSE around $0.5$. They both show slight improvement as $N$ increased. In all cases, however, their RMSE is uniformly well above that of the revealed aggregators, suggesting that averaging aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They collect information and appear to improve at the optimal rate as $N$ increases. This can be seen in the way the performance gap from $X_{true}$ to  $X_{out}''$ and $X_{cov}''$ remains rather constant as $N$ increases. The gap, however, decreases as $K$ grows larger.  When $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
+These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the root-mean-squared-errors (RMSE) of the competing aggregators in predicting $Y_k$. Figure \ref{Nfixed} varies $K$ but fixes $N = 20$.  Figure \ref{Kfixed}, on the other hand,  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{0k} \sim \mathcal{N}(0,1)$, the RMSE of the prior mean $\E[\sqrt{(Y_k-0)^2}] = \E[|Y_k|] = \sqrt{2/\pi} \approx 0.8$ can be considered as the upper bound in prediction error. On the other end, the aggregator $X_{true}''$ is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $0.8$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with RMSE around $0.5$. They both show slight improvement as $N$ increased. In all cases, however, their RMSE is uniformly well above that of the revealed aggregators, suggesting that measurement-error aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They collect information and appear to improve at the optimal rate as $N$ increases. This can be seen in the way the performance gap from $X_{true}$ to  $X_{out}''$ and $X_{cov}''$ remains rather constant as $N$ increases. The gap, however, decreases as $K$ grows larger.  When $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following subsections that apply the Gaussian model to real-world forecasting data. 
   
  
 
@@ -1860,13 +1862,14 @@ Evaluating different techniques to handle missing values, however, is well outsi
 % Requires the booktabs if the memoir class is not being used
 \begin{table}[t!]
    \centering
+   \caption{Summary of the three time intervals analyzed. Each scenario considers the forecasters' most recent forecasts within a given time interval. The value in the parentheses represent the number of events occurred. The final column shows the percent of missing forecasts. }
    \begin{tabular}{l ccc } % Column formatting, @{} suppresses leading/trailing space
+   \hline\hline
       Scenario      & Time Interval & \# of Events & Missing (\%)  \\\hline
       High Uncertainty (HU)        & $90-120$     & $49$ $(10)$ & $51$\\ 
       Medium Uncertainty (MU)       & $60-90$  &  $56$ $(14)$  & $46$ \\
-      Low Uncertainty (LU) &  $30-60$ & $60$ $(13)$ & $42$\\
+      Low Uncertainty (LU) &  $30-60$ & $60$ $(13)$ & $42$\\ \hline
    \end{tabular}
-   \caption{Summary of the three time intervals analyzed. Each scenario considers the forecasters' most recent forecasts within a given time interval. The value in the parentheses represent the number of events occurred. The final column shows the percent of missing forecasts. }
    \label{scenarios}
 \end{table}
 
