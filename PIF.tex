@@ -759,7 +759,7 @@ $j$.
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology. The conditional distributions of a multivariate Gaussian distribution also have simple forms within the Gaussian family. This is particularly useful in deriving the revealed aggregator. 
+The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology. Furthermore, the conditional distributions of a multivariate Gaussian distribution  have simple forms also within the Gaussian family. This is particularly useful in deriving the revealed aggregator. 
 %Furthermore, it has  
 
 % Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
@@ -773,7 +773,7 @@ The general partial information framework is clearly too abstract to be applied 
 
 %Furthermore, given that the main task is to predict $Y$ from the $X_j$'s, the chosen distribution should also facilitate easy derivation of the revealed aggregator $X'' = \E[Y|X_1, \dots, X_N]$. Both of these requirements point towards a multivariate Gaussian distribution. 
 
-From the intuitive point of view, the choice of the Gaussian distribution is motivated by the model of \citet{broomell2009experts}. 
+From the intuitive point of view, the choice of the Gaussian distribution can be motivated by the model of \citet{broomell2009experts}. 
 %They discuss a model in which 
 . They assume that
 % recall the interpreted signal
@@ -835,7 +835,7 @@ The target quantity is then given by $Y = g(Z_0)$, where $g$ is a context-specif
  The remaining information variables summarize the forecasters' information. In particular, Forecaster $j$ observes $Z_j$ and makes a prediction about $Y$ conditional on this observation. Therefore, $X_j= \E[Y | Z_j]$ for $j = 1, \dots, N$. 
 
 
- This construction describes the general \textit{Gaussian model}, which is very flexible and encompasses a diverse set of model instances through different choices of the link function. In other words, each model instance is fully specified by its link function. For each such instance, the general model provides easy access to the revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ through aggregation of the information variables. 
+ This construction describes the general \textit{Gaussian model}, which is very flexible and encompasses a diverse set of model instances through different choices of the link function. In fact, each instance of the Gaussian model is fully specified by its link function. For each such instance, the general model provides easy access to the revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ through aggregation of the information variables. 
 %The covariance parameters in (\ref{NExperts}) have an easy interpretation in terms of the forecasters' information. Given that $\Corr(X_j, Y) \to 1.0$ as $\Var(X_j) = \delta_j \to 1.0$, the variance term $\Var(Z_0) = 1.0$ represents the total amount of information and $\delta_j := \Var(Z_j) \in [0,1]$ is the amount of information used by Forecaster $j$.  Consequently, $\rho_{ij} := \Cov (Z_{i} , Z_{j})$ can be viewed as the amount of information overlap between Forecasters $i$ and
 %$j$. These variables are collected in the sub-matrix $\bSigma$ that represents the \textit{information structure} among the $N$ forecasters. 
 %Overall, this is  a very flexible specification that yields a broad range  of different partial information models. Examples are discussed in Section \ref{empirical} that illustrates and evaluates the \textit{Gaussian model} on probability and point forecasts.  
@@ -909,7 +909,7 @@ More specifically, if $\Z = (Z_{1}, \dots, Z_{N})'$, then
 \begin{align*}
 Z_0 | \Z \sim \mathcal{N}\left(\diag(\bSigma)' \bSigma^{-1} \Z, 1-\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)\right).
 \end{align*}
-The revealed aggregator is then nothing more than the expected value of $g(Z_0|\Z)$. This can be expressed in closed-form for many reasonable link functions. 
+The revealed aggregator is then nothing more than the expected value of $g(Z_0|\Z)$. This can be expressed in closed-form for many simple link functions. 
 %Section \ref{empirical} illustrates the Gaussian model on point and probability forecasts. 
 %The term $\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma)' \bSigma^{-1} \Z$, on the other hand, is the single best estimate of $Z_0$ given $\Z$. This term does not depend on $\Var(Z_0)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
 %$\delta_0 = 1$ is from now on incorporated in the link function such that $\Var(Z_0) = 1$. 
@@ -1097,9 +1097,11 @@ procedures to the same data but are making numerous small mistakes.
 
 \section{Model Estimation}
 \label{estimator}
-This section describes methodology for estimating the information structure $\bSigma$.  Intuitively, the predictions provide signal on $\bSigma$ as follows: a) the more similar two forecasters' predictions are, the higher the corresponding information overlap; and b) the more the forecasters disagree with the non-informative prior, i.e., the belief only reflecting the basic information, the more informed they are likely to be. 
+This section describes methodology for estimating the \textit{information structure} $\bSigma$.  Intuitively, the predictions provide signal on $\bSigma$ as follows: a) the more similar two forecasters' predictions are, the higher the corresponding information overlap; and b) the more the forecasters disagree with the non-informative prior,
+% i.e., the belief only reflecting the basic information, 
+ the more informed they are likely to be. 
 %For the second point it is important to recall that the forecasters are assumed conditionally unbiased. 
-However, estimating $\bSigma$ in full generality based on a single prediction per forecaster is difficult, if possible at all. Therefore, to facilitate model estimation, the forecasters are assumed to attend $K \geq 2$ related problems. For instance, the forecasters may participate in separate yet similar prediction problems or give repeated forecasts on a single recurring event. In such setups $\bSigma$ is likely to remain stable across problems and hence can be estimated based on multiple predictions per forecaster. See \cite{satopaamodeling} for revealed aggregation of one-time events, i.e., setups with only one prediction per forecaster. 
+However, estimating $\bSigma$ in full generality based on a single prediction per forecaster is difficult, if possible at all. Therefore, to facilitate model estimation, the forecasters are assumed to attend $K \geq 2$ related problems. For instance, the forecasters may participate in separate yet similar prediction problems or give repeated forecasts on a single recurring event. In such setups $\bSigma$ is likely to remain stable across problems and hence can be estimated based on multiple predictions per forecaster. See \cite{satopaamodeling} for revealed aggregation in setups with only one prediction per forecaster. 
 %In particular, it is assumed that the foresters attend $K \geq 2$ predictions problems. 
 % One natural simplification is to only consider the amount of information used by a forecaster and the size of the information overlap among the forecasters. 
 
@@ -1126,7 +1128,7 @@ However, estimating $\bSigma$ in full generality based on a single prediction pe
 %\end{align}
 %where $\conv(\cdot)$ denotes the convex hull operator and $\COR_N$ is known as the correlation polytope (also known as the boolean quadric polytope by some authors). All elements of $ \COR_N$ are symmetric, positive semidefinite, and hence valid covariance matrices. 
 %\citep{letchford2008binary}.  
-Estimation of $\bSigma$ is performed under the constraints induces by the multivariate Gaussian distribution (\ref{NExperts}). In particular, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
+Estimation of $\bSigma$ must be performed under the constraints induced by the multivariate Gaussian distribution (\ref{NExperts}). In particular, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
 % denote the set of symmetric $N \times N$  matrices with $\mathcal{S}^N$, represent the set of  symmetric positive semidefinite $N \times N$ matrices with $\mathcal{S}_{+}^N$, and consider a one-to-one function $h$ that transforms a matrix $\M \in \mathcal{S}^{N}$ to  
 \begin{align*}
 h(\M)  := 
@@ -1174,7 +1176,7 @@ where $f_0$ is some objective function. The feasible region defined by the two c
 %By introducing an auxiliary variable $u > 0$, the condition number constraint can be written as $ u I \preceq \bSigma \preceq \kappa u I$, where $A \preceq B$ denotes that $B - A$ is positive semidefinite.  This defines a convex region. 
 if $f_0$ is convex in $\bSigma$, expression (\ref{orig_problem}) is a convex optimization problem. 
 %\marginpar{As is stated in the Wiki page for conditional gaussian, the inverse can be a pseudo inverse. How does this relate to the condition number?}
-Typically the global optimum to such a problem can be found very efficiently. Problem (\ref{orig_problem}), however, involves $\binom{N+1}{2}$ variables. Therefore it can be solved efficiently with standard optimization techniques, such as the interior point methods, as long as the number of variables is not too large, say, not more than 1,000. Unfortunately, this limits the maximum problem size  to about $N = 45$. The next subsection chooses a loss function that permits dimension reduction and hence makes the estimation procedure available to larger sample sizes. 
+Typically the global optimum to such a problem can be found very efficiently. Problem (\ref{orig_problem}), however, involves $\binom{N+1}{2}$ variables. Therefore it can be solved efficiently with standard optimization techniques, such as the interior point methods, as long as the number of variables is not too large, say, not more than 1,000. Unfortunately, this limits the maximum problem size  to about $N = 45$. The next subsection chooses a loss function that permits dimension reduction and hence makes the estimation procedure applicable to larger number of forecasters. 
 
 %There are, however, two difficulties: 
 %\begin{enumerate}[(i)]
@@ -1322,7 +1324,7 @@ motivates a loss function that guarantees a globally optimal solution and facili
 %Even though this section focuses on $\SS_Z$, the discussion generalizes to any unconstrained estimator via direct substitution of $\SS_Z$.  The first step is to 
 %Define $\bSigma := h(\bSigma)$ and project $h(\boldsymbol{S}_Z)$ instead of $\boldsymbol{S}_Z$. 
 %The functional invariance of the MLE shows that $h(\boldsymbol{S}_Z)$ is an unconstrained MLE of  $h(\bSigma) = \bSigma$. 
-From the computational perspective, it turns out to be more convenient to project $h(\SS)$ instead of $\SS$.  The LSE is then defined as $h^{-1}(\bOmega)$, where $\bOmega$ is the solution to
+From the computational perspective, it turns out to be more convenient to project $h(\SS)$ instead of $\SS$.  The LSE is then given by $h^{-1}(\bOmega)$, where $\bOmega$ is the solution to
 %A popular and efficient solution is to project an unconstrained estimator (such as a sample covariance matrix) on to the constrained space 
 % and can be solved efficiently with standard techniques such as the interior point methods.  
 %$||\cdot||_F$ is the Frobenius norm and $\boldsymbol{S}_Z$ is an unconstrained estimate of the information structure. This is a convex optimization problem in $\bSigma$ 
@@ -1359,7 +1361,7 @@ Problem (\ref{lse_problem}) can be solved by expressing  the feasible region as 
 \mathcal{C}_{lin} &= \left\{\bOmega : \Tr(\A_j \bOmega) = b_j, j = 1, \dots, N+1\right\}.
 %& \R_+^{N+1}.
 \end{align*}
-Given that both of these sets are convex, projecting onto their intersection can be computed with the Directional Alternating Projection Algorithm \citep{gubin1967method}. This method makes progress by repeatedly projecting onto the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. Consequently, it is efficient only if projecting onto each of the individual sets is fast. Fortunately, as will be shown next, this is the case for the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. 
+Given that both of these sets are convex, projecting onto their intersection can be computed with the Directional Alternating Projection Algorithm \citep{gubin1967method}. This method makes progress by repeatedly projecting onto the sets $\mathcal{C}_{sd}$ and $\mathcal{C}_{lin}$. Consequently, it is efficient only if projecting onto each of the individual sets is fast. Fortunately, as will be shown next, this is the case. 
 
 
 %Dykstra's projection algorithm described \citep{boyle1986method}. Intuitively, the solution is found by iteratively projecting onto the sets $\mathcal{C}_{sd}$, $\mathcal{C}_{lin}$, and $\R_+^{N+1}$. 
@@ -1378,7 +1380,7 @@ Given that both of these sets are convex, projecting onto their intersection can
 
 First, projecting a matrix $\M \in \mathcal{S}^{N+1}$  onto $\mathcal{C}_{lin}$ is a linear map. To make this more specific, let $\m = \vec(\M)$ be a column-wise vectorization of $\M$. 
 %Then, $\s$ has length $N_s := \binom{N+1}{2} = (N+1)N/2$. If $\A_0$ is a $(N+1) \times (N_s - N - 1)$ binary matrix with ones only at positions $\left(i,  1+\sum_{j=0}^{i-3}(N-j)\right)$ for $i = 2, \dots, N+1$, 
-If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$, then the  linear constraints in (\ref{lse_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. The projection of  $\M$ onto $\mathcal{C}_{lin}$ then is given by $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and for $j \geq 2$ replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
+If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$, then the  linear constraints in (\ref{lse_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. Then, the projection of  $\M$ onto $\mathcal{C}_{lin}$ is given by $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and for $j \geq 2$ replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
 
 
 Second, \cite{tanaka2014positive} describe a univariate optimization problem that is almost equivalent to projecting $\M \in \mathcal{S}^{N+1}$ onto $\mathcal{C}_{sd}$. The only difference is that their solution set also includes the zero-matrix $\boldsymbol{0}$. Assuming that such a limiting case can be safely handled in the implementation, their approach offers a fast projection onto  $\mathcal{C}_{sd}$ even for a moderately large $N$. To describe this approach, consider the spectral decomposition $\M = \Q \Diag(l_1, \dots, l_{N+1}) \Q'$ and the univariate function 
@@ -1611,11 +1613,11 @@ To address these drawbacks, the current paper introduces a new selection procedu
   \begin{align}
 \kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
-where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS$ is the sample covariance matrix computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Denote the final estimate with $\bSigma_{cov} := \mathcal{P}_{LSE}(\SS : \kappa_{cov})$.  Overall, the idea is similar to cross-validation but, instead of predicting across rows (observations), the prediction is now performed across columns (variables).  This is likely to be more appropriate in prediction polling-like setups that typically involve a large number of forecasters (large $N$) attending relatively few problems (small $K$). In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}( \cdot : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains more stable when $K$ is small. This is illustrated in the next section.
+where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS$ is the sample covariance matrix computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Denote the final estimate with $\bSigma_{cov} := \mathcal{P}_{LSE}(\SS : \kappa_{cov})$.  
 
-%\marginpar{this must be re-written better. This can be viewed as column-wise CV while the regular CV is row-wise.}
-
-Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently (possibly in parallel on multicore machines) over a  grid of candidate values.  In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance. 
+The idea in conditional validation is similar to cross-validation but, instead of predicting across rows (observations), the prediction is now performed across columns (variables).  This is likely to be more appropriate in prediction polling-like setups that typically involve a large number of forecasters (large $N$) attending relatively few problems (small $K$). In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}( \cdot : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains more stable when $K$ is small. This is illustrated in the next section.
+Both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently (possibly in parallel on multicore machines) over a  grid of candidate values. 
+% In practice an extremely accurate selection of $\kappa$ is hardly necessary. Therefore, especially when $N$ is large, computation time can be saved largely by choosing $\kappa$ with a cruder tolerance. 
 
 
 %Given that it is particularly tailored for predicting $Z_S$, it is 
