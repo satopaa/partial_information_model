@@ -384,6 +384,7 @@ The section ends with a brief review of previous work on modeling forecasts. Sec
  Finally, Section \ref{discussion} concludes with a summary and discussion of
 future research.
 
+\marginpar{edit this}
 
 
 %For instance, consider a group of forecasters making independent predictions of a company's future revenue. The team members  may vary largely in terms of skill and knowledge. 
@@ -677,7 +678,7 @@ $\{X_j : j = 1, \dots, N \}$. The revealed aggregator optimally utilizes the inf
 %and $\Var(X_j)$ quantify the amount of information in $\F$ and $\F_j$, respectively.  
 %represents the total amount of information and $\Var(X_j)$ is the amount of information used by forecaster $j$.
  Consequently, $\Cov (X_{i} , X_{j})$ can be viewed as the amount of information overlap between forecasters $i$ and
-$j$. 
+$j$. This term is not necessarily positive because being positively correlated is not transitive. More precisely, by \citet[Theorem 3]{langford2001property}, $\Cov (X_{i} , X_{j}) \geq \Var(X_j)\Var(X_i) - \sqrt{\Var(X_j)(1-\Var(X_j))\Var(X_i)(1-\Var(X_i))}$, which shows that $\Cov (X_{i} , X_{j}) \geq 0$ if $ \Var(X_j) + \Var(X_i) \geq 1$. 
 %These variables are collected in the sub-matrix $\bSigma$ that represents the \textit{information structure} among the $N$ forecasters. 
 
 
@@ -764,7 +765,7 @@ $j$.
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-The general partial information framework is clearly too abstract to be applied in practice. A more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology. Furthermore, the conditional distributions of a multivariate Gaussian distribution  have simple forms also within the Gaussian family. This turns out to be particularly useful in deriving the revealed aggregator. 
+The general partial information framework is clearly too abstract to be applied in practice. A more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology. The choice of a Gaussian distribution is mathematically tractable and offers conditional distributions that have simple forms also within the Gaussian family. This turns out to be particularly useful in deriving the revealed aggregator. 
 %Furthermore, it has  
 
 % Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
@@ -778,32 +779,33 @@ The general partial information framework is clearly too abstract to be applied 
 
 %Furthermore, given that the main task is to predict $Y$ from the $X_j$'s, the chosen distribution should also facilitate easy derivation of the revealed aggregator $X'' = \E[Y|X_1, \dots, X_N]$. Both of these requirements point towards a multivariate Gaussian distribution. 
 
-From the intuitive point of view, the choice of the Gaussian distribution can be motivated by the model discussed in \citet{broomell2009experts}. 
-%They discuss a model in which 
-They assume that
-% recall the interpreted signal
-%model of~\citet{broomell2009experts}. They assume that
-forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
-$H_1 , \ldots , H_M$.
+From the intuitive point of view, the Gaussian distribution can be motivated by a pool of $M$ information particles. Each particle, which can be interpreted as representing a piece of information, has either a positive or negative effect on $Y$. The total sum (integral) of these particles determines the final value of $Y$. Each forecaster, however, observes only the sum of some subset of the particles. Based on this sum, the forecaster makes an estimate of $Y$. 
+% by the model discussed in \citet{broomell2009experts}. 
+%%They discuss a model in which 
+%They assume that
+%% recall the interpreted signal
+%%model of~\citet{broomell2009experts}. They assume that
+%forecaster~$j$ forms an opinion based on a linear function $L_j$ of cues
+%$H_1 , \ldots , H_M$.
 % influencing $Y$.  
 %Proposing a linear model for subjective
 %interpretation seems quite natural.  
 If
-the cues (or any linear combination of them) are independent
+the particles are independent
 and have small tails, then as $M \to \infty$, the joint distribution
-of the linear combinations $L_1 , \ldots , L_N$ will be asymptotically
-Gaussian.  Therefore, given that the number of cues in a real-world setup is likely to be large, it makes sense
+of the forecasters' observations will be asymptotically
+Gaussian.  Therefore, given that the number of such particles in a real-world setup is likely to be large, it makes sense
 to model the forecasters' observations as jointly Gaussian. 
 
-\marginpar{Mathematically tractable. See Many testing, estimation and confidence interval procedures discussed in the multivariate
-statistical literature are based on the assumption that the observation vectors
-are independent and normally distributed (Anderson, 2003, Srivastava and Khatri, 1979,
-Muirhead, 1982). There are two main reasons for this. Firstly, sets of multivariate observations
-are often, at least approximately, normally distributed. Secondly, the multivariate
-normal distribution is mathematically tractable. Normally distributed data can be modeled
-entirely in terms of their means and variances/covariances. Estimating the mean and
-the covariance matrix are therefore problems of great interest in statistics, as well as in
-many related more applied areas. From Studies in Estimation of Patterned Covariance Matrics -- Martin Ohlson}
+%\marginpar{Mathematically tractable. See Many testing, estimation and confidence interval procedures discussed in the multivariate
+%statistical literature are based on the assumption that the observation vectors
+%are independent and normally distributed (Anderson, 2003, Srivastava and Khatri, 1979,
+%Muirhead, 1982). There are two main reasons for this. Firstly, sets of multivariate observations
+%are often, at least approximately, normally distributed. Secondly, the multivariate
+%normal distribution is mathematically tractable. Normally distributed data can be modeled
+%entirely in terms of their means and variances/covariances. Estimating the mean and
+%the covariance matrix are therefore problems of great interest in statistics, as well as in
+%many related more applied areas. From Studies in Estimation of Patterned Covariance Matrics -- Martin Ohlson}
 
 Unfortunately, in many setups $Y$ and $X_j$ may not be real-valued. For instance, in probability forecasting of binary events, it is common to let $Y \in \{0,1\}$ and $X_j \in [0,1]$. This limitation, however, can be handled by borrowing from the theory of generalized linear models \citep{mccullagh1989generalized} and utilizing a \textit{link function}. To make this concrete, consider $N+1$ auxiliary variables, called the \textit{information variables}, that follow a multivariate Gaussian distribution with the covariance pattern (\ref{cov_str}):
 \begin{align}
@@ -844,12 +846,11 @@ Unfortunately, in many setups $Y$ and $X_j$ may not be real-valued. For instance
 %\delta_N & \rho_{N,1} & \rho_{N,2} & \dots & \delta_N\\ 
 % \end{array}\right)\right).  \label{NExperts}
 %\end{align}
-The target quantity is then given by $Y = g(Z_Y)$, where $g$ is a context-specific link function. In general it makes sense to have $g$ map the real numbers to the support of $Y$. For instance, if $Y \in \{0,1\}$, then $g : \R \to \{0,1\}$.
+The target quantity is then given by $Y = g(Z_Y)$, where $g$ is a context-specific link function.  In general it makes sense to have $g$ map the real numbers to the support of $Y$. For instance, if $Y \in \{0,1\}$, then $g : \R \to \{0,1\}$. The fact that $\Var(Z_Y) = 1$ is irrelevant as this choice can be compensated by the link function.
 % $Y$ via an appropriate transformation. More specifically, if $\mathcal{Y}$ denotes the support of $Y$, then 
-% $Y = g(Z_Y)$ for some surjective \textit{link function} $g: \R \to \mathcal{Y}$ specified by the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_Y) = Z_Y \sigma_0 + \mu_0$. 
+% $Y = g(Z_Y)$ for some surjective \textit{link function} $g: \R \to \mathcal{Y}$ specified by the model instance. For instance, if $Y$ is continuous with a prior distribution $\mathcal{N}(\mu_0, \sigma^2_0)$, then $\mathcal{Y} = \R$ and $g(Z_Y) = Z_Y \sigma_Y + \mu_0$. 
  The remaining information variables summarize the forecasters' information. In particular, forecaster $j$ observes $Z_j$ and makes a prediction about $Y$ conditional on this observation. Therefore, $X_j= \E[Y | Z_j]$ for $j = 1, \dots, N$. 
 
-\marginpar{The fact that delta0 is equal  to 1 does not matter as this can be compensated by the link function.}
 
 
  This construction describes the general \textit{Gaussian model}, which is very flexible and encompasses a diverse set of model instances through different choices of the link function. In fact, each instance of the Gaussian model is fully specified by its link function. For each instance, the general model provides easy access to the revealed aggregator $X'' = \E[Y | Z_1, \dots, Z_N]$ through aggregation of the information variables. 
@@ -922,7 +923,7 @@ The target quantity is then given by $Y = g(Z_Y)$, where $g$ is a context-specif
 %
 % Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
 %This is especially useful in deriving the revealed aggregator.   
-More specifically, if $\Z = (Z_{1}, \dots, Z_{N})'$, then the revealed aggregator is
+More specifically, if $\Z = (Z_{1}, \dots, Z_{N})'$, then 
 \begin{align*}
 Z_Y | \Z \sim \mathcal{N}\left(\diag(\bSigma)' \bSigma^{-1} \Z, 1-\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)\right).
 \end{align*}
@@ -933,6 +934,8 @@ The revealed aggregator is then nothing more than the expected value of $g(Z_Y|\
 %Therefore  the link function is assumed to transform $Z_Y$ such that $Y$ follows the correct prior distribution.
 %Therefore if the decision-maker only cares about a point estimate, the choice of $\delta_0$ is irrelevant. In the contrary, if 
 %For more motivation and interpretation of a slightly different yet closely related model, see \cite{satopaamodeling}.
+
+%\marginpar{it may be worth mentioning that there is a lower bound on the correlation; recall the other paper}
 
 % Therefore,
 %the actual scale (e.g., the fact that the covariances of
@@ -2212,18 +2215,18 @@ Only the effect of extreme values was reduced via a $90$\% Winsorization \citep{
 
 \subsubsection{Model Specification and Aggregation}
 \begin{quote}
-\textbf{Model Instance.} Suppose $Y_k$ and $X_{jk}$ are real-valued. If the proper non-informative prior distribution of $Y_k$ is $ \mathcal{N}(\mu_{0k}, \sigma_0^2)$, then $Y_k = g(Z_{Yk}) = Z_{Yk}\sigma_0 + \mu_{0k}$. Consequently, $X_{jk} = Z_{jk}\sigma_0 + \mu_{0k}$ for all $j = 1, \dots, N$. Therefore $X_j \sim \mathcal{N}(\mu_{0k}, \sigma_j^2)$ for some $\sigma_j^2 \leq \sigma_0^2$.  
+\textbf{Model Instance.} Suppose $Y_k$ and $X_{jk}$ are real-valued. If the proper non-informative prior distribution of $Y_k$ is $ \mathcal{N}(\mu_{Yk}, \sigma_Y^2)$, then $Y_k = g(Z_{Yk}) = Z_{Yk}\sigma_Y + \mu_{Yk}$. Consequently, $X_{jk} = Z_{jk}\sigma_Y + \mu_{Yk}$ for all $j = 1, \dots, N$. Therefore $X_j \sim \mathcal{N}(\mu_{Yk}, \sigma_j^2)$ for some $\sigma_j^2 \leq \sigma_Y^2$.  
 %
-%The individual forecasts $X_{jk} \sim \mathcal{N}(\mu_{0k}, \sigma_j^2)$, where $\sigma_0^2 \geq \sigma_j^2$ for all $j = 1, \dots, N$. 
+%The individual forecasts $X_{jk} \sim \mathcal{N}(\mu_{Yk}, \sigma_j^2)$, where $\sigma_Y^2 \geq \sigma_j^2$ for all $j = 1, \dots, N$. 
 %Furthermore, by item \ref{first}) of Proposition \ref{covstr}, the mean of the forecasts $\mu_j = \mu_0$.
 % because the forecasts are assumed to be conditionally unbiased; that is, $\E[Y|X_j] = X_j$. This follows specifically from the conditional distribution $Y | X_j \sim \mathcal{N}(\mu_0 + (X_j - \mu_j), \sigma^2_0 - \sigma^2_j)$. Hence $\E[Y | X_j] = \mu_0 + (X_j - \mu_j)$, which is equal to $X_j$ if and only if $\mu_0 = \mu_j$. 
-%  The observables link to the information variables by $Z_{Yk} = (Y_k - \mu_{0k})/\sigma_0 \sim \mathcal{N}(0,1)$ and $Z_{jk} = \left(X_{jk} - \mu_{0k}\right)/\sigma_0 \sim \mathcal{N}(0, \delta_j)$, where $\delta_j = \sigma_j^2/\sigma_0^2 \in [0,1]$. 
+%  The observables link to the information variables by $Z_{Yk} = (Y_k - \mu_{Yk})/\sigma_Y \sim \mathcal{N}(0,1)$ and $Z_{jk} = \left(X_{jk} - \mu_{Yk}\right)/\sigma_Y \sim \mathcal{N}(0, \delta_j)$, where $\delta_j = \sigma_j^2/\sigma_Y^2 \in [0,1]$. 
   If $\Z_k = \left(Z_{1k}, \dots, Z_{Nk}\right)'$, then the revealed aggregator for the $k$th problem is 
 \begin{align}
-X_k'' =  \E\left[Y_k | \Z_k\right] &= \diag(\bSigma)' \bSigma^{-1} \Z_k \sigma_0 + \mu_{0k}. \label{revPoint}
+X_k'' =  \E\left[Y_k | \Z_k\right] &= \diag(\bSigma)' \bSigma^{-1} \Z_k \sigma_Y + \mu_{Yk}. \label{revPoint}
 \end{align}
 \end{quote}
-Under this model the prior distribution of $Y_k$ is specified by $\mu_{0k}$ and $\sigma_0^2$. Given that $\E[X_{jk}] = \mu_{0k}$ for all $j = 1, \dots, N$, the sample average $\hat{\mu}_{0k} = \sum_{j=1}^N X_{jk}/N$ provides an initial estimate of $\mu_{0k}$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_0^2$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. Therefore any choice of $\sigma_0^2$ should lead to the same aggregates. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_0^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_0^2]$ and use the resulting likelihood to estimate $\sigma_0^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_0^2)$, which leads to the maximum likelihood estimator $\max\{\sigma_j^2\}$. This has a downward bias that can be corrected by a multiplicative factor of $(N+1)/N$. Therefore, replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{0k})^2/(K-1)$ gives the final estimate $\hat{\sigma}_0^2 = (N+1)/N\max\{s_j\}$. Using these estimates, the $X_{jk}$'s can be transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ provides the unconstrained estimator for the projection algorithm.  The value of $\kappa_{cov}$ is chosen over a grid of $10$ values between $10$ and $10,000$. Once $\bSigma_{cov}$ has been found, the prior means are updated with the precision-weighted averages $\hat{\mu}_{0k} = (\X_{k}' \bSigma_{cov}^{-1} \one)/(\one' \bSigma_{cov}^{-1} \one)$. In the end, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregator $X_{cov}''$.
+Under this model the prior distribution of $Y_k$ is specified by $\mu_{Yk}$ and $\sigma_Y^2$. Given that $\E[X_{jk}] = \mu_{Yk}$ for all $j = 1, \dots, N$, the sample average $\hat{\mu}_{Yk} = \sum_{j=1}^N X_{jk}/N$ provides an initial estimate of $\mu_{Yk}$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_Y^2$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. Therefore any choice of $\sigma_Y^2$ should lead to the same aggregates. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_Y^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_Y^2]$ and use the resulting likelihood to estimate $\sigma_Y^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_Y^2)$, which leads to the maximum likelihood estimator $\max\{\sigma_j^2\}$. This has a downward bias that can be corrected by a multiplicative factor of $(N+1)/N$. Therefore, replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{Yk})^2/(K-1)$ gives the final estimate $\hat{\sigma}_Y^2 = (N+1)/N\max\{s_j\}$. Using these estimates, the $X_{jk}$'s can be transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ provides the unconstrained estimator for the projection algorithm.  The value of $\kappa_{cov}$ is chosen over a grid of $100$ values between $10$ and $10,000$. Once $\bSigma_{cov}$ has been found, the prior means are updated with the precision-weighted averages $\hat{\mu}_{Yk} = (\X_{k}' \bSigma_{cov}^{-1} \one)/(\one' \bSigma_{cov}^{-1} \one)$. In the end, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregator $X_{cov}''$.
 
 \begin{figure}[t!]
 \captionsetup{width=0.48\textwidth}
@@ -2231,7 +2234,7 @@ Under this model the prior distribution of $Y_k$ is specified by $\mu_{0k}$ and 
         \centering
         \begin{minipage}[b]{0.495\textwidth}
 	\hspace*{1em} 	\includegraphics[width=\textwidth]{legendPoints.pdf} % requires the graphicx package
-	\vspace{-5em}
+	\vspace{-4.5em}
 
                 \includegraphics[width=\textwidth]{PointEstimates.pdf}
                 \caption{Accuracy of the competing aggregators}
@@ -2246,19 +2249,16 @@ Under this model the prior distribution of $Y_k$ is specified by $\mu_{0k}$ and 
         \end{minipage}
 \end{figure}
 
-\marginpar{This is over a grid of 100 values}
+This aggregator is compared against the average, the median, and the average of the median and average (AMA), which was proposed by \citet{lobo2010human} as a good heuristic for aggregating human judgment. Overall accuracy is measured with the RMSE averaged over $10,000$ sub-samplings of the $416$ participants. That is, each iteration chooses $N$ participants uniformly at random, aggregates their forecasts, and computes the RMSE. The size of the sub-samples is varied between $10$ and $100$ with increments of $10$. These scores are presented in Figure \ref{pointsAcc}. Similarly to the synthetic point forecasts in Section \ref{simulation}, the average outperforms the median across all $N$. The performance of AMA falls between that of average and median, reflecting its nature as a compromise of the two. The revealed aggregator $X_{cov}''$ is the most accurate once $N > 10$. The relatively worse performance at $N = 10$ suggests that $10$ observations is not enough to estimate $\hat{\mu}_{Yk}$ accurately.
+After this, however, $X_{cov}''$ collects information efficiently and increases the performance advantage against the other aggregators as $N$ becomes larger. 
 
-\marginpar{Maybe we should mention that performs poorly under small N because this does not allow tk to be estimated accurately.}
 
-This aggregator is compared against the average and median estimates. Overall accuracy is measured with the RMSE averaged over $10,000$ sub-samplings of the $416$ participants. That is, each iteration chooses $N$ participants uniformly at random, aggregates their forecasts, and computes the RMSE. The size of the sub-samples is varied between $10$ and $100$ with increments of $10$. These scores are presented in Figure \ref{pointsAcc}. Similarly to the synthetic point forecasts in Section \ref{simulation}, the average outperforms the median across all $N$. The revealed aggregator $X_{cov}''$ is the most accurate once $N > 10$. Furthermore, it collects information more efficiently and hence increases the performance advantage as $N$ becomes larger. 
+ Figure \ref{ID416} shows $\bSigma_{cov}$ for all the 416 forecasters. Similarly to before, the structure has been ordered such that the most knowledgeable forecasters are on the right. Overall, this plot is much more monochromatic than the one presented earlier in Figure \ref{top100}, suggesting that information diversity among the 416 students is indeed relatively lower. If there were no information diversity, i.e., all the forecasters used the same information, then averaging aggregators, such as the simple average, would perform relatively well \citep{satopaamodeling}. Such a limiting case, however, is rarely encountered in practice. Often at least some information diversity is present. The results in the current section show that the revealed aggregator does not require extremely high information diversity in order to outperform the measurement-error aggregators. 
+ 
+% even small amounts of information diversity allow the revealed aggregator is able to synthesize and utilize even very small deviations in the forecasters' information. 
+  %\marginpar{Try with all 416. See what the results look like}
 
-\marginpar{This needs to be said differently; the difference is after all quite impressive.}
-
-Overall, however, the advantage is not as dramatic as in Section \ref{binaryReal}. This is explained by Figure \ref{ID416} that shows $\bSigma_{cov}$ for all the 416 forecasters. The structure has been ordered such that the most knowledgeable forecasters are on the right. This plot is much more monochromatic than the one presented earlier in Figure \ref{top100}, suggesting that information diversity among the 416 students is indeed relatively lower. When information diversity is low, averaging aggregators, such as the simple average, tend to perform relatively well \citep{satopaamodeling}. 
-
-%\marginpar{Try with all 416. See what the results look like}
-
-% As mentioned earlier, the revealed aggregator is not affected by this choice. To make this specific, suppose that $\varepsilon \sigma_0^2$ for some $\varepsilon > 0$ was used instead of $\sigma_0^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_0^2$ must be chosen.
+% As mentioned earlier, the revealed aggregator is not affected by this choice. To make this specific, suppose that $\varepsilon \sigma_Y^2$ for some $\varepsilon > 0$ was used instead of $\sigma_Y^2$. Then, $\Z \sim \mathcal{N}_N(\boldsymbol{0}, \bSigma/\varepsilon)$ and, by simple cancellation, $X''$ becomes exactly as in (\ref{revPoint}). Of course, for the sake of estimation, some $\sigma_Y^2$ must be chosen.
 
 
 
@@ -2292,9 +2292,9 @@ Overall, however, the advantage is not as dramatic as in Section \ref{binaryReal
 %%\end{align*}
 %
 %\subsection{Point Estimates for Continuous Outcomes}
-%Suppose that the quantity of interest $Y$ and the predictions $X_j$ are real-valued. Denote the proper non-informative prior distribution with $Y \sim \mathcal{N}(\mu_0, \sigma_0^2)$. The individual forecasts $X_j \sim \mathcal{N}(\mu_j, \sigma_j^2)$, where $\sigma_0^2 \geq \sigma_i^2$; otherwise some forecast is considered less informative than the commonly agreed non-informative prior. Furthermore, the mean of the forecasts $\mu_j = \mu_0$ because the forecasts are assumed to be conditionally unbiased; that is, $\E[Y|X_j] = X_j$. This follows specifically from the conditional distribution $Y | X_j \sim \mathcal{N}(\mu_0 + (X_j - \mu_j), \sigma^2_0 - \sigma^2_j)$. Hence $\E[Y | X_j] = \mu_0 + (X_j - \mu_j)$, which is equal to $X_j$ if and only if $\mu_0 = \mu_j$.  The observables link to the information pool by $Z_S = (Y - \mu_0)/\sigma_0 \sim \mathcal{N}(0,1)$ and $Z_{B_j} = \left(X_j - \mu_0\right)/\sigma_0 \sim \mathcal{N}(0, \delta_j)$, where $\delta_j = \sigma_j^2/\sigma_0^2 \in [0,1]$. If $\Z = \left(Z_{B_1}, \dots, Z_{B_N}\right)'$, then the revealed aggregator is
+%Suppose that the quantity of interest $Y$ and the predictions $X_j$ are real-valued. Denote the proper non-informative prior distribution with $Y \sim \mathcal{N}(\mu_0, \sigma_Y^2)$. The individual forecasts $X_j \sim \mathcal{N}(\mu_j, \sigma_j^2)$, where $\sigma_Y^2 \geq \sigma_i^2$; otherwise some forecast is considered less informative than the commonly agreed non-informative prior. Furthermore, the mean of the forecasts $\mu_j = \mu_0$ because the forecasts are assumed to be conditionally unbiased; that is, $\E[Y|X_j] = X_j$. This follows specifically from the conditional distribution $Y | X_j \sim \mathcal{N}(\mu_0 + (X_j - \mu_j), \sigma^2_0 - \sigma^2_j)$. Hence $\E[Y | X_j] = \mu_0 + (X_j - \mu_j)$, which is equal to $X_j$ if and only if $\mu_0 = \mu_j$.  The observables link to the information pool by $Z_S = (Y - \mu_0)/\sigma_Y \sim \mathcal{N}(0,1)$ and $Z_{B_j} = \left(X_j - \mu_0\right)/\sigma_Y \sim \mathcal{N}(0, \delta_j)$, where $\delta_j = \sigma_j^2/\sigma_Y^2 \in [0,1]$. If $\Z = \left(Z_{B_1}, \dots, Z_{B_N}\right)'$, then the revealed aggregator is
 %\begin{align*}
-%X'' =  \E\left(Y  | \F''\right) =  \E\left(Y | \X\right) &= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} \Z \sigma_0 + \mu_0
+%X'' =  \E\left(Y  | \F''\right) =  \E\left(Y | \X\right) &= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} \Z \sigma_Y + \mu_0
 %%&= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1} (\boldsymbol{Y} - \mu_S\one) + \mu_S
 %%&= {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1}\boldsymbol{Y} +\mu_s(1- {\bf\Sigma}_{12} {\bf\Sigma}_{22}^{-1}\one)\\
 %\end{align*}
@@ -2311,13 +2311,13 @@ Overall, however, the advantage is not as dramatic as in Section \ref{binaryReal
 %%\textcolor{red}{how about scaling}\\
 %%\textcolor{red}{check informative prior online}
 %
-%Similarly to the previous subsection, denote the proper non-informative prior with $Y \sim \mathcal{N}(\mu_0, \sigma_0^2)$. The outcome is linked to the information pool by $X_S = (Y-\mu_0)/\sigma_0 \sim \mathcal{N}(0, 1)$. forecaster $j$ reports $\mathcal{N}\left(\mu_j, \sigma^2_j\right)$, where $\sigma_0^2 \geq \sigma_j^2$; otherwise some forecaster is less informated than the commonly agreed non-informative prior. The predictions then link to the information pool via
+%Similarly to the previous subsection, denote the proper non-informative prior with $Y \sim \mathcal{N}(\mu_0, \sigma_Y^2)$. The outcome is linked to the information pool by $X_S = (Y-\mu_0)/\sigma_Y \sim \mathcal{N}(0, 1)$. forecaster $j$ reports $\mathcal{N}\left(\mu_j, \sigma^2_j\right)$, where $\sigma_Y^2 \geq \sigma_j^2$; otherwise some forecaster is less informated than the commonly agreed non-informative prior. The predictions then link to the information pool via
 %\begin{align*}
-%Z_{B_j} &= \frac{\mu_j - \mu_0}{\sigma_0} && \text{ and } && \delta_j = 1-\frac{\sigma_j^2}{\sigma_0^2}.
+%Z_{B_j} &= \frac{\mu_j - \mu_0}{\sigma_Y} && \text{ and } && \delta_j = 1-\frac{\sigma_j^2}{\sigma_Y^2}.
 %\end{align*}
 % If $\Z = \left(Z_{B_1}, \dots, Z_{B_N}\right)'$, then the revealed aggregator is
 %%
-%%This restriction illustrates that variance decreases in the amount of information held by the expert. Given that  $\mathcal{N}(\mu_0, \sigma_0^2)$ is the forecast given under no information, the variance of any forecast must be at most $\sigma_0^2$. Now, referring back to (\ref{NExperts}), if $\boldsymbol{X} = (X_{I_1}, X_{I_2},  \dots, X_{I_N})'$ is a column vector of length $N$ and $\Sigma_{22}$ is a coherent overlap structure such that $\Sigma_{22}^{-1}$ exists, then 
+%%This restriction illustrates that variance decreases in the amount of information held by the expert. Given that  $\mathcal{N}(\mu_0, \sigma_Y^2)$ is the forecast given under no information, the variance of any forecast must be at most $\sigma_Y^2$. Now, referring back to (\ref{NExperts}), if $\boldsymbol{X} = (X_{I_1}, X_{I_2},  \dots, X_{I_N})'$ is a column vector of length $N$ and $\Sigma_{22}$ is a coherent overlap structure such that $\Sigma_{22}^{-1}$ exists, then 
 %%\begin{align*}
 %%X_{S} | \boldsymbol{X} \sim \mathcal{N}\left(\bar{\mu}, \bar{\Sigma}\right), 
 %%\end{align*}
@@ -2328,7 +2328,7 @@ Overall, however, the advantage is not as dramatic as in Section \ref{binaryReal
 %%\end{align*}
 %%Finally, the aggregate distribution for $Z_S$ is
 %\begin{align*}
-%Y | \boldsymbol{Z} \sim \mathcal{N}\left(\sigma_0 \bar{\mu} + \mu_0, \sigma_0 \bar{\Sigma}\right),
+%Y | \boldsymbol{Z} \sim \mathcal{N}\left(\sigma_Y \bar{\mu} + \mu_0, \sigma_Y \bar{\Sigma}\right),
 %\end{align*}
 %where $\bar{\mu} =  \diag(\bSigma)' \bSigma^{-1} \boldsymbol{Z}$ and $\bar{\Sigma}=1 - \diag(\bSigma)' \bSigma^{-1} \bSigma_{21}$. Given that $Z_{B_j}$'s and $\delta_j$'s are known to the aggregator, the only unknown quantities are the $\rho_{ij}$'s, namely the information overlap parameters. 
 %
