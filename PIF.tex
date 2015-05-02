@@ -350,7 +350,7 @@ Once the predictions have been collected, the challenge is to combine them into 
 %This paper proposes a new source of heterogeneity called the \textit{information diversity}. 
 The main contribution of this paper is a new source of forecast heterogeneity, called \textit{information diversity}, that serves as an alternative to measurement error. In particular,  any variation in the forecasts is assumed to stem from information available to the forecasters and how they decide to use it. For instance, forecasters studying the same (or different) articles about a company may use separate parts of the information and hence report differing predictions on the company's future revenue. Such diversity forms the basis of a novel modeling framework known as the \textit{partial information framework}. Theory behind this framework was originally introduced for probability forecasts by \cite{satopaamodeling}; though their specification is somewhat restrictive for empirical applications. We generalize this framework beyond probability forecast and remove all unnecessary assumptions, leading to a new specification that is more appropriate for practical applications. This allows the decision-maker to build context-specific models and aggregators, instead of relying on the usual mean or median aggregates.
 
-\marginpar{mention the propositions here}
+%\marginpar{mention the propositions here}
 
 
 
@@ -381,11 +381,11 @@ The main contribution of this paper is a new source of forecast heterogeneity, c
 %\subsection{Organization of the Paper}
 The paper is structured as follows. Section \ref{PIF} first describes the partial information framework at its most general level and then introduces a practical specification of the framework. 
 %This specification culminates in a distribution that describes information diversity with a covariance matrix. 
-The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Section \ref{empirical} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability and point forecasts from the two real-world prediction polls discussed above. The resulting partial information aggregators achieve a noticeable performance improvement over the common measurement-error-based aggregators, suggesting that  information diversity is the more important  source of forecast heterogeneity. 
+The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Sections \ref{simulation} and \ref{applications} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability and point forecasts from the two real-world prediction polls discussed above. The resulting partial information aggregators achieve a noticeable performance improvement over the common measurement-error-based aggregators, suggesting that  information diversity is the more important  source of forecast heterogeneity. 
  Finally, Section \ref{discussion} concludes with a summary and discussion of
 future research.
 
-\marginpar{edit this}
+%\marginpar{edit this}
 
 
 %For instance, consider a group of forecasters making independent predictions of a company's future revenue. The team members  may vary largely in terms of skill and knowledge. 
@@ -1821,6 +1821,7 @@ These two strategies lead to slightly different predictive behavior as is illust
 %\marginpar{somewhere should be a discussion of when this method can be expected to work well.}
 
 \section{Applications}
+\label{applications}
 \subsection{Probability Forecasts of Binary Outcomes}
 \label{binaryReal}
 \subsubsection{Dataset}
@@ -2062,7 +2063,8 @@ Figure \ref{simReal} shows the average RMSE's under the three scenarios describe
 %All scenarios, however, tell a similar story about the relative accuracies of the competing aggregators. First,
 In all the figures the measurement-error aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Despite the level of uncertainty, the revealed aggregator $X_{cov}''$ outperforms the averaging aggregators as long as $K \geq 10$. 
 %This provides evidence in favor of information diversity being the more important source of forecast heterogeneity. 
-The relative advantage, however, increases from HU to LU. This trend can be explained by several reasons: First, as can be seen in Table \ref{scenarios}, the amount of data increases from HU to LU. This yields a better estimate of $\bSigma$ and hence more accurate revealed aggregation. Second, under HU the events are still inherently very uncertain. Consequently, the forecasters are unlikely to hold much useful information as a group. Under such low information diversity, measurement-error aggregators generally perform relatively well (\citealt{satopaamodeling}).  In the contrary, under MU  the events have lost a part of their inherent uncertainty, allowing some forecasters to possess useful private information. These individuals are then prioritized by $X_{cov}''$ while the averaging-aggregators continue treating all forecasts equally. Third, the forecasters can be expected to show better calibration under MU and LU than under HU. Therefore the model assumptions are more likely to hold under MU and LU. 
+The relative advantage, however, increases from HU to LU. This trend can be explained by several reasons: First, as can be seen in Table \ref{scenarios}, the amount of data increases from HU to LU. This yields a better estimate of $\bSigma$ and hence more accurate revealed aggregation. Second, under HU the events are still inherently very uncertain. Consequently, the forecasters are unlikely to hold much useful information as a group. Under such low information diversity, measurement-error aggregators generally perform relatively well (\citealt{satopaamodeling}).  In the contrary, under MU  the events have lost a part of their inherent uncertainty, allowing some forecasters to possess useful private information. These individuals are then prioritized by $X_{cov}''$ while the averaging-aggregators continue treating all forecasts equally. Third, the forecasters are more likely to be conditionally unbiased under MU and LU than under HU. 
+%Therefore the model assumptions are more likely to hold under MU and LU. 
 %  $X_{cov}''$ is able to collect information more efficiently than the measurement error aggregators. Consequently, its performance advantage grows as $N$ increases. 
 %Overall, the extent to which $X_{cov}''$ outperforms the measurement-error aggregators 
 % model of forecast heterogeneity than measurement error. 
@@ -2239,10 +2241,31 @@ After this, however, $X_{cov}''$ collects information efficiently and increases 
 
 \section{Discussion}
 \label{discussion}
+This paper introduced the partial information framework for modeling forecasts from different types of  prediction polls. Forecast heterogeneity is assumed to stem purely from differences in the forecasters' information. This is considered more plausible on the micro-level than the historical measurement error. The partial information framework motivates and describes the forecasters' information overlap with a patterned covariance matrix (Equation \ref{cov_str}). A correctional procedure was proposed (Algorithm \ref{proj_algo}) as a general tool for estimating these information structures. This procedure inputs any covariance estimator and modifies it minimally such that all the associated forecasts can be regarded as (conditionally unbiased) estimates of some common target outcome. Even though the general partial information framework motivates an optimal aggregator, this is generally too abstract to be applied in practice. 
+%
+%
+%A practical form of the optimal aggregator, however, cannot be derived without a specific instance of the 
+%
+%
+% in its  most general form, however, is too abstract for practical applications. 
+ This paper discusses a specification within the framework, known as the Gaussian model (Section \ref{gaussian}). 
+  The Gaussian model permits a closed-form solution for the optimal aggregator and utilizes a  link function to model different types of forecasts and outcomes. In the common case of point forecast of a continuous outcome the optimal aggregator never (except in an unrealistic boundary case) reduces to a weighted average of the individual forecasts (Proposition \ref{Gaussian}). This result was  illustrated on synthetic data (Section \ref{simulation}) and verified on real-world forecasts (Section \ref{continuousReal}). The model was also applied to real-world probability forecasts of binary events (Section \ref{binaryReal}).  In each application the Gaussian model outperforms the typical measurement-error-based aggregators. This provides evidence that information diversity is the more important source of forecast heterogeneity. 
 
-Summarize.
-Given Lyle's intuition.
-Future work: Bayesian one time, general sub optimality of convex combinations
+Generally speaking, partial information aggregation works well because it downweights pairs or sets of forecasters that share more information and
+      upweights ones that have unique information (or choose to attend to unique information as is the case, e.g., in Section \ref{continuousReal}, where forecasters made judgments based on pictures). This is very different from measurement-error aggregators that ignore information overlap and treat the forecasters equally.
+      
+      
+      The partial information framework offers both theoretical and empirical directions for future research. One theoretical avenue involves estimation of information overlap. In some cases the higher order overlaps have been found to be irrelevant to aggregation. For instance, \cite{degroot1991optimal} show that the pairwise conditional (on the truth) distributions of the forecasts are sufficient for computing the optimal weights of a weighted average. Theoretical results on the significance or insignificance of higher order overlaps under the partial information framework would be desirable. Given that the Gaussian model can only accommodate pairwise information overlap, such a result would reveal the need of a specification that is more complex than the Gaussian model. Another theoretical direction involves generalizing the sub-optimality of the weighted average of the forecasts  (Proposition \ref{Gaussian}).
+      
+      A promising empirical direction is the Bayesian approach.  These techniques are very natural for fitting hierarchical models such as the ones discussed in this paper.  Furthermore, in many applications with small or moderately sized datasets, Bayesian methods have been found to be superior to the likelihood-based alternatives. Therefore, given that the number of forecasts on a single event is typically quite small, a Bayesian approach is likely to improve the quality of the final aggregate. This would involve  developing a prior distribution for the information structure -- a problem that seems interesting in itself. 
+%      
+%      Currently, we have work in progress analyzing a Bayesian model but there are many, many reason- able priors on the information structures. 
+Overall, this avenue should certainly be pursued, and the results tested against other high performing aggregators.
+      
+        
+%Summarize.
+%Given Lyle's intuition.
+%Future work: Bayesian one time, general sub optimality of convex combinations
 
 
 \section{Appendix A}
