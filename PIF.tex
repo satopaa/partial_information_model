@@ -248,7 +248,7 @@ by the Good Judgment Project (GJP) (\citealt{ungar2012good, mellers2014psycholog
 % of the events specified by IARPA. These forecasters were allowed to
 Since its initiation in 2011, the project has recruited thousands of forecasters to make probability estimates and update them whenever they felt the likelihoods had changed. To illustrate, Figure \ref{Example_prob} shows the forecasts for one of these events. This example involves $522$ forecasters making a total of $1,669$ predictions between 30 July 2012 and 30 December 2012 when the event finally resolved as ``No'' (represented by the red line at $0.0$). 
 % ``Will Moody's issue a new downgrade on the long-term ratings for any of the eight major French banks between 30 July 2012 and 31 December 2012?'' and ``Will the Palestinian group Islamic Jihad significantly violate its cease-fire with Israel before 30 September 2012?".
-In general, the forecasters reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset very sparse. The point forecasts for our second application, on the other hand, were collected by \cite{moore2008use} who recruited $416$ undergraduates from Carnegie Mellon University to guess the weights of $20$ people based on a series of pictures. This is an experimental setup where each participant was required to respond to all the questions, leading to a fully completed dataset. The responses are illustrated in Figure \ref{Example_point} that shows the boxplots of the guesses across forecasters for each of the $20$ people. The red dots represent the corresponding true weights.
+In general, the forecasters reported updates very infrequently. Furthermore, not all forecasters made probability estimates for all the events, making the dataset very sparse. The point forecasts for our second application were collected by \cite{moore2008use} who recruited $416$ undergraduates from Carnegie Mellon University to guess the weights of $20$ people based on a series of pictures. This is an experimental setup where each participant was required to respond to all the questions, leading to a fully completed dataset. The responses are illustrated in Figure \ref{Example_point} that shows the boxplots of the forecasters' guesses for each of the $20$ people. The red dots represent the corresponding true weights.
 
 %Each question has a timeframe during which the participating forecasters made and updated their estimates as frequently as they liked without penalty. For instance, the question in Figure \ref{Example1} has a timeframe of $154$ days, ranging from 30 July 2012  to 31 December 2012. In general, the forecasters updated their estimates very infrequently, making the dataset extremely sparse. 
 
@@ -655,12 +655,12 @@ information diversity does not only arise from differences in the available info
   The following proposition uses these assumptions to relate the target quantity to the forecasts. The proof is this and other propositions are deferred to the Appendix.
  \begin{proposition}
 \label{covstr}
-If $\E(Y|\F_j)  = X_j$ for some $\F_j \subseteq \F$ and all $j =1, \dots, N$, then the following holds.
+If $\E(Y|\F_j)  = X_j$ for some $\F_j \subseteq \F$ and all $j =1, \dots, N$, then the following holds for all $i$ and $j$ .
 \begin{enumerate}[i)] 
-\item The forecasts are marginally consistent: $\E(Y) = \E(X_j)$ for all $j = 1, \dots, N$. \label{first}
-\item $\Cov(X_j, X_i) = \Var(X_i)$ for all $i$ such that $\F_i \subseteq \F_j$.
+\item The forecasts are marginally consistent: $\E(Y) = \E(X_j)$. \label{first}
+\item $\Cov(X_j, X_i) = \Var(X_i)$ if $\F_i \subseteq \F_j$.
    \label{second}
-\item $\Var(X_i) \leq \Var(X_j)$ for all $i$ such that $\F_i \subseteq \F_j$.  \label{third}
+\item The variance increases in information: $\Var(X_i) \leq \Var(X_j)$ if $\F_i \subseteq \F_j$.  \label{third}
 \end{enumerate}
 \end{proposition}
 %\marginpar{add more intuition here. Why can there be negative covariance. }
@@ -776,7 +776,7 @@ $j$. Observe that under the partial information framework increased variance is 
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology and offers potentially the cleanest entry into the issues of the current paper. The Gaussian distribution is also mathematically tractable and incorporates conditional distributions that have simple forms also within the Gaussian family. This turns out to be particularly useful in deriving the revealed aggregator. 
+The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how the model variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This points towards a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology and offers potentially the cleanest entry into the issues at hand. The Gaussian distribution is also mathematically tractable and incorporates conditional distributions that have simple forms also within the Gaussian family. This turns out to be particularly useful in deriving the revealed aggregator. 
 %Furthermore, it has  
 
 % Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
@@ -806,7 +806,7 @@ the particles are independent
 and have small tails, then as $M \to \infty$, the joint distribution
 of the forecasters' observations will be asymptotically
 Gaussian.  Therefore, given that the number of such particles in a real-world setup is likely to be large, it makes sense
-to model the forecasters' observations as jointly Gaussian. This distributional choice has been utilized by many authors in the past (see, e.g., \citealt{broomell2009experts, Bacco}). 
+to model the forecasters' observations as jointly Gaussian. This distributional choice has been utilized by other authors in the past (see, e.g., \citealt{broomell2009experts, Bacco}). 
 
 %\marginpar{Mathematically tractable. See Many testing, estimation and confidence interval procedures discussed in the multivariate
 %statistical literature are based on the assumption that the observation vectors
