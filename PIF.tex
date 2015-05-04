@@ -79,6 +79,7 @@
 \def\m{{\bf m}}
 \def\r{{\bf r}}
 \def\a{{\bf a}}
+\def\e{{\bf e}}
 \def\x{{\bf x}}
 \def\q{{\bf q}}
 \def\w{{\bf w}}
@@ -188,7 +189,6 @@ averaging; Noise reduction
 
 
 %data generative process. 
-
 
 \section{Introduction}
 Past literature has distinguished two types of polling: prediction and opinion polling. In broad terms, an opinion poll is a survey of public opinion, whereas a prediction poll involves multiple agents collectively predicting the value of some quantity of interest \citep{goel2010prediction, mellers2014psychological}. For instance, consider a presidential election poll. An opinion poll typically asks the voters who they will vote for. A prediction poll, on the other hand, could ask which candidate they think will win in their state. A liberal voter in a dominantly conservative state is likely to answer differently to these two questions. 
@@ -381,7 +381,7 @@ The main contribution of this paper is a new source of forecast heterogeneity, c
 %\subsection{Organization of the Paper}
 The paper is structured as follows. Section \ref{PIF} first describes the partial information framework at its most general level and then introduces a practical specification of the framework. 
 %This specification culminates in a distribution that describes information diversity with a covariance matrix. 
-The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Sections \ref{simulation} and \ref{applications} illustrates the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability and point forecasts from the two real-world prediction polls discussed above. The resulting partial information aggregators achieve a noticeable performance improvement over the common measurement-error-based aggregators, suggesting that  information diversity is the more important  source of forecast heterogeneity. 
+The section ends with a brief review of previous work on modeling forecasts. Section \ref{estimator} derives a numerical procedure that efficiently estimates the information structure among the forecasters. Sections \ref{simulation} and \ref{applications} illustrate the framework on synthetic and real-world forecasts of different types of outcomes. In particular, the framework is used to analyze probability and point forecasts from the two real-world prediction polls discussed above. The resulting partial information aggregators achieve a noticeable performance improvement over the common measurement-error-based aggregators, suggesting that  information diversity is the more important  source of forecast heterogeneity. 
  Finally, Section \ref{discussion} concludes with a summary and discussion of
 future research.
 
@@ -590,7 +590,7 @@ This assumption is, to some degree, self-fulfilling if the forecasters operate
 %Many choices are possible, and
 %an estimator that outperforms another under one loss function will not
 %necessarily do so under a different one. In this paper  the focus is on l
-loss function that is minimized by the conditional expectation of $Y$ (given the forecaster's information). In this paper such loss functions are deemed \textit{revealing}. Even though this group of functions involves many well-known penalties such as the Kullback-Leibler divergence, Mahalanobis distance, and the quadratic loss \citep{banerjee2005optimality}, the current paper analyzes univariate outcomes and only focuses on minimizing the quadratic loss.
+loss function that is minimized by the conditional expectation of $Y$ (given the forecaster's information). For this reason such loss functions can be called \textit{revealing}. Even though this group of functions involves many well-known penalties such as the Kullback-Leibler divergence, Mahalanobis distance, and the quadratic loss \citep{banerjee2005optimality}, the current paper analyzes univariate outcomes and only focuses on minimizing the quadratic loss.
 %\marginpar{Though we focus on quadratic loss. then later make the claim that the conditional minimizes this, in fact t minimizes all of these functions.}
 %These loss functions can be considered \textit{revealing} because if a group of
 %sophisticated forecasters operates under such a loss function,
@@ -636,26 +636,26 @@ The principal $\sigma$-field $\F$ can be interpreted as all the possible informa
 %Under the partial information framework, the forecasters operate under the same probability model but use different subsets of the full information. In fact, i
 In any Bayesian setup, with a revealing loss function, it is more or less tautological that
 %More specifically,
-forecaster $j$ predicts $X_j = \E(Y \| \F_j)$ based on some partial \textit{information set} $\F_j \subseteq \F$. Therefore $\F_i \neq \F_j$ if $X_i \neq X_j$, and forecast heterogeneity stems purely from \textit{information diversity}. This point of view was motivated in \cite{satopaamodeling} with simple examples that illustrate how the optimal aggregate is not well-defined without assumptions on the information structure among the forecasters. Note, however, that if forecaster $j$ uses a simple rule, $\F_i$ may not be the full $\sigma$-field of information available to the forecaster but rather a smaller $\sigma$-field corresponding to the information used by the rule. Furthermore, if two forecasters have access to the same $\sigma$-field, they may decide to use different sub-$\sigma$-fields, leading to different predictions. 
+forecaster $j$ predicts $X_j = \E(Y \| \F_j)$ based on some partial \textit{information set} $\F_j \subseteq \F$. Therefore $\F_i \neq \F_j$ if $X_i \neq X_j$, and forecast heterogeneity stems purely from \textit{information diversity}.  Note, however, that if forecaster $j$ uses a simple rule, $\F_i$ may not be the full $\sigma$-field of information available to the forecaster but rather a smaller $\sigma$-field corresponding to the information used by the rule. Furthermore, if two forecasters have access to the same $\sigma$-field, they may decide to use different sub-$\sigma$-fields, leading to different predictions. 
 %This is reminiscent of a forecasting algorithm that only uses
 %a similarly restricted subset of information. 
 Therefore,
-information diversity does not only arise from differences in the available information, but also from how the forecasters decide to use it. 
+information diversity does not only arise from differences in the available information, but also from how the forecasters decide to use it. This general point of view was motivated in \cite{satopaamodeling} with simple examples that illustrate how the optimal aggregate is not well-defined without assumptions on the information structure among the forecasters.
 %, where $\F_j \subseteq \F$ is
 % the \textit{information set} used by the forecaster.
 % Note that forecaster $j$ may have access to some larger $\sigma$-field $\G$ but only decides to use $\F_j \subseteq \G$. 
 
 
- For the purposes of aggregation, however, any available information discarded by the forecaster may as well not exist because  information comes to the aggregator only through the forecasts. Therefore it is not in any way restrictive to assume that $\F_j = \sigma(X_j)$, where $\sigma(X_j)$ is the $\sigma$-field generated by $X_j$. The form $X_j = \E(Y | \F_j)$ then follows directly from the assumption of conditional unbiasedness and  the existence of an underlying probability model. % 
+ For the purposes of aggregation any available information discarded by the forecaster may as well not exist because  information comes to the aggregator only through the forecasts. Therefore it is not in any way restrictive to assume that $\F_j = \sigma(X_j)$, where $\sigma(X_j)$ is the $\sigma$-field generated by $X_j$. The form $X_j = \E(Y | \F_j)$ then arises directly from the assumption of conditional unbiasedness and  the existence of an underlying probability model. % 
 % Therefore the \textit{information set} $\F_j$ is defined explicitly as the information used by the forecaster. 
 % Overall, this is not in any way restrictive. In fact, by letting $\F_j = \sigma(X_j)$ be the $\sigma$-field generated by $X_j$, the forecasts can be written as $ \E[Y \| \F_j] =  \E[Y \| X_j] = X_j$, which suggests nothing but the conditional unbiasedness property discussed in the previous section together with the existence of an underlying probability model. 
  % based on different information sets. 
 %To see that this assumption is not in any way restrictive, recall that a conditionally unbiased forecaster predicts $\E [Y \| X_j] = X_j$. Under the given probability model, conditioning on $X_j$ is equivalent to conditioning on $\sigma(X_j) = \F_j$, namely the smallest $\sigma$-field generated by $X_j$, and hence $\E [Y \| X_j] =  \E [Y \| \F_j] = X_j$. Consequently, the assumption
 % $X_j = \E [Y | \F_j]$ only requires the existence of a probability model, together with the assumption of conditional unbiasedness. 
-  The following proposition uses these assumptions to relate the target quantity to the forecasts. The proof is this and other propositions are deferred to the Appendix.
+  The following proposition uses these assumptions to relate the target quantity to the forecasts. All the proofs are deferred to the Appendix.
  \begin{proposition}
 \label{covstr}
-If $\E(Y|\F_j)  = X_j$ for all $j =1, \dots, N$, then the following holds.
+Suppose $\F_j = \sigma(X_j)$ such that $\E(Y|\F_j) = \E(Y|X_j)  = X_j$ for all $j =1, \dots, N$. Then, the following holds.
 \begin{enumerate}[i)] 
 \item The forecasts are marginally consistent: $\E(Y) = \E(X_j)$. \label{first}
 \item $\Cov(X_j, X_i) = \Var(X_i)$ if $\F_i \subseteq \F_j$.
@@ -776,7 +776,7 @@ $j$. Observe that under the partial information framework increased variance sug
 
 \subsection{Gaussian Partial Information Model}
 \label{gaussian}
-The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how these variables change together. A natural solution refers to Proposition \ref{covstr} and parametrizes the joint distribution in terms of covariances. This suggests a multivariate Gaussian distribution, which is a typical starting point in developing statistical methodology and often provides the cleanest entry into the issues at hand. The Gaussian distribution is also mathematically tractable and incorporates conditional distributions that have simple forms also within the Gaussian family. This turns out to be particularly useful in deriving the revealed aggregator. 
+The general partial information framework is clearly too abstract to be applied in practice. Therefore a more specific model within the framework is needed. The first step is to choose a joint distribution for the model variables $Y, X_1, \dots, X_N$. This in general requires an understanding of how these variables change together. One approach is to refer to Proposition \ref{covstr} and parametrize the joint distribution in terms of covariances. This suggests the multivariate Gaussian distribution that is a typical starting point in developing statistical methodology and often provides the cleanest entry into the issues at hand. Furthermore, the Gaussian distribution incorporates conditional distributions that have simple forms also within the Gaussian family. This turns out to be particularly useful in deriving the revealed aggregator. 
 %Furthermore, it has  
 
 % Second, both the multivariate and conditional Gaussian distributions are well-studied and have simple forms. 
@@ -790,7 +790,7 @@ The general partial information framework is clearly too abstract to be applied 
 
 %Furthermore, given that the main task is to predict $Y$ from the $X_j$'s, the chosen distribution should also facilitate easy derivation of the revealed aggregator $X'' = \E[Y|X_1, \dots, X_N]$. Both of these requirements point towards a multivariate Gaussian distribution. 
 
-From the intuitive point of view, the Gaussian distribution can be motivated by a pool of $M$ information particles. Each particle, which can be interpreted as representing a piece of information, has either a positive or negative effect on $Y$. The total sum (integral) of these particles determines the final value of $Y$. Each forecaster, however, observes only the sum of some subset of the particles. Based on this sum, the forecaster makes an estimate of $Y$. 
+Intuitively the Gaussian distribution can be motivated by a pool of $M$ information particles. Each particle, which can be interpreted as representing a piece of information, has either a positive or negative effect on $Y$. The total sum (integral) of these particles determines the final value of $Y$. Each forecaster, however, observes only the sum of some subset of the particles. Based on this sum, the forecaster makes an estimate of $Y$. 
 % by the model discussed in \citet{broomell2009experts}. 
 %%They discuss a model in which 
 %They assume that
@@ -874,10 +874,10 @@ where $\Z = (Z_1, \dots, Z_N)'$.
 %This completes the characterization of the Gaussian model. 
 %Given that these expressions and the construction of $Y$ only depend on the choice of $g(\cdot)$. Therefore each instance of the Gaussian model is fully specified by its link function.
 
- One of the most important instances of the Gaussian model addresses point forecasts $X_j$ of a continuous outcome $Y$. The next proposition analyzes the relationship between $X''$ and the weighted average of the forecasts under this particular setup. The comparison is of particular importance because many measurement-error aggregators are different types of weighted averages.
-
+ One of the most important instances of the Gaussian model considers point forecasts $X_j$ of a continuous outcome $Y$. The next proposition analyzes the relationship between $X''$ and the weighted average of the forecasts under this particular setup. 
+% The comparison is of particular importance because many measurement-error-based aggregators are different types of weighted averages.
 \begin{proposition} \label{Gaussian}
-Consider the Gaussian model for point forecasts of continuous outcomes. Denote the prior on the outcome with $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$. If $\X = (X_1, \dots, X_N)' \in \mathbb{R}^N$, then the revealed aggregator is $X'' = \diag(\bSigma)'\bSigma^{-1}(\X-\mu_Y\one_N) + \mu_Y$.  Consider the weighted average $\w'\X$, where $w_1, \dots, w_N \geq 0$ and $\sum_{i=1}^N w_j = 1$.
+Consider the Gaussian model for point forecasts of continuous outcomes with the prior $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$. Denote the set of positive definite $N \times N$ matrices with  $\mathcal{S}_{++}^N$. If $\bSigma \in \mathcal{S}_{++}^N$ and  $\X = (X_1, \dots, X_N)' \in \mathbb{R}^N$, then the revealed aggregator is $X'' = \diag(\bSigma)'\bSigma^{-1}(\X-\mu_Y\one_N) + \mu_Y$.  Consider the weighted average $\w'\X$, where $\w = (w_1, \dots, w_N)'$ such that all $w_1, \dots, w_N \geq 0$ and $\sum_{i=1}^N w_j = 1$.
 %\begin{enumerate}
 %\item Both $X''$ and $\w' \X$ are marginally consistent; that is, $\E[X''] = \E[\w'\X] = \E(Y) =  \mu_Y$.
 %\item
@@ -886,8 +886,9 @@ The revealed aggregator $X''$ reduces to $\w'\X$ only if there is a forecaster $
 %\item The linear opinion pool is under confident in a sense that $\E[(\mu_Y - X'')^2] > \E[(\mu_Y - \w'\X)^2]$
 %\end{enumerate}
 \end{proposition}
-\marginpar{Be careful here though. Make a similar claim to the reviewers comment. The aggregator only cares about the total noise in that region etc. Should also prove the form of X''}
-Recall from Section \ref{context} that $X''$ minimizes the expected quadratic loss among all functions that are measurable with respect to $\F''$. Given that $\w' \X \in \F''$ for any set of weights $\w$, no weighted average can outperform $X''$ in terms of expected quadratic loss. Therefore the weighted average of the forecasts is strictly sub-optimal except in the extreme case when one forecaster knows everything that all the other forecasters know. This result is illustrated under synthetic data in Section \ref{simulation} and verfiied under real-world data in Section \ref{continuousReal}.
+This proposition raises two interesting observations: First, recall from Section \ref{context} that $X''$ minimizes the expected quadratic loss among all functions measurable with respect to $\F''$ such as the weighted average $\w' \X $. Therefore, under the Gaussian model, no weighted average can outperform $X''$ in terms of expected quadratic loss. In particular, the weighted average  is strictly sub-optimal except in the extreme case when one forecaster knows everything that all the other forecasters know. This result is illustrated on synthetic and real-world data in Sections \ref{simulation} and \ref{continuousReal}, respectively. Second, many measurement-error-based aggregators can be viewed as different types of weighted averages. According to Proposition \ref{Gaussian} the set of aggregators based on measurement error barely overlaps with the set of partial information aggregators.  Therefore measurement error and information diversity are not only fundamentally different but they also require very different aggregators. 
+
+%Proposition \ref{Gaussian} compares the aggregators under the 
 
 %Section \ref{empirical} illustrates the Gaussian model on point and probability forecasts. 
 %The term $\diag(\bSigma)' \bSigma^{-1}\diag(\bSigma)$ can be interpreted as the total amount of information revealed by the $N$ forecasters. The conditional mean $\diag(\bSigma)' \bSigma^{-1} \Z$, on the other hand, is the single best estimate of $Z_Y$ given $\Z$. This term does not depend on $\Var(Z_Y)$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. 
@@ -1111,7 +1112,7 @@ Unfortunately, estimating $\bSigma$ in full generality based on a single predict
 %\end{align}
 %where $\conv(\cdot)$ denotes the convex hull operator and $\COR_N$ is known as the correlation polytope (also known as the boolean quadric polytope by some authors). All elements of $ \COR_N$ are symmetric, positive semidefinite, and hence valid covariance matrices. 
 %\citep{letchford2008binary}.  
-Estimation of $\bSigma$ must be performed under the covariance pattern in (\ref{NExperts}). In particular, if $\mathcal{S}_{+}^N$ is the set of  symmetric positive semidefinite $N \times N$ matrices and 
+Estimation of $\bSigma$ must be performed under the covariance pattern in (\ref{NExperts}). In particular, if $\mathcal{S}_{+}^N$ denotes the set of positive semidefinite $N \times N$ matrices  and 
 % denote the set of symmetric $N \times N$  matrices with $\mathcal{S}^N$, represent the set of  symmetric positive semidefinite $N \times N$ matrices with $\mathcal{S}_{+}^N$, and consider a one-to-one function $h$ that transforms a matrix $\M \in \mathcal{S}^{N}$ to  
 \begin{align*}
 h(\M)  := 
@@ -1385,7 +1386,7 @@ Given that both of these sets are convex, projecting onto their intersection can
 
 %Let $\M$ be an arbitrary $(N+1) \times (N+1)$ matrix. First, projecting $\M$ onto $\R_+^{N+1}$ is equal to taking the positive part of each element of $\M$. Denote this projection with the operator $\mathcal{P}_{+}(\cdot)$. 
 
-First, projecting a matrix $\M \in \mathcal{S}^{N+1}$  onto $\mathcal{C}_{lin}$ is a linear map. To make this more specific, let $\m = \vec(\M)$ be a column-wise vectorization of $\M$. 
+First, projecting a matrix $\M = \{m_{ij}\} \in \mathcal{S}^{N+1}$  onto $\mathcal{C}_{lin}$ is a linear map. To make this more specific, let $\m = \vec(\M)$ be a column-wise vectorization of $\M$. 
 %Then, $\s$ has length $N_s := \binom{N+1}{2} = (N+1)N/2$. If $\A_0$ is a $(N+1) \times (N_s - N - 1)$ binary matrix with ones only at positions $\left(i,  1+\sum_{j=0}^{i-3}(N-j)\right)$ for $i = 2, \dots, N+1$, 
 If $\A$ is a matrix with the $j$th row equal to $\vec(\A_j)$, then the  linear constraints in (\ref{lse_problem}) can be expressed as $\A\m =  \boldsymbol{e}_1$, where $\boldsymbol{e}_1$ is the first standard basis vector. Then, the projection of  $\M$ onto $\mathcal{C}_{lin}$ is given by $\vec^{-1}(\m + \A' (\A \A')^{-1}(\boldsymbol{e}_1 - \A\m))$. This expression simplifies significantly by close inspection. In particular, the projection is equivalent to setting $m_{11} = 1$ and for $j \geq 2$ replacing $m_{j1}$, $m_{1j}$, and $m_{jj}$ by their average $(m_{jj} + m_{j1} + m_{1j})/3$. Denote this projection with the operator $\mathcal{P}_{lin}(\cdot)$. 
 
@@ -1582,7 +1583,7 @@ for $j = 1, \dots, N+1$,  then $\Q \Diag(\lambda_1^*, \dots, \lambda_{N+1}^*) \Q
 \subsection{Selecting the value of $\kappa$}
 \label{condSelection}
 %The only remaining component in model estimation is the selection of $\kappa$. 
-Algorithm \ref{proj_algo} requires the specification of the condition number bound $\kappa$. This subsection describes two approaches to choosing $\kappa$ under the Gaussian model. The general principles, however, extend directly to any partial information model. 
+Algorithm \ref{proj_algo} requires the specification of the threshold $\kappa$. This subsection describes two approaches to choosing $\kappa$ under the Gaussian model. The general principles, however, extend directly to any partial information model. 
 % This subsection explains how this value can be chosen from the forecasts. 
 %A practical application of Algorithm \ref{proj_algo} requires a value for the condition number constraint $\kappa$.
 %Given that Algorithm \ref{proj_algo} requires a given $\kappa$, a principled approach to selecting this threshold should be described. 
@@ -1621,7 +1622,7 @@ To address these drawbacks, the current paper introduces a new selection procedu
   \begin{align}
 \kappa_{cov} = \argmax_{\nu \geq 1} \sum_{j=1}^N \ell \left( \Z_{j}^*, \mathcal{P}_{LSE}(\SS : \nu) \big| \Z_i^* \text{ for } i \neq j\right), \label{kappa_cov}
 \end{align}
-where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS$ is the sample covariance matrix computed once based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Denote the final estimate with $\bSigma_{cov} := \mathcal{P}_{LSE}(\SS : \kappa_{cov})$.  
+where the log-likelihood is now conditional on $\Z_i^*$'s for $i \neq j$ and $\SS$ is the sample covariance matrix computed  based on all the forecasts $\Z_1^*, \dots, \Z_N^*$. Denote the final estimate with $\bSigma_{cov} := \mathcal{P}_{LSE}(\SS : \kappa_{cov})$.  
 
 The idea in conditional validation is similar to cross-validation but, instead of predicting across rows (observations), the prediction is  performed across columns (variables).  This is likely to be more appropriate in prediction polling-like setups that typically involve a large number of forecasters (large $N$) attending relatively few problems (small $K$). In contrast to cross-validation, however, conditional validation requires only one call to $\mathcal{P}_{LSE}( \cdot : \nu)$ per candidate value $\nu$. Furthermore, it has no tuning parameters and remains more stable when $K$ is small (as will be illustrated in the next section).
 Unfortunately, both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}) are non-convex in $\nu$.  However, as was mentioned before, Algorithm \ref{proj_algo} is fast for moderately sized $N$. Therefore $\kappa$ can be chosen efficiently (possibly in parallel on multicore machines) over a  grid of candidate values. 
@@ -1695,12 +1696,12 @@ Unfortunately, both optimization problems (\ref{kappa_out}) and (\ref{kappa_cov}
 Model evaluation naturally begins with synthetic data generated directly from the multivariate Gaussian distribution (\ref{NExperts}). This  provides insight into the behavior of the estimation procedure and also introduces the simplest instance of the Gaussian model.
 
 \begin{quote}
-{\bf Model Instance.}  The link function $g$ is the identity. Consequently, the target quantity is $Y_k = g(Z_{Yk}) = Z_{Yk}$, and the forecasts are $X_{jk} = \E(Y_k | Z_{jk}) = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \diag(\bSigma)' \bSigma^{-1} \X_k$. 
+{\bf Model Instance.}  The link function $g(\cdot)$ is the identity. Consequently, the target quantity is $Y_k = g(Z_{Yk}) = Z_{Yk}$, and the forecasts are $X_{jk} = \E(Y_k | Z_{jk}) = Z_{jk}$ for $j = 1, \dots, N$ and $k = 1, \dots, K$. The revealed aggregator for problem $k$ is $X_k'' = \diag(\bSigma)' \bSigma^{-1} \X_k$. 
 \end{quote}
 
 
 Simulating forecasts from (\ref{NExperts}) requires a covariance matrix $\bSigma$ such that $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
-One approach is to pick $\delta_j \in [0,1]$ and set $\rho_{ij} = \delta_i \delta_j$ for all $i \neq j$. If  $\bSigma$ is the resulting information structure, then $\bSigma - \diag(\bSigma)\diag(\bSigma)' = \Diag((\delta_1 - \delta_1^2, \dots, \delta_N - \delta_N^2)) \in \mathcal{S}_{+}^{N}$, which by the Schur complement is equivalent to $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
+One approach is to pick $\delta_j \in [0,1]$ and set $\rho_{ij} = \delta_i \delta_j$ for all $i \neq j$. If  $\bSigma$ is the resulting information structure, then $\bSigma - \diag(\bSigma)\diag(\bSigma)' = \Diag((\delta_1 - \delta_1^2, \dots, \delta_N - \delta_N^2)) \in \mathcal{S}_{+}^{N}$, which by the Schur complement is equivalent to having  $h(\bSigma) \in \mathcal{S}_{+}^{N+1}$. 
 %A mechanism for randomly generating valid information structures is introduced in the following proposition. 
 %\begin{proposition}
 %\label{synth}
@@ -1795,7 +1796,7 @@ Even though all estimators become more accurate as $K$ grows, $\bSigma_{out}$ an
 
 
 
-These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the root-mean-squared-errors (RMSE) of the competing aggregators in predicting $Y_k$. Figure \ref{Nfixed} varies $K$ but fixes $N = 20$.  Figure \ref{Kfixed}, on the other hand,  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{Yk} \sim \mathcal{N}(0,1)$, the RMSE of the prior mean $\E(\sqrt{(Y_k-0)^2}) = \E(|Y_k|) = \sqrt{2/\pi} \approx 0.8$ can be considered as the upper bound in prediction error. On the other end, the aggregator $X_{true}''$ is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $0.8$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with RMSE around $0.5$. They both show slight improvement as $N$ increases. In all cases, however, their RMSE is uniformly well above that of the revealed aggregators, suggesting that measurement-error aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They collect information and appear to improve at the optimal rate as $N$ increases. This can be seen in the way the performance gap from $X_{true}$ to  $X_{out}''$ and $X_{cov}''$ remains approximately constant as $N$ increases. The gap, however, decreases as $K$ grows larger.  When $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following section that applies the Gaussian model to real-world forecasting data. 
+These two strategies lead to slightly different predictive behavior as is illustrated in Figure \ref{XEstimation}. This plot shows the root-mean-squared-errors (RMSE) of the competing aggregators in predicting $Y_k$. Figure \ref{Nfixed} varies $K$ but fixes $N = 20$.  Figure \ref{Kfixed}, on the other hand,  varies $N$ but fixes $K = 20$. Given that $Y_k = Z_{Yk} \sim \mathcal{N}(0,1)$, the RMSE of the prior mean $\E(\sqrt{(Y_k-0)^2}) = \E(|Y_k|) = \sqrt{2/\pi} \approx 0.8$ can be considered as the upper bound in prediction error. On the other end, the aggregator $X_{true}''$ is optimal and hence provides the corresponding lower bound. The revealed aggregator $X''$ with $\SS_Z$ typically received a loss much larger than $0.8$ and is therefore not included in the figure. Overall, the average and median perform very similarly, with RMSE around $0.5$. They both show slight improvement as $N$ increases. In all cases, however, their RMSE is uniformly well above that of the revealed aggregators, suggesting that measurement-error aggregators are a poor choice when forecasts truly arise from a partial information model. The revealed aggregators $X_{cov}''$ and $X_{out}''$ perform very similarly when $K \geq 15$. They collect information and appear to improve at the optimal rate as $N$ increases. This can be seen in the way the performance gap from $X_{true}$ to  $X_{out}''$ and $X_{cov}''$ remains approximately constant in Figure \ref{Kfixed}. They both, however, approach the optimal as $K$ grows larger.  When $K$ is small, say less than $15$, conditional validation is more robust and clearly yields better results. Given that conditional validation is also computationally much less demanding, only $X_{cov}''$ is considered in the following section that applies the Gaussian model to real-world forecasting data. 
   
  
 
@@ -1971,7 +1972,7 @@ All these considerations lead to a parallel analysis of three scenarios: High Un
 %\textit{Model.} 
 The fact that  $Y_k \in \{0,1\}$ is binary and lies on the boundary of the support of the forecasts $X_{jk} \in [0,1]$ makes the model instance slightly more involved. This instance resembles in many ways the latent variable version of a standard probit model. 
 \begin{quote}
-\textbf{Model Instance.} Represent the $k$th event with $Y_k \in \{0,1\}$ for $k = 1, \dots, K$. These outcomes link to the Gaussian information pool via the following function:
+\textbf{Model Instance.} Identity the $k$th event with $Y_k \in \{0,1\}$. These outcomes link to the information variables via the following function:
 \begin{align*}
 Y_k &= g(Z_{Yk}) = \begin{cases}
 1 & \text{ if } Z_{Yk} > t_k\\
@@ -2005,17 +2006,17 @@ All the parameters of this model can be estimated from the data. The first step 
 %If the predictions are missing at random, the resulting $\SS_P$ is an unbiased estimator of $\Cov(\PP)$. 
 Next, compute $\bSigma_{cov}$, where $\kappa_{cov}$ is chosen over a grid of $100$ candidate values between $10$ and $1,000$. 
 %Once the final estimate of $\bSigma$ has been found,
-The threshold $t_k$ can be estimated by letting $\PP_k = (P_{1k}, \dots, P_{Nk})'$, observing that $-\Diag(\one-\diag(\bSigma))^{1/2}\PP_{k} \sim \mathcal{N}_N(t_k \one_N, \bSigma)$,
+Finally, the threshold $t_k$ can be estimated by letting $\PP_k = (P_{1k}, \dots, P_{Nk})'$, observing that $-\Diag(\one-\diag(\bSigma))^{1/2}\PP_{k} \sim \mathcal{N}_N(t_k \one_N, \bSigma)$,
 %With this estimate of $\bSigma$, the thresholds $t_k$ can be estimated.
 % It is possible  $t_k$ is set by the prior $\P(A_k)$; that is, if $\P(A_k) = q_k \in [0,1]$, then $t_k = \Phi^{-1}(1-q_k)$. Alternatively, the value of $t_k$ can be estimated from the forecasts by 
 % 
 % observing that $P_{jk} := -\Phi^{-1}(X_{jk})\sqrt{1-\delta_j} \sim \mathcal{N}(t_k, \delta_j)$. 
-and finally computing the precision-weighted average: 
+and computing the precision-weighted average: 
 \begin{align*}
 %\hat{t}_k &= -\frac{\sum_{j=1}^N \sqrt{1-\hat{\delta}_j}P_{jk}/\hat{\delta}_j}{\sum_{j=1}^N 1/\hat{\delta}_j},
 \hat{t}_k &= -\frac{\PP_{k}' \Diag(\one-\diag(\bSigma_{cov}))^{1/2} \bSigma_{cov}^{-1} \one}{\one' \bSigma_{cov}^{-1} \one}.
 \end{align*}
- If $\PP_k$ has missing values, the corresponding rows and columns of $\bSigma_{cov}$ are dropped. Intuitively, this estimator gives more weight to the forecasters with very little information. Plug these estimates in (\ref{RevAgg}) to get the revealed aggregator  $X_{cov}''$. 
+ If $\PP_k$ has missing values, the corresponding rows and columns of $\bSigma_{cov}$ are dropped. Intuitively, this estimator gives more weight to the forecasters with very little information. These estimates are then plugged in to (\ref{RevAgg}) to get the revealed aggregator  $X_{cov}''$. 
 
 
 %\vspace{2em}
@@ -2064,7 +2065,7 @@ censored to $X_{jk} = 0.001$ and $0.999$, respectively. The results remain insen
 \end{figure}
 
 
-Figure \ref{simReal} shows the average RMSE's under the three scenarios described in Table \ref{scenarios}. Notice that the scores become uniformly worse from HU to LU. This reflects the decreasing level of uncertainty. 
+Figure \ref{simReal} shows the average RMSE's under the three scenarios described in Table \ref{scenarios}. Notice that the scores improve uniformly from HU to LU. This reflects the decreasing level of uncertainty. 
 %All scenarios, however, tell a similar story about the relative accuracies of the competing aggregators. First,
 In all the figures the measurement-error aggregators rank in the typical order (from worst to best): average probability, median probability, average probit, and average log-odds. Despite the level of uncertainty, the revealed aggregator $X_{cov}''$ outperforms the averaging aggregators as long as $K \geq 10$. 
 %This provides evidence in favor of information diversity being the more important source of forecast heterogeneity. 
@@ -2163,7 +2164,7 @@ The associated 100 forecasters involve 36 individuals predicting in isolation, 3
 
 
 
-This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays $\bSigma_{cov}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the more informed forecasters appear on the right. Furthermore, a colored rug has been appended on the top. This rug shows whether each forecaster worked in isolation, in a non-super-forecaster team, or in a super-forecaster team. Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams are $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the the observed plot is from a monochromatic plot, the higher the information diversity. Therefore the colorful Figure  \ref{top100} suggests that the GJP forecasters have high information diversity. 
+This pattern generalizes to the entire group of forecasters. To illustrate, Figure  \ref{top100} displays $\bSigma_{cov}$ for all the 100 forecasters. The information structure has been ordered with respect to the diagonal such that the more informed forecasters appear on the right. Furthermore, a colored rug has been appended on the top. This rug shows whether each forecaster worked in isolation, in a non-super-forecaster team, or in a super-forecaster team. Observe that the super-forecasters are mostly situated on the right among the most informed forecasters. The average estimated $\delta_j$ among the super-forecaster is $0.80$.  On the other hand, the average estimated $\delta_j$ among the individuals working isolation or in non-super-forecaster teams are $0.47$ and $0.50$, respectively. Therefore working in a team makes the forecasters' predictions, on average, slightly more informed. In general, a plot like the one in Figure  \ref{top100} is useful for assessing the level of information diversity among the forecasters: the further away the observed plot is from a monochromatic plot, the higher the information diversity. Therefore the colorful Figure  \ref{top100} suggests that the GJP forecasters have high information diversity. 
 
 
 %\marginpar{This figure shows high information diversity. The further away it is from a single colored levelplto the higher diversity is.}
@@ -2205,7 +2206,7 @@ Only the effect of extreme values was reduced via a $90$\% Winsorization \citep{
 X_k'' =  \E\left[Y_k | \Z_k\right] &= \diag(\bSigma)' \bSigma^{-1} \Z_k \sigma_Y + \mu_{Yk}. \label{revPoint}
 \end{align}
 \end{quote}
-Under this model the prior distribution of $Y_k$ is specified by $\mu_{Yk}$ and $\sigma_Y^2$. Given that $\E(X_{jk}) = \mu_{Yk}$ for all $j = 1, \dots, N$, the sample average $\hat{\mu}_{Yk} = \sum_{j=1}^N X_{jk}/N$ provides an initial estimate of $\mu_{Yk}$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_Y^2$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. Therefore any choice of $\sigma_Y^2$ should lead to the same aggregates. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_Y^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_Y^2]$ and use the resulting likelihood to estimate $\sigma_Y^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_Y^2)$, which leads to the maximum likelihood estimator $\max\{\sigma_j^2\}$. This has a downward bias that can be corrected by a multiplicative factor of $(N+1)/N$. Therefore, replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{Yk})^2/(K-1)$ gives the final estimate $\hat{\sigma}_Y^2 = (N+1)/N\max\{s_j\}$. Using these estimates, the $X_{jk}$'s can be transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ provides the unconstrained estimator for the projection algorithm.  The value of $\kappa_{cov}$ is chosen over a grid of $10$ values between $10$ and $10,000$. Once $\bSigma_{cov}$ has been found, the prior means are updated with the precision-weighted averages $\hat{\mu}_{Yk} = (\X_{k}' \bSigma_{cov}^{-1} \one)/(\one' \bSigma_{cov}^{-1} \one)$. In the end, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregator $X_{cov}''$.
+Under this model the prior distribution of $Y_k$ is specified by $\mu_{Yk}$ and $\sigma_Y^2$. Given that $\E(X_{jk}) = \mu_{Yk}$ for all $j = 1, \dots, N$, the sample average $\hat{\mu}_{Yk} = \sum_{j=1}^N X_{jk}/N$ provides an initial estimate of $\mu_{Yk}$. Theoretically the revealed aggregator (\ref{revPoint}) does not depend on $\sigma_Y^2$; that is, the conditional mean is completely defined by how much the forecasters know relative to each other -- not by how much they know in absolute terms. Therefore any choice of $\sigma_Y^2$ should lead to the same aggregator. Unfortunately, the projection procedure discussed in Section \ref{estimator} is sensitive to this choice. The value of $\sigma_Y^2$, however, can be estimated by assuming a distribution for the $\sigma_j^2$'s. More specifically, let $\sigma_j^2$ be i.i.d. on the interval $[0,\sigma_Y^2]$ and use the resulting likelihood to estimate $\sigma_Y^2$. For instance, a non-informative choice is to assume $\sigma_j^2 \stackrel{i.i.d.}{\sim} \mathcal{U}(0,\sigma_Y^2)$, which leads to the maximum likelihood estimator $\max\{\sigma_j^2\}$. This has a downward bias that can be corrected by a multiplicative factor of $(N+1)/N$. Therefore, replacing $\sigma_j^2$ with the sample variance  $s_j = \sum_{k=1}^K (X_{jk}-\hat{\mu}_{Yk})^2/(K-1)$ gives the final estimate $\hat{\sigma}_Y^2 = (N+1)/N\max\{s_j\}$. Using these estimates, the $X_{jk}$'s can be transformed into the $Z_{jk}$'s whose sample covariance matrix $\SS_Z$ provides the unconstrained estimator for the projection algorithm.  The value of $\kappa_{cov}$ is chosen over a grid of $10$ values between $10$ and $10,000$. Once $\bSigma_{cov}$ has been found, the prior means are updated with the precision-weighted averages $\hat{\mu}_{Yk} = (\X_{k}' \bSigma_{cov}^{-1} \one_N)/(\one_N' \bSigma_{cov}^{-1} \one_N)$. In the end, all these estimates are plugged in (\ref{revPoint}) to get the revealed aggregator $X_{cov}''$.
 
 \begin{figure}[t!]
 \captionsetup{width=0.48\textwidth}
@@ -2229,7 +2230,7 @@ Under this model the prior distribution of $Y_k$ is specified by $\mu_{Yk}$ and 
 \end{figure}
 
 This aggregator is compared against the average, the median, and the average of the median and average (AMA), which was proposed by \citet{lobo2010human} as a good heuristic for aggregating human judgments. Overall accuracy is measured with the RMSE averaged over $10,000$ sub-samplings of the $416$ participants. That is, each iteration chooses $N$ participants uniformly at random, aggregates their forecasts, and computes the RMSE. The size of the sub-samples is varied between $10$ and $100$ with increments of $10$. These scores are presented in Figure \ref{pointsAcc}. Similarly to the synthetic point forecasts in Section \ref{simulation}, the average outperforms the median across all $N$. The performance of AMA falls between that of average and median, reflecting its nature as a compromise of the two. The revealed aggregator $X_{cov}''$ is the most accurate once $N > 10$. The relatively worse performance at $N = 10$ suggests that $10$ observations is not enough to estimate $\hat{\mu}_{Yk}$ accurately.
-After this, however, $X_{cov}''$ collects information efficiently and increases the performance advantage against the other aggregators as $N$ becomes larger. 
+As $N$ approaches $100$, however, $X_{cov}''$ collects information efficiently and increases the performance advantage against the other aggregators. In particular, compared to the lowest RMSE at $N = 10$, namely $21.18$ achieved by the average, $X_{cov}''$ gains an absolute improvement of $0.74$ at $N = 100$. This is more than double the improvement of the average forecast. 
 
 
  Figure \ref{ID416} shows $\bSigma_{cov}$ for all the 416 forecasters. Similarly to before, the structure has been ordered such that the most knowledgeable forecasters are on the right. Overall, this plot is much more monochromatic than the one presented earlier in Figure \ref{top100}, suggesting that information diversity among the 416 students is indeed relatively lower. If there were no information diversity, i.e., all the forecasters used the same information, then averaging aggregators, such as the simple average, would perform relatively well \citep{satopaamodeling}. Such a limiting case, however, is rarely encountered in practice. Often at least some information diversity is present. The results in the current section show that the revealed aggregator does not require extremely high information diversity in order to outperform the measurement-error aggregators. 
@@ -2257,12 +2258,11 @@ This paper introduced the partial information framework for modeling forecasts f
   The Gaussian model permits a closed-form solution for the optimal aggregator and utilizes a  link function to model different types of forecasts and outcomes. In the common case of point forecast of a continuous outcome the optimal aggregator never (except in an unrealistic boundary case) reduces to a weighted average of the individual forecasts (Proposition \ref{Gaussian}). This result was  illustrated on synthetic data (Section \ref{simulation}) and verified on real-world forecasts (Section \ref{continuousReal}). The model was also applied to real-world probability forecasts of binary events (Section \ref{binaryReal}).  In each application the Gaussian model outperforms the typical measurement-error-based aggregators. This provides evidence that information diversity is the more important source of forecast heterogeneity. 
 
 Generally speaking, partial information aggregation works well because it downweights pairs or sets of forecasters that share more information and
-      upweights ones that have unique information (or choose to attend to unique information as is the case, e.g., in Section \ref{continuousReal}, where forecasters made judgments based on pictures). This is very different from measurement-error aggregators that ignore information overlap and treat the forecasters equally.
+      upweights ones that have unique information (or choose to attend to unique information as is the case, e.g., in Section \ref{continuousReal}, where forecasters made judgments based on pictures). This is very different from measurement-error aggregators that assume each forecaster to have the same information and hence consider the forecasters equally important. In real-world prediction polls, however, participants are unlikely to have equal skill and information sets. Therefore prioritizing is almost certainly called for. 
       
+      The partial information framework offers both theoretical and empirical directions for future research. One theoretical avenue involves estimation of information overlap. In some cases the higher order overlaps have been found to be irrelevant to aggregation. For instance, \cite{degroot1991optimal} show that the pairwise conditional (on the truth) distributions of the forecasts are sufficient for computing the optimal weights of a weighted average. Theoretical results on the significance or insignificance of higher order overlaps under the partial information framework would be desirable. Given that the Gaussian model can only accommodate pairwise information overlap, such a result would reveal the need of a specification that is more complex than the Gaussian model. Another theoretical direction involves a continued exploration of the connection between the revealed aggregator and the class of weighted averages. This in particular entails proving the sub-optimality of the weighted average under a more general context.
       
-      The partial information framework offers both theoretical and empirical directions for future research. One theoretical avenue involves estimation of information overlap. In some cases the higher order overlaps have been found to be irrelevant to aggregation. For instance, \cite{degroot1991optimal} show that the pairwise conditional (on the truth) distributions of the forecasts are sufficient for computing the optimal weights of a weighted average. Theoretical results on the significance or insignificance of higher order overlaps under the partial information framework would be desirable. Given that the Gaussian model can only accommodate pairwise information overlap, such a result would reveal the need of a specification that is more complex than the Gaussian model. Another theoretical direction involves generalizing the sub-optimality of the weighted average of the forecasts  (Proposition \ref{Gaussian}).
-      
-      A promising empirical direction is the Bayesian approach.  These techniques are very natural for fitting hierarchical models such as the ones discussed in this paper.  Furthermore, in many applications with small or moderately sized datasets, Bayesian methods have been found to be superior to the likelihood-based alternatives. Therefore, given that the number of forecasts on a single event is typically quite small, a Bayesian approach is likely to improve the quality of the final aggregate. This would involve  developing a prior distribution for the information structure -- a problem that seems interesting in itself. 
+      A promising empirical direction is the Bayesian approach.  These techniques are very natural for fitting hierarchical models such as the ones discussed in this paper.  Furthermore, in many applications with small or moderately sized datasets, Bayesian methods have been found to be superior to the likelihood-based alternatives. Therefore, given that the number of forecasts in a prediction poll is typically quite small, a Bayesian approach is likely to improve the quality of the final aggregate. This would involve  developing a prior distribution for the information structure -- a problem that seems interesting in itself. 
 %      
 %      Currently, we have work in progress analyzing a Bayesian model but there are many, many reason- able priors on the information structures. 
 Overall, this avenue should certainly be pursued, and the results tested against other high performing aggregators.
@@ -2474,24 +2474,24 @@ Overall, this avenue should certainly be pursued, and the results tested against
 \subsection{Proof of Proposition \ref{covstr}}
 
 \begin{proof} 
-Denote the common marginal mean with $\mu = \E(X_j)$ for all $j = 1, \dots, N$. Each item is then proved as follows.
+Denote the mean of the target outcome $Y$ with $\mu_Y = \E(Y)$. Each item is then proved as follows.
 \begin{enumerate}[i)]
-\item Given that $\E(Y | X_j)  = X_j$, the law of iterated expectation gives $\E(\E(Y | X_j))  = \E(Y) = \E(X_j)$ for all $j = 1, \dots, N$. 
-\item This follows from direct computation:
+\item Given that $\E(Y | X_j)  = X_j$, the law of iterated expectation gives $\E(X_j) = \E(\E(Y | X_j))  = \E(Y)$ for all $j = 1, \dots, N$. 
+\item 
 \begin{align*}
-\Cov(X_j, X_i) &= \E((X_j - \mu)(X_i - \mu))\\
-&= \E(X_jX_i) - \mu^2\\
-&= \E(\E(X_j|X_i)X_i) - \mu^2\\
-&= \E(\E(\E(Y|X_j)|X_i)X_i) - \mu^2\\
-&= \E(\E(Y|X_i)X_i) - \mu^2\\
-&= \E(X_i^2) - \mu^2\\
+\Cov(X_j, X_i) &= \E((X_j - \mu_Y)(X_i - \mu_Y))\\
+&= \E(X_jX_i) - \mu_Y^2\\
+&= \E(\E(X_j|X_i)X_i) - \mu_Y^2\\
+&= \E(\E(\E(Y|X_j)|X_i)X_i) - \mu_Y^2\\
+&= \E(\E(Y|X_i)X_i) - \mu_Y^2\\
+&= \E(X_i^2) - \mu_Y^2\\
 &= \Var(X_i)
 \end{align*}
-\item This follows from item ii) and an application of the Cauchy-Schwarz inequality:
+\item 
 \begin{align*}
-\Var(X_i) &= \Cov(X_i, X_j)\\
-&= \E((X_i - \mu)(X_j - \mu))\\
-&\leq \E((X_i - \mu)^2)^{1/2}\E((X_j - \mu)^2)^{1/2}\\
+\Var(X_i) &= \Cov(X_i, X_j) & \text{(by item ii)}\\
+&= \E((X_i - \mu_Y)(X_j - \mu_Y))\\
+&\leq \E((X_i - \mu_Y)^2)^{1/2}\E((X_j - \mu_Y)^2)^{1/2} & \text{(by Cauchy-Schwarz' inequality)}\\
 &= \sqrt{\Var(X_i) \Var(X_j)},
 \end{align*}
 which then provides $\Var(X_i) \leq \Var(X_j)$. This inequality is tight because $X_i = X_j$ for $\F_i = \F_j$. 
@@ -2525,24 +2525,36 @@ which then provides $\Var(X_i) \leq \Var(X_j)$. This inequality is tight because
 %&= \mu_0
 %\end{align*}
 %\item 
-Suppose $X'' = \w' \X$. Then, 
-\begin{align*}
-\diag(\bSigma)'\bSigma^{-1}(\X-\mu_0\one_N) + \mu_0 &= \w' \X\\
-\diag(\bSigma)'\bSigma^{-1}(\X-\mu_0\one_N) &= \w' (\X - \mu_0 \one_N)\\
-( \diag(\bSigma)'\bSigma^{-1} - \w' ) (\X-\mu_0\one_N) &= 0
-\end{align*}
-which suggest (as long as $\X$ is not degenerate at $\mu_0\one_N$, which would contradict the assumption $\bSigma \in \SS_{++}^N$) that $\diag(\bSigma)'\bSigma^{-1} = \w'$ or equivalently that $\diag(\bSigma)' = \w'\bSigma$. This means that a convex combination of the column (or row) elements equals the corresponding diagonal element. Let $\delta_{m} = \max \{ \delta_i : i =1, \dots, N\}$, and denote the $m$th column of $\bSigma$ with $\bSigma_{(m)}$.  No element in $\bSigma_{(m)}$ can be larger than $\delta_m$. This is verified as follows:
+Given that $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$, the link function is $Y = g(Z_Y) = Z_Y \sigma_Y + \mu_Y$. The forecasts are  $X_j = \E(Y | Z_j) = Z_j \sigma_Y + \mu_Y$, which gives $Z_j = (X_j - \mu_Y)/\sigma_Y$. The revealed aggregator is $X'' =  \E(Z_Y|\Z) \sigma_Y + \mu_Y  = \diag(\bSigma) \bSigma^{-1}\Z\sigma_Y + \mu_Y = \diag(\bSigma) \bSigma^{-1}(\X-\mu_0\one_N) + \mu_Y$. Now, suppose $X'' = \w' \X$ for some vector fo weights $\w$. Then, 
+\begin{align}
+\diag(\bSigma)'\bSigma^{-1}(\X-\mu_0\one_N) + \mu_0 &= \w' \X \nonumber\\
+%\diag(\bSigma)'\bSigma^{-1}(\X-\mu_0\one_N) &= \w' (\X - \mu_0 \one_N)\\
+( \diag(\bSigma)'\bSigma^{-1} - \w' ) (\X-\mu_0\one_N) &= 0 \label{rev_we}
+\end{align}
+Given that $\bSigma \in \SS_{++}^N$, $\X$ cannot be degenerate at $\mu_0\one_N$. Therefore (\ref{rev_we}) shows that $\diag(\bSigma)'\bSigma^{-1} = \w'$ or equivalently that $\diag(\bSigma)' = \w'\bSigma$. This means that a weighted average of the column (or row) elements equals the corresponding diagonal element.
+
+ Let $m = \argmax_j \{ \delta_j : j =1, \dots, N\}$ index the maximum variance among the forecasts and denote the $m$th column of $\bSigma$ with $\bSigma_{\cdot m}$.  No element in $\bSigma_{\dot m}$ can be larger than $\delta_m$. This is verified as follows:
 \begin{align*}
 |\rho_{im}| &= |\E\{ (X_i - \mu_0)(X_m - \mu_0) \}| \\
 &\leq  \E\{ (X_i - \mu_0)^2 \}^{1/2}\E\{ (X_m - \mu_0)^2 \}^{1/2} & \text{(by Cauchy-Schwarz' inequality)}\\
 &=  \sqrt{\delta_i \delta_m}\\
 &\leq \delta_m
 \end{align*}
-for all $i \neq m$. Given that $\w' \bSigma_{(m)} = \delta_m$, either a) $w_m = 1$, or b) $\rho_{im} = \delta_m$ for all $i \neq m$ such that $w_i > 0$. In case a) $\diag(\bSigma)' = \w'\bSigma$ if and only if $\rho_{im} = \delta_i$ for all $i \neq m$. In case b) $\delta_{im} = \delta_m$ for all $i$ with $w_i > 0$ because otherwise  $\w' \bSigma_{(m)} \neq \delta_m$. On the other hand, if some $\rho_{im} = \delta_m$, the correlation coefficient between $X_i$ and $X_m$ is
+for all $i \neq m$. Given that $\w' \bSigma_{(m)} = \delta_m$, either a) $w_m = 1$ or b) $\rho_{im} = \delta_m$ for all $w_i > 0$. Next it is shown that only case a) is possible:
+\begin{enumerate}[a)]
+\item If $w_m = 1$, then $\w = \e_m$, where $\e_m$ is the $m$th standard basis vector. Therefore $\diag(\bSigma)' = \e'\bSigma$ such that $\rho_{im} = \delta_i$ for all $i \neq m$. An information structure $\bSigma \in \SS_{++}^N$ with this pattern can be constructed by picking $\delta_i \sim [0,\delta_m)$ and setting $\rho_{ij} = \delta_i\delta_j/\delta_m$ for all $i \neq m$, $j \neq m$, and $i \neq j$. To see that the resulting $\bSigma \in \SS_{++}^N$, consider the principal sub-matrix $\bSigma_{(-m)}$ formed by removing  the $m$th row and column from $\bSigma$. By the Schur complement $\bSigma \in \SS_{++}^N$ if and only if $\delta_m > 0$ and $\bSigma_{(-m)} - \diag(\bSigma_{(-m)})\diag(\bSigma_{(-m)})'/\delta_m \in \SS_{++}^{N-1}$. This final expression becomes $\Diag((\delta_i - \delta_i^2/\delta_m : i \neq m))$, which is clearly in $\SS_{++}^{N-1}$. Generally, if  $\rho_{im} = \delta_i$ for all $i \neq m$, the revealed aggregator simplifies to
+\begin{align*}
+\diag(\bSigma)'\bSigma^{-1}(\X-\mu_0\one_N) + \mu_0 &= \e_m' (\X-\mu_0\one_N) + \mu_0 = X_m.
+\end{align*}
+Thus $\E[Y | \Z] = \E[Y | Z_m]$. In other words, the forecasts $X_i$ for $i \neq m$ do not provide any further information beyond $X_m$, and $\F_i \subseteq \F_m$ for all $i \neq m$. 
+\item Recall that $\delta_m \geq \delta_i$ for all $i \neq m$. Then, if some $\rho_{im} = \delta_m$, the correlation coefficient between $X_i$ and $X_m$ is
 \begin{align*}
 \frac{\rho_{im}}{\sqrt{\delta_i \delta_m}} &= \sqrt{ \frac{\delta_{m}}{\delta_i }} \geq 1.
 \end{align*}
-Given that the correlation coefficient is bound to the unit interval, it must be the case that $\delta_i = \delta_m$ and that the correlation coefficient is equal to one. This means that the $i$th and $m$th columns of $\bSigma$ are identical. Consequently, the columns of $\bSigma$ are not linearly independent. Such a matrix cannot be inverted to form the revealed aggregator. This means that case b) is not possible. 
+Given that the correlation coefficient is bound to the unit interval, it must be the case that $\delta_i = \delta_m$. This means that the $i$th and $m$th columns of $\bSigma$ are identical. Consequently, the columns of $\bSigma$ are not linearly independent. Given that this contradicts the assumption $\bSigma \in \SS_{++}^N$, case b) is not plausible.
+\end{enumerate}
+
+
 
 %This suggest that there is a principal sub-matrix $\delta_m \one_2 \one_2'$ in $\bSigma$. Given that this sub-matrix is not positive definite, the full matrix $\bSigma$ cannot be positive definite. 
 
@@ -2567,7 +2579,7 @@ Given that the correlation coefficient is bound to the unit interval, it must be
 \caption{This procedure solves (\ref{globalMu}) efficiently using the structure of the problem and binary-search.} 
 \label{projSD_algo}
 \begin{algorithmic}[1]
-\Require $\kappa \geq 1$ and sample eigenvalues in ascending order $\l_1 \leq l_2 \leq \dots \leq l_{N+1}$.
+\Require Condition number threshold $\kappa \geq 1$ and sample eigenvalues in ascending order $\l_1 \leq l_2 \leq \dots \leq l_{N+1}$.
 \Procedure{binary-search optimization}{}
 \State Initialize $D \leftarrow \max\{l_1,0\}$ and  $U \leftarrow l_{N+1}/\kappa$.
 \State $\mu_0 \leftarrow (D + U)/2$
